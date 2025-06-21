@@ -83,7 +83,7 @@ class ServerSideApplyTest extends TestCase
 
         $this->assertInstanceOf(K8sDeployment::class, $result);
         $this->assertEquals('apply-test-deployment', $result->getName());
-        $this->assertEquals(2, $result->getSpec()['replicas']);
+        $this->assertEquals(2, $result->getAttribute('spec.replicas'));
 
         // Clean up
         $result->delete();
@@ -136,8 +136,8 @@ class ServerSideApplyTest extends TestCase
 
         $this->assertInstanceOf(K8sService::class, $result);
         $this->assertEquals('apply-test-service', $result->getName());
-        $this->assertEquals('ClusterIP', $result->getSpec()['type']);
-        $this->assertEquals(80, $result->getSpec()['ports'][0]['port']);
+        $this->assertEquals('ClusterIP', $result->getAttribute('spec.type'));
+        $this->assertEquals(80, $result->getAttribute('spec.ports')[0]['port']);
 
         // Clean up
         $result->delete();

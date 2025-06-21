@@ -193,7 +193,7 @@ class ServerSideApplyConflictTest extends TestCase
 
         // Force should work
         $result = $deployment2->apply('deployment-manager-2', true);
-        $this->assertEquals(5, $result->getSpec()['replicas']);
+        $this->assertEquals(5, $result->getAttribute('spec.replicas'));
 
         // Clean up
         $result->delete();
