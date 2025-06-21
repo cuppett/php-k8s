@@ -10,7 +10,11 @@ use RenokiCo\PhpK8s\Kinds\K8sDaemonSet;
 use RenokiCo\PhpK8s\Kinds\K8sDeployment;
 use RenokiCo\PhpK8s\Kinds\K8sEndpointSlice;
 use RenokiCo\PhpK8s\Kinds\K8sEvent;
+use RenokiCo\PhpK8s\Kinds\K8sGateway;
+use RenokiCo\PhpK8s\Kinds\K8sGatewayClass;
+use RenokiCo\PhpK8s\Kinds\K8sGRPCRoute;
 use RenokiCo\PhpK8s\Kinds\K8sHorizontalPodAutoscaler;
+use RenokiCo\PhpK8s\Kinds\K8sHTTPRoute;
 use RenokiCo\PhpK8s\Kinds\K8sIngress;
 use RenokiCo\PhpK8s\Kinds\K8sJob;
 use RenokiCo\PhpK8s\Kinds\K8sMutatingWebhookConfiguration;
@@ -341,5 +345,53 @@ trait InitializesResources
     public static function endpointSlice($cluster = null, array $attributes = [])
     {
         return new K8sEndpointSlice($cluster, $attributes);
+    }
+
+    /**
+     * Create a new GatewayClass kind.
+     *
+     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  array  $attributes
+     * @return \RenokiCo\PhpK8s\Kinds\K8sGatewayClass
+     */
+    public static function gatewayClass($cluster = null, array $attributes = [])
+    {
+        return new K8sGatewayClass($cluster, $attributes);
+    }
+
+    /**
+     * Create a new Gateway kind.
+     *
+     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  array  $attributes
+     * @return \RenokiCo\PhpK8s\Kinds\K8sGateway
+     */
+    public static function gateway($cluster = null, array $attributes = [])
+    {
+        return new K8sGateway($cluster, $attributes);
+    }
+
+    /**
+     * Create a new HTTPRoute kind.
+     *
+     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  array  $attributes
+     * @return \RenokiCo\PhpK8s\Kinds\K8sHTTPRoute
+     */
+    public static function httpRoute($cluster = null, array $attributes = [])
+    {
+        return new K8sHTTPRoute($cluster, $attributes);
+    }
+
+    /**
+     * Create a new GRPCRoute kind.
+     *
+     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  array  $attributes
+     * @return \RenokiCo\PhpK8s\Kinds\K8sGRPCRoute
+     */
+    public static function grpcRoute($cluster = null, array $attributes = [])
+    {
+        return new K8sGRPCRoute($cluster, $attributes);
     }
 }

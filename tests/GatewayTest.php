@@ -1,0 +1,198 @@
+<?php
+
+namespace RenokiCo\PhpK8s\Test;
+
+use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
+use RenokiCo\PhpK8s\Kinds\K8sGateway;
+use RenokiCo\PhpK8s\ResourcesList;
+
+class GatewayTest extends TestCase
+{
+    /**
+     * The default testing listeners.
+     *
+     * @var array
+     */
+    protected static $listeners = [[
+        'name' => 'http-listener',
+        'hostname' => 'gateway.example.com',
+        'port' => 80,
+        'protocol' => 'HTTP',
+    ]];
+
+    /**
+     * The default testing addresses.
+     *
+     * @var array
+     */
+    protected static $addresses = [[
+        'type' => 'IPAddress',
+        'value' => '192.168.1.100',
+    ]];
+
+    public function test_gateway_build()
+    {
+        $gw = $this->cluster->gateway()
+            ->setName('example-gateway')
+            ->setLabels(['tier' => 'gateway'])
+            ->setAnnotations(['gateway/type' => 'load-balancer'])
+            ->setGatewayClassName('example-gateway-class')
+            ->setListeners(self::$listeners)
+            ->setAddresses(self::$addresses);
+
+        $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
+        $this->assertEquals('example-gateway', $gw->getName());
+        $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
+        $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
+        $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
+        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $this->assertEquals(self::$addresses, $gw->getAddresses());
+    }
+
+    public function test_gateway_from_yaml_post()
+    {
+        $gw = $this->cluster->fromYamlFile(__DIR__.'/yaml/gateway.yaml');
+
+        $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
+        $this->assertEquals('example-gateway', $gw->getName());
+        $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
+        $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
+        $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
+        $this->assertEquals(self::$listeners, $gw->getListeners());
+    }
+
+    public function test_gateway_api_interaction()
+    {
+        $this->runCreationTests();
+        $this->runGetAllTests();
+        $this->runGetAllFromAllNamespacesTests();
+        $this->runGetTests();
+        $this->runUpdateTests();
+        $this->runWatchAllTests();
+        $this->runWatchTests();
+        $this->runDeletionTests();
+    }
+
+    public function runCreationTests()
+    {
+        $gw = $this->cluster->gateway()
+            ->setName('example-gateway')
+            ->setLabels(['tier' => 'gateway'])
+            ->setAnnotations(['gateway/type' => 'load-balancer'])
+            ->setGatewayClassName('example-gateway-class')
+            ->setListeners(self::$listeners)
+            ->setAddresses(self::$addresses);
+
+        $this->assertFalse($gw->isSynced());
+        $this->assertFalse($gw->exists());
+
+        $gw = $gw->createOrUpdate();
+
+        $this->assertTrue($gw->isSynced());
+        $this->assertTrue($gw->exists());
+
+        $this->assertInstanceOf(K8sGateway::class, $gw);
+
+        $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
+        $this->assertEquals('example-gateway', $gw->getName());
+        $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
+        $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
+        $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
+        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $this->assertEquals(self::$addresses, $gw->getAddresses());
+    }
+
+    public function runGetAllTests()
+    {
+        $gateways = $this->cluster->getAllGateways();
+
+        $this->assertInstanceOf(ResourcesList::class, $gateways);
+
+        foreach ($gateways as $gw) {
+            $this->assertInstanceOf(K8sGateway::class, $gw);
+
+            $this->assertNotNull($gw->getName());
+        }
+    }
+
+    public function runGetAllFromAllNamespacesTests()
+    {
+        $gateways = $this->cluster->getAllGatewaysFromAllNamespaces();
+
+        $this->assertInstanceOf(ResourcesList::class, $gateways);
+
+        foreach ($gateways as $gw) {
+            $this->assertInstanceOf(K8sGateway::class, $gw);
+
+            $this->assertNotNull($gw->getName());
+        }
+    }
+
+    public function runGetTests()
+    {
+        $gw = $this->cluster->getGatewayByName('example-gateway');
+
+        $this->assertInstanceOf(K8sGateway::class, $gw);
+
+        $this->assertTrue($gw->isSynced());
+
+        $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
+        $this->assertEquals('example-gateway', $gw->getName());
+        $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
+        $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
+        $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
+        $this->assertEquals(self::$listeners, $gw->getListeners());
+    }
+
+    public function runUpdateTests()
+    {
+        $gw = $this->cluster->getGatewayByName('example-gateway');
+
+        $this->assertTrue($gw->isSynced());
+
+        $gw->setAnnotations([]);
+
+        $gw->createOrUpdate();
+
+        $this->assertTrue($gw->isSynced());
+
+        $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
+        $this->assertEquals('example-gateway', $gw->getName());
+        $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
+        $this->assertEquals([], $gw->getAnnotations());
+        $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
+        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $this->assertEquals(self::$addresses, $gw->getAddresses());
+    }
+
+    public function runDeletionTests()
+    {
+        $gateway = $this->cluster->getGatewayByName('example-gateway');
+
+        $this->assertTrue($gateway->delete());
+
+        $this->expectException(KubernetesAPIException::class);
+
+        $this->cluster->getGatewayByName('example-gateway');
+    }
+
+    public function runWatchAllTests()
+    {
+        $watch = $this->cluster->gateway()->watchAll(function ($type, $gateway) {
+            if ($gateway->getName() === 'example-gateway') {
+                return true;
+            }
+        }, ['timeoutSeconds' => 10]);
+
+        $this->assertTrue($watch);
+    }
+
+    public function runWatchTests()
+    {
+        $watch = $this->cluster->gateway()->watchByName('example-gateway', function ($type, $gateway) {
+            return $gateway->getName() === 'example-gateway';
+        }, ['timeoutSeconds' => 10]);
+
+        $this->assertTrue($watch);
+    }
+}
