@@ -3,7 +3,7 @@
 namespace RenokiCo\PhpK8s\Test;
 
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
-use RenokiCo\PhpK8s\Kinds\K8sGRPCRoute;
+use RenokiCo\PhpK8s\Test\Kinds\GRPCRoute;
 use RenokiCo\PhpK8s\ResourcesList;
 
 class GRPCRouteTest extends TestCase
@@ -48,6 +48,8 @@ class GRPCRouteTest extends TestCase
 
     public function test_grpc_route_build()
     {
+        GRPCRoute::register('grpcRoute');
+
         $route = $this->cluster->grpcRoute()
             ->setName('example-grpc-route')
             ->setLabels(['tier' => 'grpc'])
@@ -70,6 +72,8 @@ class GRPCRouteTest extends TestCase
 
     public function test_grpc_route_from_yaml_post()
     {
+        GRPCRoute::register('grpcRoute');
+
         $route = $this->cluster->fromYamlFile(__DIR__.'/yaml/grpc-route.yaml');
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $route->getApiVersion());
@@ -98,6 +102,8 @@ class GRPCRouteTest extends TestCase
 
     public function runCreationTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $route = $this->cluster->grpcRoute()
             ->setName('example-grpc-route')
             ->setLabels(['tier' => 'grpc'])
@@ -114,7 +120,7 @@ class GRPCRouteTest extends TestCase
         $this->assertTrue($route->isSynced());
         $this->assertTrue($route->exists());
 
-        $this->assertInstanceOf(K8sGRPCRoute::class, $route);
+        $this->assertInstanceOf(GRPCRoute::class, $route);
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $route->getApiVersion());
         $this->assertEquals('example-grpc-route', $route->getName());
@@ -130,12 +136,14 @@ class GRPCRouteTest extends TestCase
 
     public function runGetAllTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $grpcRoutes = $this->cluster->getAllGrpcRoutes();
 
         $this->assertInstanceOf(ResourcesList::class, $grpcRoutes);
 
         foreach ($grpcRoutes as $route) {
-            $this->assertInstanceOf(K8sGRPCRoute::class, $route);
+            $this->assertInstanceOf(GRPCRoute::class, $route);
 
             $this->assertNotNull($route->getName());
         }
@@ -143,12 +151,14 @@ class GRPCRouteTest extends TestCase
 
     public function runGetAllFromAllNamespacesTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $grpcRoutes = $this->cluster->getAllGrpcRoutesFromAllNamespaces();
 
         $this->assertInstanceOf(ResourcesList::class, $grpcRoutes);
 
         foreach ($grpcRoutes as $route) {
-            $this->assertInstanceOf(K8sGRPCRoute::class, $route);
+            $this->assertInstanceOf(GRPCRoute::class, $route);
 
             $this->assertNotNull($route->getName());
         }
@@ -156,9 +166,11 @@ class GRPCRouteTest extends TestCase
 
     public function runGetTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $route = $this->cluster->getGrpcRouteByName('example-grpc-route');
 
-        $this->assertInstanceOf(K8sGRPCRoute::class, $route);
+        $this->assertInstanceOf(GRPCRoute::class, $route);
 
         $this->assertTrue($route->isSynced());
 
@@ -176,6 +188,8 @@ class GRPCRouteTest extends TestCase
 
     public function runUpdateTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $route = $this->cluster->getGrpcRouteByName('example-grpc-route');
 
         $this->assertTrue($route->isSynced());
@@ -200,6 +214,8 @@ class GRPCRouteTest extends TestCase
 
     public function runDeletionTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $grpcRoute = $this->cluster->getGrpcRouteByName('example-grpc-route');
 
         $this->assertTrue($grpcRoute->delete());
@@ -211,6 +227,8 @@ class GRPCRouteTest extends TestCase
 
     public function runWatchAllTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $watch = $this->cluster->grpcRoute()->watchAll(function ($type, $grpcRoute) {
             if ($grpcRoute->getName() === 'example-grpc-route') {
                 return true;
@@ -222,6 +240,8 @@ class GRPCRouteTest extends TestCase
 
     public function runWatchTests()
     {
+        GRPCRoute::register('grpcRoute');
+
         $watch = $this->cluster->grpcRoute()->watchByName('example-grpc-route', function ($type, $grpcRoute) {
             return $grpcRoute->getName() === 'example-grpc-route';
         }, ['timeoutSeconds' => 10]);

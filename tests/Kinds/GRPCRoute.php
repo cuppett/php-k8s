@@ -1,12 +1,12 @@
 <?php
 
-namespace RenokiCo\PhpK8s\Kinds;
+namespace RenokiCo\PhpK8s\Test\Kinds;
 
 use RenokiCo\PhpK8s\Contracts\InteractsWithK8sCluster;
-use RenokiCo\PhpK8s\Contracts\Watchable;
+use RenokiCo\PhpK8s\Kinds\K8sResource;
 use RenokiCo\PhpK8s\Traits\Resource\HasSpec;
 
-class K8sGRPCRoute extends K8sResource implements InteractsWithK8sCluster, Watchable
+class GRPCRoute extends K8sResource implements InteractsWithK8sCluster
 {
     use HasSpec;
 

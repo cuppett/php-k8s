@@ -3,7 +3,7 @@
 namespace RenokiCo\PhpK8s\Test;
 
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
-use RenokiCo\PhpK8s\Kinds\K8sHTTPRoute;
+use RenokiCo\PhpK8s\Test\Kinds\HTTPRoute;
 use RenokiCo\PhpK8s\ResourcesList;
 
 class HTTPRouteTest extends TestCase
@@ -49,6 +49,8 @@ class HTTPRouteTest extends TestCase
 
     public function test_http_route_build()
     {
+        HTTPRoute::register('httpRoute');
+
         $route = $this->cluster->httpRoute()
             ->setName('example-http-route')
             ->setLabels(['tier' => 'routing'])
@@ -71,6 +73,8 @@ class HTTPRouteTest extends TestCase
 
     public function test_http_route_from_yaml_post()
     {
+        HTTPRoute::register('httpRoute');
+
         $route = $this->cluster->fromYamlFile(__DIR__.'/yaml/http-route.yaml');
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $route->getApiVersion());
@@ -99,6 +103,8 @@ class HTTPRouteTest extends TestCase
 
     public function runCreationTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $route = $this->cluster->httpRoute()
             ->setName('example-http-route')
             ->setLabels(['tier' => 'routing'])
@@ -115,7 +121,7 @@ class HTTPRouteTest extends TestCase
         $this->assertTrue($route->isSynced());
         $this->assertTrue($route->exists());
 
-        $this->assertInstanceOf(K8sHTTPRoute::class, $route);
+        $this->assertInstanceOf(HTTPRoute::class, $route);
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $route->getApiVersion());
         $this->assertEquals('example-http-route', $route->getName());
@@ -131,12 +137,14 @@ class HTTPRouteTest extends TestCase
 
     public function runGetAllTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $httpRoutes = $this->cluster->getAllHttpRoutes();
 
         $this->assertInstanceOf(ResourcesList::class, $httpRoutes);
 
         foreach ($httpRoutes as $route) {
-            $this->assertInstanceOf(K8sHTTPRoute::class, $route);
+            $this->assertInstanceOf(HTTPRoute::class, $route);
 
             $this->assertNotNull($route->getName());
         }
@@ -144,12 +152,14 @@ class HTTPRouteTest extends TestCase
 
     public function runGetAllFromAllNamespacesTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $httpRoutes = $this->cluster->getAllHttpRoutesFromAllNamespaces();
 
         $this->assertInstanceOf(ResourcesList::class, $httpRoutes);
 
         foreach ($httpRoutes as $route) {
-            $this->assertInstanceOf(K8sHTTPRoute::class, $route);
+            $this->assertInstanceOf(HTTPRoute::class, $route);
 
             $this->assertNotNull($route->getName());
         }
@@ -157,9 +167,11 @@ class HTTPRouteTest extends TestCase
 
     public function runGetTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $route = $this->cluster->getHttpRouteByName('example-http-route');
 
-        $this->assertInstanceOf(K8sHTTPRoute::class, $route);
+        $this->assertInstanceOf(HTTPRoute::class, $route);
 
         $this->assertTrue($route->isSynced());
 
@@ -177,6 +189,8 @@ class HTTPRouteTest extends TestCase
 
     public function runUpdateTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $route = $this->cluster->getHttpRouteByName('example-http-route');
 
         $this->assertTrue($route->isSynced());
@@ -201,6 +215,8 @@ class HTTPRouteTest extends TestCase
 
     public function runDeletionTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $httpRoute = $this->cluster->getHttpRouteByName('example-http-route');
 
         $this->assertTrue($httpRoute->delete());
@@ -212,6 +228,8 @@ class HTTPRouteTest extends TestCase
 
     public function runWatchAllTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $watch = $this->cluster->httpRoute()->watchAll(function ($type, $httpRoute) {
             if ($httpRoute->getName() === 'example-http-route') {
                 return true;
@@ -223,6 +241,8 @@ class HTTPRouteTest extends TestCase
 
     public function runWatchTests()
     {
+        HTTPRoute::register('httpRoute');
+
         $watch = $this->cluster->httpRoute()->watchByName('example-http-route', function ($type, $httpRoute) {
             return $httpRoute->getName() === 'example-http-route';
         }, ['timeoutSeconds' => 10]);

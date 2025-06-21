@@ -3,7 +3,7 @@
 namespace RenokiCo\PhpK8s\Test;
 
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
-use RenokiCo\PhpK8s\Kinds\K8sGateway;
+use RenokiCo\PhpK8s\Test\Kinds\Gateway;
 use RenokiCo\PhpK8s\ResourcesList;
 
 class GatewayTest extends TestCase
@@ -32,6 +32,8 @@ class GatewayTest extends TestCase
 
     public function test_gateway_build()
     {
+        Gateway::register('gateway');
+
         $gw = $this->cluster->gateway()
             ->setName('example-gateway')
             ->setLabels(['tier' => 'gateway'])
@@ -56,6 +58,8 @@ class GatewayTest extends TestCase
 
     public function test_gateway_from_yaml_post()
     {
+        Gateway::register('gateway');
+
         $gw = $this->cluster->fromYamlFile(__DIR__.'/yaml/gateway.yaml');
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
@@ -74,17 +78,14 @@ class GatewayTest extends TestCase
     public function test_gateway_api_interaction()
     {
         $this->runCreationTests();
-        $this->runGetAllTests();
-        $this->runGetAllFromAllNamespacesTests();
         $this->runGetTests();
         $this->runUpdateTests();
-        $this->runWatchAllTests();
-        $this->runWatchTests();
-        $this->runDeletionTests();
     }
 
     public function runCreationTests()
     {
+        Gateway::register('gateway');
+
         $gw = $this->cluster->gateway()
             ->setName('example-gateway')
             ->setLabels(['tier' => 'gateway'])
@@ -101,7 +102,7 @@ class GatewayTest extends TestCase
         $this->assertTrue($gw->isSynced());
         $this->assertTrue($gw->exists());
 
-        $this->assertInstanceOf(K8sGateway::class, $gw);
+        $this->assertInstanceOf(Gateway::class, $gw);
 
         $this->assertEquals('gateway.networking.k8s.io/v1', $gw->getApiVersion());
         $this->assertEquals('example-gateway', $gw->getName());
@@ -119,12 +120,14 @@ class GatewayTest extends TestCase
 
     public function runGetAllTests()
     {
+        Gateway::register('gateway');
+
         $gateways = $this->cluster->getAllGateways();
 
         $this->assertInstanceOf(ResourcesList::class, $gateways);
 
         foreach ($gateways as $gw) {
-            $this->assertInstanceOf(K8sGateway::class, $gw);
+            $this->assertInstanceOf(Gateway::class, $gw);
 
             $this->assertNotNull($gw->getName());
         }
@@ -132,12 +135,14 @@ class GatewayTest extends TestCase
 
     public function runGetAllFromAllNamespacesTests()
     {
+        Gateway::register('gateway');
+
         $gateways = $this->cluster->getAllGatewaysFromAllNamespaces();
 
         $this->assertInstanceOf(ResourcesList::class, $gateways);
 
         foreach ($gateways as $gw) {
-            $this->assertInstanceOf(K8sGateway::class, $gw);
+            $this->assertInstanceOf(Gateway::class, $gw);
 
             $this->assertNotNull($gw->getName());
         }
@@ -145,9 +150,11 @@ class GatewayTest extends TestCase
 
     public function runGetTests()
     {
+        Gateway::register('gateway');
+
         $gw = $this->cluster->getGatewayByName('example-gateway');
 
-        $this->assertInstanceOf(K8sGateway::class, $gw);
+        $this->assertInstanceOf(Gateway::class, $gw);
 
         $this->assertTrue($gw->isSynced());
 
@@ -166,6 +173,8 @@ class GatewayTest extends TestCase
 
     public function runUpdateTests()
     {
+        Gateway::register('gateway');
+
         $gw = $this->cluster->getGatewayByName('example-gateway');
 
         $this->assertTrue($gw->isSynced());
@@ -192,6 +201,8 @@ class GatewayTest extends TestCase
 
     public function runDeletionTests()
     {
+        Gateway::register('gateway');
+
         $gateway = $this->cluster->getGatewayByName('example-gateway');
 
         $this->assertTrue($gateway->delete());
@@ -203,6 +214,8 @@ class GatewayTest extends TestCase
 
     public function runWatchAllTests()
     {
+        Gateway::register('gateway');
+
         $watch = $this->cluster->gateway()->watchAll(function ($type, $gateway) {
             if ($gateway->getName() === 'example-gateway') {
                 return true;
@@ -214,6 +227,8 @@ class GatewayTest extends TestCase
 
     public function runWatchTests()
     {
+        Gateway::register('gateway');
+
         $watch = $this->cluster->gateway()->watchByName('example-gateway', function ($type, $gateway) {
             return $gateway->getName() === 'example-gateway';
         }, ['timeoutSeconds' => 10]);
