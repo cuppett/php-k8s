@@ -60,7 +60,10 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-grpc-route', $route->getName());
         $this->assertEquals(['tier' => 'grpc'], $route->getLabels());
         $this->assertEquals(['route/type' => 'grpc'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -73,7 +76,10 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-grpc-route', $route->getName());
         $this->assertEquals(['tier' => 'grpc'], $route->getLabels());
         $this->assertEquals(['route/type' => 'grpc'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -114,7 +120,10 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-grpc-route', $route->getName());
         $this->assertEquals(['tier' => 'grpc'], $route->getLabels());
         $this->assertEquals(['route/type' => 'grpc'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -157,7 +166,10 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-grpc-route', $route->getName());
         $this->assertEquals(['tier' => 'grpc'], $route->getLabels());
         $this->assertEquals(['route/type' => 'grpc'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -178,7 +190,10 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-grpc-route', $route->getName());
         $this->assertEquals(['tier' => 'grpc'], $route->getLabels());
         $this->assertEquals([], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }

@@ -45,7 +45,12 @@ class GatewayTest extends TestCase
         $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
         $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
         $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
-        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $listeners = $gw->getListeners();
+        $this->assertCount(1, $listeners);
+        $this->assertEquals('http-listener', $listeners[0]['name']);
+        $this->assertEquals('gateway.example.com', $listeners[0]['hostname']);
+        $this->assertEquals(80, $listeners[0]['port']);
+        $this->assertEquals('HTTP', $listeners[0]['protocol']);
         $this->assertEquals(self::$addresses, $gw->getAddresses());
     }
 
@@ -58,7 +63,12 @@ class GatewayTest extends TestCase
         $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
         $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
         $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
-        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $listeners = $gw->getListeners();
+        $this->assertCount(1, $listeners);
+        $this->assertEquals('http-listener', $listeners[0]['name']);
+        $this->assertEquals('gateway.example.com', $listeners[0]['hostname']);
+        $this->assertEquals(80, $listeners[0]['port']);
+        $this->assertEquals('HTTP', $listeners[0]['protocol']);
     }
 
     public function test_gateway_api_interaction()
@@ -98,7 +108,12 @@ class GatewayTest extends TestCase
         $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
         $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
         $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
-        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $listeners = $gw->getListeners();
+        $this->assertCount(1, $listeners);
+        $this->assertEquals('http-listener', $listeners[0]['name']);
+        $this->assertEquals('gateway.example.com', $listeners[0]['hostname']);
+        $this->assertEquals(80, $listeners[0]['port']);
+        $this->assertEquals('HTTP', $listeners[0]['protocol']);
         $this->assertEquals(self::$addresses, $gw->getAddresses());
     }
 
@@ -141,7 +156,12 @@ class GatewayTest extends TestCase
         $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
         $this->assertEquals(['gateway/type' => 'load-balancer'], $gw->getAnnotations());
         $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
-        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $listeners = $gw->getListeners();
+        $this->assertCount(1, $listeners);
+        $this->assertEquals('http-listener', $listeners[0]['name']);
+        $this->assertEquals('gateway.example.com', $listeners[0]['hostname']);
+        $this->assertEquals(80, $listeners[0]['port']);
+        $this->assertEquals('HTTP', $listeners[0]['protocol']);
     }
 
     public function runUpdateTests()
@@ -161,7 +181,12 @@ class GatewayTest extends TestCase
         $this->assertEquals(['tier' => 'gateway'], $gw->getLabels());
         $this->assertEquals([], $gw->getAnnotations());
         $this->assertEquals('example-gateway-class', $gw->getGatewayClassName());
-        $this->assertEquals(self::$listeners, $gw->getListeners());
+        $listeners = $gw->getListeners();
+        $this->assertCount(1, $listeners);
+        $this->assertEquals('http-listener', $listeners[0]['name']);
+        $this->assertEquals('gateway.example.com', $listeners[0]['hostname']);
+        $this->assertEquals(80, $listeners[0]['port']);
+        $this->assertEquals('HTTP', $listeners[0]['protocol']);
         $this->assertEquals(self::$addresses, $gw->getAddresses());
     }
 

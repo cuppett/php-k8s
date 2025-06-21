@@ -61,7 +61,10 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-http-route', $route->getName());
         $this->assertEquals(['tier' => 'routing'], $route->getLabels());
         $this->assertEquals(['route/type' => 'api'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -74,7 +77,10 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-http-route', $route->getName());
         $this->assertEquals(['tier' => 'routing'], $route->getLabels());
         $this->assertEquals(['route/type' => 'api'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -115,7 +121,10 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-http-route', $route->getName());
         $this->assertEquals(['tier' => 'routing'], $route->getLabels());
         $this->assertEquals(['route/type' => 'api'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -158,7 +167,10 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-http-route', $route->getName());
         $this->assertEquals(['tier' => 'routing'], $route->getLabels());
         $this->assertEquals(['route/type' => 'api'], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
@@ -179,7 +191,10 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-http-route', $route->getName());
         $this->assertEquals(['tier' => 'routing'], $route->getLabels());
         $this->assertEquals([], $route->getAnnotations());
-        $this->assertEquals(self::$parentRefs, $route->getParentRefs());
+        $parentRefs = $route->getParentRefs();
+        $this->assertCount(1, $parentRefs);
+        $this->assertEquals('example-gateway', $parentRefs[0]['name']);
+        $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
         $this->assertEquals(self::$rules, $route->getRules());
     }
