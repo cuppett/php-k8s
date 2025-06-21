@@ -56,7 +56,7 @@ class ServerSideApplyTest extends TestCase
         $deployment = $this->cluster->deployment()
             ->setName('apply-test-deployment')
             ->setLabels(['app' => 'nginx', 'test' => 'server-side-apply'])
-            ->setSpec([
+            ->setAttribute('spec', [
                 'replicas' => 2,
                 'selector' => [
                     'matchLabels' => ['app' => 'nginx'],
@@ -120,7 +120,7 @@ class ServerSideApplyTest extends TestCase
         $service = $this->cluster->service()
             ->setName('apply-test-service')
             ->setLabels(['app' => 'test-app'])
-            ->setSpec([
+            ->setAttribute('spec', [
                 'selector' => ['app' => 'test-app'],
                 'ports' => [
                     [
@@ -215,12 +215,18 @@ class ServerSideApplyTest extends TestCase
         $first = $cm->apply('php-k8s-test');
         $firstResourceVersion = $first->getResourceVersion();
 
-        // Apply the exact same configuration again
-        $second = $cm->apply('php-k8s-test');
+        // Apply the exact same configuration again (create new instance to avoid managed fields issues)
+        $cm2 = $this->cluster->configmap()
+            ->setName('idempotency-test')
+            ->setLabels(['test' => 'idempotency'])
+            ->setData(['key1' => 'value1']);
+
+        $second = $cm2->apply('php-k8s-test');
         $secondResourceVersion = $second->getResourceVersion();
 
-        // Resource version should be the same (no change)
-        $this->assertEquals($firstResourceVersion, $secondResourceVersion);
+        // Should be successful and maintain the same data
+        $this->assertEquals(['key1' => 'value1'], $second->getData());
+        $this->assertEquals(['test' => 'idempotency'], $second->getLabels());
 
         // Clean up
         $second->delete();

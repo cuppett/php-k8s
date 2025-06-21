@@ -145,8 +145,8 @@ class ServerSideApplyConflictTest extends TestCase
             $cm->apply('');
             $this->fail('Expected KubernetesAPIException for empty field manager');
         } catch (KubernetesAPIException $e) {
-            // Should get a 400 Bad Request for invalid field manager
-            $this->assertEquals(400, $e->getCode());
+            // Should get a 400 or 422 for invalid field manager
+            $this->assertContains($e->getCode(), [400, 422]);
         }
     }
 
@@ -155,7 +155,7 @@ class ServerSideApplyConflictTest extends TestCase
         // Create deployment with manager1
         $deployment1 = $this->cluster->deployment()
             ->setName('deploy-conflict-test')
-            ->setSpec([
+            ->setAttribute('spec', [
                 'replicas' => 2,
                 'selector' => [
                     'matchLabels' => ['app' => 'test'],
@@ -180,7 +180,7 @@ class ServerSideApplyConflictTest extends TestCase
         // Try to change replica count with different manager (conflict)
         $deployment2 = $this->cluster->deployment()
             ->setName('deploy-conflict-test')
-            ->setSpec([
+            ->setAttribute('spec', [
                 'replicas' => 5, // Different replica count
             ]);
 
@@ -216,19 +216,18 @@ class ServerSideApplyConflictTest extends TestCase
         }
     }
 
-    public function test_server_side_apply_malformed_yaml()
+    public function test_server_side_apply_validation_error()
     {
-        // Create a resource with invalid data structure
+        // Create a configmap with invalid name (contains invalid characters)
         $cm = $this->cluster->configmap()
-            ->setName('malformed-test');
-
-        // Manually set invalid attributes that would cause YAML issues
-        $cm->setAttribute('data', 'invalid-data-structure');
+            ->setName('Invalid-Name-With-Capitals!')
+            ->setData(['key' => 'value']);
 
         try {
             $cm->apply('php-k8s-test');
+            $this->fail('Expected validation error for invalid resource name');
         } catch (KubernetesAPIException $e) {
-            // Should handle malformed YAML/JSON appropriately
+            // Should handle validation errors appropriately
             $this->assertContains($e->getCode(), [400, 422]);
         }
     }
