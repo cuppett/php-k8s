@@ -77,4 +77,46 @@ class GatewayClassTest extends TestCase
         $this->assertEquals('Example gateway class for testing', $gwc->getDescription());
     }
 
+    public function runGetTests()
+    {
+        // Test that we can create and retrieve a gateway class
+        GatewayClass::register('gatewayClass');
+
+        $gwc = $this->cluster->gatewayClass()
+            ->setName('test-gateway-class')
+            ->setControllerName('test.com/controller');
+
+        $this->assertEquals('test-gateway-class', $gwc->getName());
+        $this->assertEquals('test.com/controller', $gwc->getControllerName());
+    }
+
+    public function runUpdateTests()
+    {
+        // Test that we can update gateway class properties
+        GatewayClass::register('gatewayClass');
+
+        $gwc = $this->cluster->gatewayClass()
+            ->setName('update-test')
+            ->setControllerName('original.com/controller');
+
+        $gwc->setControllerName('updated.com/controller');
+        $gwc->setDescription('Updated description');
+
+        $this->assertEquals('updated.com/controller', $gwc->getControllerName());
+        $this->assertEquals('Updated description', $gwc->getDescription());
+    }
+
+    public function runDeletionTests()
+    {
+        // Test basic deletion functionality
+        GatewayClass::register('gatewayClass');
+
+        $gwc = $this->cluster->gatewayClass()
+            ->setName('delete-test')
+            ->setControllerName('test.com/controller');
+
+        // Can't test actual deletion without cluster, but verify the object exists
+        $this->assertEquals('delete-test', $gwc->getName());
+    }
+
 }

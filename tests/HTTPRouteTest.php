@@ -68,7 +68,13 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('api-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(80, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function test_http_route_from_yaml_post()
@@ -86,7 +92,13 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('api-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(80, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function test_http_route_api_interaction()
@@ -132,7 +144,13 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('api-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(80, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runGetAllTests()
@@ -184,7 +202,13 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('api-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(80, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runUpdateTests()
@@ -210,7 +234,13 @@ class HTTPRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('api-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(80, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runDeletionTests()

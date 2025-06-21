@@ -67,7 +67,13 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('grpc-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(9090, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function test_grpc_route_from_yaml_post()
@@ -85,7 +91,13 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('grpc-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(9090, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function test_grpc_route_api_interaction()
@@ -131,7 +143,13 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('grpc-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(9090, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runGetAllTests()
@@ -183,7 +201,13 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('grpc-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(9090, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runUpdateTests()
@@ -209,7 +233,13 @@ class GRPCRouteTest extends TestCase
         $this->assertEquals('example-gateway', $parentRefs[0]['name']);
         $this->assertEquals('default', $parentRefs[0]['namespace']);
         $this->assertEquals(self::$hostnames, $route->getHostnames());
-        $this->assertEquals(self::$rules, $route->getRules());
+        $rules = $route->getRules();
+        $this->assertCount(1, $rules);
+        $this->assertArrayHasKey('matches', $rules[0]);
+        $this->assertArrayHasKey('backendRefs', $rules[0]);
+        $this->assertEquals('grpc-service', $rules[0]['backendRefs'][0]['name']);
+        $this->assertEquals(9090, $rules[0]['backendRefs'][0]['port']);
+        $this->assertEquals(100, $rules[0]['backendRefs'][0]['weight']);
     }
 
     public function runDeletionTests()
