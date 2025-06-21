@@ -135,7 +135,7 @@ class HorizontalPodAutoscalerTest extends TestCase
         $this->assertEquals(10, $hpa->getMaxReplicas());
 
         while (! $dep->allPodsAreRunning()) {
-           sleep(1);
+            sleep(1);
         }
 
         while ($hpa->getCurrentReplicasCount() < 1) {
@@ -154,6 +154,7 @@ class HorizontalPodAutoscalerTest extends TestCase
         $dep->refresh();
 
         while ($dep->getReadyReplicasCount() === 0) {
+            sleep(1);
             $dep->refresh();
         }
 
@@ -206,6 +207,7 @@ class HorizontalPodAutoscalerTest extends TestCase
         $this->assertTrue($hpa->isSynced());
 
         while ($hpa->getMaxReplicas() < 6) {
+            sleep(1);
             $hpa->refresh();
         }
 
