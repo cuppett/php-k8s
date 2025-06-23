@@ -52,6 +52,7 @@ class PatchIntegrationTest extends TestCase
             // Pod might already be deleted
         }
     }
+
     public function test_json_patch_integration_with_pod()
     {
         $pod = $this->createMariadbPod([
