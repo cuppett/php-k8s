@@ -5,6 +5,7 @@ namespace RenokiCo\PhpK8s\Test;
 use RenokiCo\PhpK8s\Patches\JsonPatch;
 use RenokiCo\PhpK8s\Patches\JsonMergePatch;
 use RenokiCo\PhpK8s\Kinds\K8sPod;
+use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
 
 class PatchIntegrationTest extends TestCase
 {
@@ -263,18 +264,25 @@ class PatchIntegrationTest extends TestCase
                 ->remove('/metadata/labels/app');
 
             // Apply the patch to the live pod
-            $patchedPod = $pod->patch($jsonPatch);
+            $patchedPod = $pod->jsonPatch($jsonPatch);
 
-            // Retrieve the actual object from the cluster
+            // The jsonPatch method should update the pod object itself
+            // Let's also verify by retrieving fresh from cluster
             $livePod = $this->cluster->getPodByName($podName);
 
-            // Validate the changes were applied correctly
+            // Validate the changes were applied correctly in the patched object
+            $this->assertEquals('v2.0', $patchedPod->getLabels()['version']);
+            $this->assertEquals('production', $patchedPod->getLabels()['environment']);
+            $this->assertArrayNotHasKey('app', $patchedPod->getLabels());
+            $this->assertEquals($podName, $patchedPod->getName());
+
+            // Validate the changes are also present in the live cluster object
             $this->assertEquals('v2.0', $livePod->getLabels()['version']);
             $this->assertEquals('production', $livePod->getLabels()['environment']);
             $this->assertArrayNotHasKey('app', $livePod->getLabels());
-            $this->assertEquals($podName, $livePod->getName());
 
             // Ensure the test label is still present
+            $this->assertEquals('patch-integration', $patchedPod->getLabels()['test']);
             $this->assertEquals('patch-integration', $livePod->getLabels()['test']);
 
         } finally {
@@ -297,7 +305,7 @@ class PatchIntegrationTest extends TestCase
                 ->remove('metadata.labels.app');
 
             // Apply the merge patch to the live pod
-            $patchedPod = $pod->mergePatch($mergePatch);
+            $patchedPod = $pod->jsonMergePatch($mergePatch);
 
             // Retrieve the actual object from the cluster
             $livePod = $this->cluster->getPodByName($podName);
@@ -329,7 +337,7 @@ class PatchIntegrationTest extends TestCase
                 ->add('/metadata/labels/stage', 'development')
                 ->replace('/metadata/labels/version', 'v1.1');
 
-            $pod->patch($jsonPatch);
+            $pod->jsonPatch($jsonPatch);
 
             // Verify first patch
             $livePod1 = $this->cluster->getPodByName($podName);
@@ -343,7 +351,7 @@ class PatchIntegrationTest extends TestCase
                 ->set('metadata.labels.version', 'v1.2')
                 ->set('metadata.labels.deployed-by', 'php-k8s');
 
-            $pod->mergePatch($mergePatch);
+            $pod->jsonMergePatch($mergePatch);
 
             // Verify final state
             $livePod2 = $this->cluster->getPodByName($podName);
@@ -367,8 +375,8 @@ class PatchIntegrationTest extends TestCase
             $jsonPatch = new JsonPatch();
             $jsonPatch->test('/metadata/name', 'wrong-name');
 
-            $this->expectException(\Exception::class);
-            $pod->patch($jsonPatch);
+            $this->expectException(KubernetesAPIException::class);
+            $pod->jsonPatch($jsonPatch);
 
         } finally {
             $this->cleanupTestPod($pod);
@@ -388,7 +396,7 @@ class PatchIntegrationTest extends TestCase
                 ->set('metadata.annotations.last-updated', date('c'))
                 ->set('metadata.annotations.test-description', 'Complex nested patch test');
 
-            $pod->mergePatch($mergePatch);
+            $pod->jsonMergePatch($mergePatch);
 
             // Retrieve and validate
             $livePod = $this->cluster->getPodByName($podName);
