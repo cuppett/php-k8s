@@ -208,49 +208,41 @@ kubectl get volumesnapshot test-snapshot-manual -n volume-snapshot-manual-test -
 echo "🐘 Testing PHP SDK integration..."
 php -r "
 require 'vendor/autoload.php';
+use RenokiCo\PhpK8s\Test\Kinds\VolumeSnapshot;
 
 \$cluster = new \RenokiCo\PhpK8s\KubernetesCluster('http://127.0.0.1:8080');
 \$cluster->withoutSslChecks();
 
-echo \"Testing VolumeSnapshot PHP SDK...\n\";
+echo \"Testing VolumeSnapshot CRD PHP SDK...\n\";
 
-// Test getting all volume snapshots
-try {
-    \$snapshots = \$cluster->getAllVolumeSnapshots('volume-snapshot-manual-test');
-    echo \"✅ Successfully retrieved \" . count(\$snapshots) . \" volume snapshots\n\";
-    
-    foreach (\$snapshots as \$snapshot) {
-        echo \"  - Snapshot: \" . \$snapshot->getName() . \" (Ready: \" . (\$snapshot->isReady() ? 'Yes' : 'No') . \")\n\";
-    }
-} catch (Exception \$e) {
-    echo \"❌ Failed to get volume snapshots: \" . \$e->getMessage() . \"\n\";
-}
+// Register the VolumeSnapshot CRD
+VolumeSnapshot::register();
 
-// Test getting specific snapshot
-try {
-    \$snapshot = \$cluster->getVolumeSnapshotByName('test-snapshot-manual', 'volume-snapshot-manual-test');
-    echo \"✅ Successfully retrieved specific snapshot: \" . \$snapshot->getName() . \"\n\";
-    echo \"  - Ready: \" . (\$snapshot->isReady() ? 'Yes' : 'No') . \"\n\";
-    echo \"  - Creation Time: \" . (\$snapshot->getCreationTime() ?: 'N/A') . \"\n\";
-    echo \"  - Snapshot Handle: \" . (\$snapshot->getSnapshotHandle() ?: 'N/A') . \"\n\";
-    echo \"  - Restore Size: \" . (\$snapshot->getRestoreSize() ?: 'N/A') . \"\n\";
-} catch (Exception \$e) {
-    echo \"❌ Failed to get specific snapshot: \" . \$e->getMessage() . \"\n\";
-}
-
-// Test creating a new snapshot via PHP SDK
+// Test creating a new snapshot via PHP SDK CRD
 try {
     \$newSnapshot = \$cluster->volumeSnapshot()
         ->setName('php-sdk-snapshot')
         ->setNamespace('volume-snapshot-manual-test')
         ->setVolumeSnapshotClassName('csi-hostpath-snapclass')
-        ->setSourcePvcName('test-pvc-manual')
-        ->create();
+        ->setSourcePvcName('test-pvc-manual');
     
-    echo \"✅ Successfully created snapshot via PHP SDK: \" . \$newSnapshot->getName() . \"\n\";
+    echo \"✅ Successfully created VolumeSnapshot CRD object: \" . \$newSnapshot->getName() . \"\n\";
+    echo \"  - Type: \" . get_class(\$newSnapshot) . \"\n\";
+    echo \"  - API Version: \" . \$newSnapshot->getApiVersion() . \"\n\";
+    echo \"  - Namespace: \" . \$newSnapshot->getNamespace() . \"\n\";
+    echo \"  - Source PVC: \" . \$newSnapshot->getSourcePvcName() . \"\n\";
+    
+    // Create it on the cluster
+    \$createdSnapshot = \$newSnapshot->create();
+    echo \"✅ Successfully created snapshot on cluster: \" . \$createdSnapshot->getName() . \"\n\";
+    
 } catch (Exception \$e) {
     echo \"❌ Failed to create snapshot via PHP SDK: \" . \$e->getMessage() . \"\n\";
 }
+
+echo \"\n📝 Note: VolumeSnapshot is implemented as a CRD (Custom Resource Definition).\n\";
+echo \"   Cluster-level methods like getAllVolumeSnapshots() are not available for CRDs.\n\";
+echo \"   Use direct resource creation and Kubernetes API calls instead.\n\";
 "
 
 # Clean up manual test resources

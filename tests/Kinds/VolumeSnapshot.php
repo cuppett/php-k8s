@@ -116,4 +116,65 @@ class VolumeSnapshot extends K8sResource implements InteractsWithK8sCluster
     {
         return $this->getStatus('restoreSize');
     }
+
+    /**
+     * Set the source VolumeSnapshot name for cloning.
+     *
+     * @param  string  $snapshotName
+     * @return $this
+     */
+    public function setSourceVolumeSnapshotName(string $snapshotName)
+    {
+        return $this->setSpec('source.volumeSnapshotContentName', $snapshotName);
+    }
+
+    /**
+     * Get the source VolumeSnapshot name.
+     *
+     * @return string|null
+     */
+    public function getSourceVolumeSnapshotName()
+    {
+        return $this->getSpec('source.volumeSnapshotContentName');
+    }
+
+    /**
+     * Get the bound volume snapshot content name.
+     *
+     * @return string|null
+     */
+    public function getBoundVolumeSnapshotContentName()
+    {
+        return $this->getStatus('boundVolumeSnapshotContentName');
+    }
+
+    /**
+     * Get any error message from the snapshot creation.
+     *
+     * @return string|null
+     */
+    public function getErrorMessage()
+    {
+        return $this->getStatus('error.message');
+    }
+
+    /**
+     * Get the error time if snapshot creation failed.
+     *
+     * @return string|null
+     */
+    public function getErrorTime()
+    {
+        return $this->getStatus('error.time');
+    }
+
+    /**
+     * Check if the snapshot creation has failed.
+     *
+     * @return bool
+     */
+    public function hasFailed(): bool
+    {
+        return !is_null($this->getErrorMessage());
+    }
 }

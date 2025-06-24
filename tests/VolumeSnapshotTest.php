@@ -3,7 +3,6 @@
 namespace RenokiCo\PhpK8s\Test;
 
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
-use RenokiCo\PhpK8s\Kinds\K8sVolumeSnapshot;
 use RenokiCo\PhpK8s\ResourcesList;
 use RenokiCo\PhpK8s\Test\Kinds\VolumeSnapshot;
 
@@ -11,6 +10,8 @@ class VolumeSnapshotTest extends TestCase
 {
     public function test_volume_snapshot_build()
     {
+        VolumeSnapshot::register();
+        
         $vs = $this->cluster->volumeSnapshot()
             ->setName('test-snapshot')
             ->setNamespace('default')
@@ -28,8 +29,21 @@ class VolumeSnapshotTest extends TestCase
 
     public function test_volume_snapshot_from_yaml()
     {
+        VolumeSnapshot::register();
+        
         $vs = $this->cluster->fromYamlFile(__DIR__.'/yaml/volumesnapshot.yaml');
 
+        // Handle case where CRD registration returns array
+        if (is_array($vs)) {
+            foreach ($vs as $instance) {
+                if ($instance instanceof VolumeSnapshot) {
+                    $vs = $instance;
+                    break;
+                }
+            }
+        }
+
+        $this->assertInstanceOf(VolumeSnapshot::class, $vs);
         $this->assertEquals('snapshot.storage.k8s.io/v1', $vs->getApiVersion());
         $this->assertEquals('test-snapshot', $vs->getName());
         $this->assertEquals('default', $vs->getNamespace());
@@ -68,6 +82,8 @@ class VolumeSnapshotTest extends TestCase
 
     public function test_volume_snapshot_source_types()
     {
+        VolumeSnapshot::register();
+        
         $vs = $this->cluster->volumeSnapshot()->setName('test-snapshot');
         
         // Test setting source PVC
@@ -82,6 +98,8 @@ class VolumeSnapshotTest extends TestCase
 
     public function test_volume_snapshot_status_methods()
     {
+        VolumeSnapshot::register();
+        
         $vs = $this->cluster->volumeSnapshot()
             ->setName('test-snapshot')
             ->setAttribute('status.readyToUse', true)
@@ -104,6 +122,8 @@ class VolumeSnapshotTest extends TestCase
 
     public function test_volume_snapshot_ready_status()
     {
+        VolumeSnapshot::register();
+        
         $vs = $this->cluster->volumeSnapshot()
             ->setName('ready-snapshot')
             ->setAttribute('status.readyToUse', false);
@@ -119,6 +139,8 @@ class VolumeSnapshotTest extends TestCase
 
     public function test_volume_snapshot_api_interaction()
     {
+        VolumeSnapshot::register();
+        
         $this->runCreationTests();
         $this->runGetAllTests();
         $this->runGetTests();
@@ -166,7 +188,7 @@ class VolumeSnapshotTest extends TestCase
         $this->assertTrue($vs->isSynced());
         $this->assertTrue($vs->exists());
 
-        $this->assertInstanceOf(K8sVolumeSnapshot::class, $vs);
+        $this->assertInstanceOf(VolumeSnapshot::class, $vs);
 
         $this->assertEquals('snapshot.storage.k8s.io/v1', $vs->getApiVersion());
         $this->assertEquals('test-snapshot', $vs->getName());
@@ -199,7 +221,7 @@ class VolumeSnapshotTest extends TestCase
         $this->assertInstanceOf(ResourcesList::class, $volumeSnapshots);
 
         foreach ($volumeSnapshots as $vs) {
-            $this->assertInstanceOf(K8sVolumeSnapshot::class, $vs);
+            $this->assertInstanceOf(VolumeSnapshot::class, $vs);
             $this->assertNotNull($vs->getName());
         }
     }
@@ -208,7 +230,7 @@ class VolumeSnapshotTest extends TestCase
     {
         $vs = $this->cluster->getVolumeSnapshotByName('test-snapshot');
 
-        $this->assertInstanceOf(K8sVolumeSnapshot::class, $vs);
+        $this->assertInstanceOf(VolumeSnapshot::class, $vs);
         $this->assertTrue($vs->isSynced());
 
         $this->assertEquals('snapshot.storage.k8s.io/v1', $vs->getApiVersion());

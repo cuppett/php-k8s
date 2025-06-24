@@ -28,7 +28,6 @@ use RenokiCo\PhpK8s\Kinds\K8sServiceAccount;
 use RenokiCo\PhpK8s\Kinds\K8sStatefulSet;
 use RenokiCo\PhpK8s\Kinds\K8sStorageClass;
 use RenokiCo\PhpK8s\Kinds\K8sValidatingWebhookConfiguration;
-use RenokiCo\PhpK8s\Kinds\K8sVolumeSnapshot;
 
 trait InitializesResources
 {
@@ -342,18 +341,6 @@ trait InitializesResources
     public static function endpointSlice($cluster = null, array $attributes = [])
     {
         return new K8sEndpointSlice($cluster, $attributes);
-    }
-
-    /**
-     * Create a new VolumeSnapshot kind.
-     *
-     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
-     * @param  array  $attributes
-     * @return \RenokiCo\PhpK8s\Kinds\K8sVolumeSnapshot
-     */
-    public static function volumeSnapshot($cluster = null, array $attributes = [])
-    {
-        return new K8sVolumeSnapshot($cluster, $attributes);
     }
 
 }
