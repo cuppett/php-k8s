@@ -216,7 +216,9 @@ class VolumeSnapshotTest extends TestCase
 
     public function runGetAllTests()
     {
-        $volumeSnapshots = $this->cluster->getAllVolumeSnapshots();
+        // For CRDs, we need to use the volumeSnapshot() method directly
+        // and call ->all() to get all resources in the namespace
+        $volumeSnapshots = $this->cluster->volumeSnapshot()->all();
 
         $this->assertInstanceOf(ResourcesList::class, $volumeSnapshots);
 
@@ -228,7 +230,8 @@ class VolumeSnapshotTest extends TestCase
 
     public function runGetTests()
     {
-        $vs = $this->cluster->getVolumeSnapshotByName('test-snapshot');
+        // For CRDs, we need to use the volumeSnapshot() method and getByName()
+        $vs = $this->cluster->volumeSnapshot()->getByName('test-snapshot');
 
         $this->assertInstanceOf(VolumeSnapshot::class, $vs);
         $this->assertTrue($vs->isSynced());
@@ -243,7 +246,7 @@ class VolumeSnapshotTest extends TestCase
 
     public function runUpdateTests()
     {
-        $vs = $this->cluster->getVolumeSnapshotByName('test-snapshot');
+        $vs = $this->cluster->volumeSnapshot()->getByName('test-snapshot');
 
         $this->assertTrue($vs->isSynced());
 
@@ -264,7 +267,7 @@ class VolumeSnapshotTest extends TestCase
 
     public function runDeletionTests()
     {
-        $vs = $this->cluster->getVolumeSnapshotByName('test-snapshot');
+        $vs = $this->cluster->volumeSnapshot()->getByName('test-snapshot');
 
         $this->assertTrue($vs->delete());
 
@@ -276,7 +279,7 @@ class VolumeSnapshotTest extends TestCase
 
         $this->expectException(KubernetesAPIException::class);
 
-        $this->cluster->getVolumeSnapshotByName('test-snapshot');
+        $this->cluster->volumeSnapshot()->getByName('test-snapshot');
 
         // Also clean up the PVC
         $pvc = $this->cluster->getPersistentVolumeClaimByName('test-pvc');
