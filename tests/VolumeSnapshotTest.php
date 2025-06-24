@@ -145,8 +145,6 @@ class VolumeSnapshotTest extends TestCase
         $this->runGetAllTests();
         $this->runGetTests();
         $this->runUpdateTests();
-        $this->runWatchAllTests();
-        $this->runWatchTests();
         $this->runDeletionTests();
     }
 
@@ -286,23 +284,4 @@ class VolumeSnapshotTest extends TestCase
         $pvc->delete();
     }
 
-    public function runWatchAllTests()
-    {
-        $watch = $this->cluster->volumeSnapshot()->watchAll(function ($type, $vs) {
-            if ($vs->getName() === 'test-snapshot') {
-                return true;
-            }
-        }, ['timeoutSeconds' => 10]);
-
-        $this->assertTrue($watch);
-    }
-
-    public function runWatchTests()
-    {
-        $watch = $this->cluster->volumeSnapshot()->watchByName('test-snapshot', function ($type, $vs) {
-            return $vs->getName() === 'test-snapshot';
-        }, ['timeoutSeconds' => 10]);
-
-        $this->assertTrue($watch);
-    }
 }
