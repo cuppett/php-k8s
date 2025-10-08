@@ -173,8 +173,9 @@ These hit a live Kubernetes cluster and mirror CI.
   7. Create PR against `cuppett/php-k8s` main branch: `gh pr create --repo cuppett/php-k8s --base main --title "..." --body "..."`
 
 **Releasing & CI (Reference)**
-- CI matrix runs PHP 8.3/8.4 across Kubernetes v1.31.10, v1.32.6, v1.33.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
-- Minikube is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
+- CI matrix runs PHP 8.3/8.4 across Kubernetes v1.32.9, v1.33.5, v1.34.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
+- Minikube v1.37.0 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
+- Timeout: 25 minutes per job.
 
 **Useful References**
 - **Documentation:** https://renoki-co.github.io/php-k8s/
