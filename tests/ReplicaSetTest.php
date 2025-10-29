@@ -183,26 +183,19 @@ class ReplicaSetTest extends TestCase
 
         $this->assertTrue($rs->isSynced());
 
-        $scaler = $rs->scaler();
-        $scaler->setReplicas(2);
-
-        $this->assertEquals(2, $scaler->getReplicas());
-
-        $scaler->create();
-
-        sleep(1);
+        $scaler = $rs->scale(2);
 
         $this->assertTrue($rs->isSynced());
-        $this->assertEquals(2, $rs->getReplicas());
 
-        $rs->refresh();
-
-        while ($rs->getReadyReplicasCount() !== 2) {
-            sleep(1);
+        while ($rs->getReadyReplicasCount() < 2 || $scaler->getReplicas() < 2) {
+            $scaler->refresh();
             $rs->refresh();
+
+            sleep(1);
         }
 
         $this->assertEquals(2, $rs->getReadyReplicasCount());
+        $this->assertEquals(2, $scaler->getReplicas());
     }
 
     public function runUpdateTests()
