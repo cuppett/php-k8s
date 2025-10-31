@@ -20,7 +20,7 @@ class ReplicaSetTest extends TestCase
 
         $rs = $this->cluster->replicaSet()
             ->setName('mariadb-rs')
-            ->setLabels(['tier' => 'backend'])
+            ->setLabels(['tier' => 'backend-rs'])
             ->setAnnotations(['mariadb/annotation' => 'yes'])
             ->setReplicas(3)
             ->setTemplate($pod);
