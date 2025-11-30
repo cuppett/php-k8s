@@ -8,6 +8,7 @@ use RenokiCo\PhpK8s\Contracts\Executable;
 use RenokiCo\PhpK8s\Contracts\Loggable;
 use RenokiCo\PhpK8s\Contracts\Scalable;
 use RenokiCo\PhpK8s\Contracts\Watchable;
+use RenokiCo\PhpK8s\Enums\Operation;
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
 use RenokiCo\PhpK8s\Exceptions\KubernetesAttachException;
 use RenokiCo\PhpK8s\Exceptions\KubernetesExecException;
@@ -156,7 +157,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::GET_OP,
+                Operation::GET,
                 $this->allResourcesPath(),
                 $this->toJsonPayload(),
                 $query
@@ -176,7 +177,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::GET_OP,
+                Operation::GET,
                 $this->allResourcesPath(false),
                 $this->toJsonPayload(),
                 $query
@@ -196,7 +197,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::GET_OP,
+                Operation::GET,
                 $this->resourcePath(),
                 $this->toJsonPayload(),
                 $query
@@ -216,7 +217,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::CREATE_OP,
+                Operation::CREATE,
                 $this->allResourcesPath(),
                 $this->toJsonPayload(),
                 $query
@@ -244,7 +245,7 @@ trait RunsClusterOperations
         $instance = $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::REPLACE_OP,
+                Operation::REPLACE,
                 $this->resourcePath(),
                 $this->toJsonPayload(),
                 $query
@@ -283,7 +284,7 @@ trait RunsClusterOperations
         $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::DELETE_OP,
+                Operation::DELETE,
                 $this->resourcePath(),
                 $this->toJsonPayload('DeleteOptions'),
                 $query
@@ -317,7 +318,7 @@ trait RunsClusterOperations
         $instance = $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::APPLY_OP,
+                Operation::APPLY,
                 $this->resourcePath(),
                 $this->toJsonPayload(),
                 $query
@@ -348,7 +349,7 @@ trait RunsClusterOperations
         $instance = $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::JSON_PATCH_OP,
+                Operation::JSON_PATCH,
                 $this->resourcePath(),
                 $payload,
                 $query
@@ -379,7 +380,7 @@ trait RunsClusterOperations
         $instance = $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::JSON_MERGE_PATCH_OP,
+                Operation::JSON_MERGE_PATCH,
                 $this->resourcePath(),
                 $payload,
                 $query
@@ -410,7 +411,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::WATCH_OP,
+                Operation::WATCH,
                 $this->allResourcesWatchPath(),
                 $callback,
                 $query
@@ -437,7 +438,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::WATCH_OP,
+                Operation::WATCH,
                 $this->resourceWatchPath(),
                 $callback,
                 $query
@@ -464,7 +465,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::LOG_OP,
+                Operation::LOG,
                 $this->resourceLogPath(),
                 $this->toJsonPayload(),
                 $query
@@ -501,7 +502,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::WATCH_LOGS_OP,
+                Operation::WATCH_LOGS,
                 $this->resourceLogPath(),
                 $callback,
                 $query
@@ -527,7 +528,7 @@ trait RunsClusterOperations
         $scaler = $this->cluster
             ->setResourceClass(K8sScale::class)
             ->runOperation(
-                KubernetesCluster::GET_OP,
+                Operation::GET,
                 $this->resourceScalePath(),
                 $this->toJsonPayload(),
                 ['pretty' => 1]
@@ -563,7 +564,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::EXEC_OP,
+                Operation::EXEC,
                 $this->resourceExecPath(),
                 '',
                 ['command' => array_map('urlencode', $command), 'container' => $container] + $query
@@ -595,7 +596,7 @@ trait RunsClusterOperations
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                KubernetesCluster::ATTACH_OP,
+                Operation::ATTACH,
                 $this->resourceAttachPath(),
                 $callback,
                 ['container' => $container] + $query

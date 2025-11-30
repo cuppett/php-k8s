@@ -150,11 +150,12 @@ class K8sResource implements Arrayable, Jsonable
      * Convert the object to its JSON representation.
      * Optionally, you can specify the Kind attribute to replace.
      *
-     * @param  int  $options
-     * @param  string|null  $kind
-     * @return string
+     * @param int  $options
+     * @param string|null  $kind
+     *
+     * @return false|string
      */
-    public function toJson($options = 0, ?string $kind = null)
+    public function toJson($options = 0, ?string $kind = null): string|false
     {
         return json_encode($this->toArray($kind), $options);
     }

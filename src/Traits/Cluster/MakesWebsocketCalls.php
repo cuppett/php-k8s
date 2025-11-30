@@ -78,8 +78,9 @@ trait MakesWebsocketCalls
     /**
      * Create a new socket connection as stream context.
      *
-     * @param  string  $callableUrl
-     * @return resource
+     * @param string  $callableUrl
+     *
+     * @return false|resource
      */
     protected function createSocketConnection(string $callableUrl)
     {
