@@ -1,0 +1,26 @@
+{
+  "name": "php-k8s-docs",
+  "version": "1.0.0",
+  "description": "Documentation for PHP K8s - PHP client for Kubernetes clusters",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cuppett/php-k8s"
+  },
+  "keywords": [
+    "kubernetes",
+    "k8s",
+    "php",
+    "client",
+    "documentation"
+  ],
+  "author": "Stephen Cuppett",
+  "license": "Apache-2.0"
+}
