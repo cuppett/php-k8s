@@ -3,6 +3,7 @@
 namespace RenokiCo\PhpK8s\Kinds;
 
 use RenokiCo\PhpK8s\Contracts\InteractsWithK8sCluster;
+use RenokiCo\PhpK8s\Enums\Operation;
 use RenokiCo\PhpK8s\Traits\Resource\HasReplicas;
 use RenokiCo\PhpK8s\Traits\Resource\HasSpec;
 
@@ -103,7 +104,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
         return $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                \RenokiCo\PhpK8s\KubernetesCluster::REPLACE_OP,
+                Operation::REPLACE,
                 $this->resourcePath(),
                 $this->toJsonPayload(),
                 $query
@@ -128,7 +129,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
         $instance = $this->cluster
             ->setResourceClass(get_class($this))
             ->runOperation(
-                \RenokiCo\PhpK8s\KubernetesCluster::REPLACE_OP,
+                Operation::REPLACE,
                 $this->resourcePath(),
                 $this->toJsonPayload(),
                 $query

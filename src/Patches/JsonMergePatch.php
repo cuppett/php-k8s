@@ -132,10 +132,11 @@ class JsonMergePatch implements Arrayable, Jsonable
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int  $options
-     * @return string
+     * @param int  $options
+     *
+     * @return false|string
      */
-    public function toJson($options = 0)
+    public function toJson($options = 0): string|false
     {
         return json_encode($this->toArray(), $options);
     }

@@ -8,6 +8,8 @@ use RenokiCo\PhpK8s\Contracts\Executable;
 use RenokiCo\PhpK8s\Contracts\InteractsWithK8sCluster;
 use RenokiCo\PhpK8s\Contracts\Loggable;
 use RenokiCo\PhpK8s\Contracts\Watchable;
+use RenokiCo\PhpK8s\Enums\PodPhase;
+use RenokiCo\PhpK8s\Enums\RestartPolicy;
 use RenokiCo\PhpK8s\Instances\Affinity;
 use RenokiCo\PhpK8s\Instances\Container;
 use RenokiCo\PhpK8s\Instances\Volume;
@@ -227,32 +229,34 @@ class K8sPod extends K8sResource implements
     /**
      * Specify the pod to be restarted on failure
      * for Job kinds only.
-     *
-     * @return $this
      */
-    public function restartOnFailure()
+    public function restartOnFailure(): static
     {
-        return $this->setSpec('restartPolicy', 'OnFailure');
+        return $this->setSpec('restartPolicy', RestartPolicy::ON_FAILURE->value);
     }
 
     /**
      * Specify the pod to never be restarted for Job kinds only.
-     *
-     * @return $this
      */
-    public function neverRestart()
+    public function neverRestart(): static
     {
-        return $this->setSpec('restartPolicy', 'Never');
+        return $this->setSpec('restartPolicy', RestartPolicy::NEVER->value);
     }
 
     /**
-     * Get the restart policy for this pod, for Job kinds only.
-     *
-     * @return string
+     * Set the restart policy for this pod.
      */
-    public function getRestartPolicy()
+    public function setRestartPolicy(RestartPolicy $policy): static
     {
-        return $this->getSpec('restartPolicy', 'Always');
+        return $this->setSpec('restartPolicy', $policy->value);
+    }
+
+    /**
+     * Get the restart policy for this pod.
+     */
+    public function getRestartPolicy(): RestartPolicy
+    {
+        return RestartPolicy::from($this->getSpec('restartPolicy', RestartPolicy::ALWAYS->value));
     }
 
     /**
@@ -465,22 +469,35 @@ class K8sPod extends K8sResource implements
     }
 
     /**
+     * Get the pod phase as an enum.
+     */
+    public function getPodPhase(): PodPhase
+    {
+        $phase = $this->getPhase();
+        return PodPhase::from($phase ?: PodPhase::UNKNOWN->value);
+    }
+
+    /**
      * Check if the pod is running.
-     *
-     * @return bool
      */
     public function isRunning(): bool
     {
-        return $this->getPhase() === 'Running';
+        return $this->getPodPhase() === PodPhase::RUNNING;
     }
 
     /**
      * Check if the pod completed successfully.
-     *
-     * @return bool
      */
     public function isSuccessful(): bool
     {
-        return $this->getPhase() === 'Succeeded';
+        return $this->getPodPhase() === PodPhase::SUCCEEDED;
+    }
+
+    /**
+     * Check if the pod is in a terminal state.
+     */
+    public function isTerminal(): bool
+    {
+        return $this->getPodPhase()->isTerminal();
     }
 }
