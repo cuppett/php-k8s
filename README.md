@@ -22,6 +22,12 @@ Control your Kubernetes clusters with this PHP-based Kubernetes client. It suppo
 
 For Laravel projects, you might want to use [renoki-co/laravel-php-k8s](https://github.com/renoki-co/laravel-php-k8s) which eases the access for this particular case.
 
+## 📦 Requirements
+
+- PHP 8.2 or higher
+- Laravel 11.x or 12.x (for Laravel integration)
+- Kubernetes cluster access
+
 ## 🤝 Supporting
 
 **If you are using one or more Renoki Co. open-source packages in your production apps, in presentation demos, hobby projects, school projects or so, sponsor our work with [Github Sponsors](https://github.com/sponsors/rennokki). 📦**
