@@ -5,3 +5,16 @@ coverage.xml
 .DS_Store
 .idea/
 .phpunit.result.cache
+
+# Node.js / VitePress
+node_modules/
+npm-debug.log*
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+.temp/
+.cache/
+
+# Testing artifacts
+temp/
+autoscaler/
+*.log
