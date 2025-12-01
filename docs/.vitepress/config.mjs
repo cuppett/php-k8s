@@ -6,16 +6,12 @@ export default defineConfig({
   description: 'PHP client for Kubernetes clusters',
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#306ce8' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:site_name', content: 'PHP K8s' }],
-    ['meta', { name: 'og:image', content: 'https://php-k8s.cuppett.dev/og-image.png' }],
   ],
 
   themeConfig: {
-    logo: '/logo.png',
-
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/getting-started/installation' },

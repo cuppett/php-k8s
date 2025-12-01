@@ -5,9 +5,6 @@ hero:
   name: PHP K8s
   text: PHP Client for Kubernetes
   tagline: Control your Kubernetes clusters with this modern PHP-based client. Supports exec API, CRDs, and any form of authentication.
-  image:
-    src: /logo.png
-    alt: PHP K8s
   actions:
     - theme: brand
       text: Get Started
