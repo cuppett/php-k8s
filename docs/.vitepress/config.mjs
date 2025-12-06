@@ -15,6 +15,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/getting-started/installation' },
+      { text: 'Resources', link: '/resources/base-resource' },
       { text: 'API Reference', link: '/api-reference/kubernetes-cluster' },
       { text: 'Examples', link: '/examples/basic-crud' },
       { text: 'GitHub', link: 'https://github.com/cuppett/php-k8s' }

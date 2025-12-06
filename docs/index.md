@@ -10,8 +10,8 @@ hero:
       text: Get Started
       link: /getting-started/installation
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/cuppett/php-k8s
+      text: Resources
+      link: /resources/base-resource
     - theme: alt
       text: Examples
       link: /examples/basic-crud
