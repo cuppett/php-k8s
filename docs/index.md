@@ -110,6 +110,21 @@ See the [Fork Differences](/project/fork-differences) page for a detailed compar
 
 ## Installation
 
+Since this is a fork, add the repository to your `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/cuppett/php-k8s"
+        }
+    ]
+}
+```
+
+Then install the package:
+
 ```bash
 composer require renoki-co/php-k8s
 ```
@@ -119,6 +134,8 @@ For Laravel projects:
 ```bash
 composer require renoki-co/laravel-php-k8s
 ```
+
+> **Note:** The [laravel-php-k8s](https://github.com/renoki-co/laravel-php-k8s) package is from the upstream project. Compatibility with this fork is not guaranteed.
 
 ## Supported Kubernetes Versions
 

@@ -3,16 +3,6 @@ PHP K8s
 
 > **Note:** This is a maintained fork of [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s) with PHP 8.2+ support and additional features. See [fork differences](https://php-k8s.cuppett.dev/project/fork-differences.html) for details.
 
-![CI](https://github.com/renoki-co/php-k8s/workflows/CI/badge.svg?branch=master)
-[![codecov](https://codecov.io/gh/renoki-co/php-k8s/branch/master/graph/badge.svg)](https://codecov.io/gh/renoki-co/php-k8s/branch/master)
-[![StyleCI](https://github.styleci.io/repos/259992525/shield?branch=master)](https://github.styleci.io/repos/259992525)
-[![Maintainability](https://api.codeclimate.com/v1/badges/f1904ccbef8809c9d93b/maintainability)](https://codeclimate.com/github/renoki-co/php-k8s/maintainability)
-[![License](https://poser.pugx.org/renoki-co/php-k8s/license)](https://packagist.org/packages/renoki-co/php-k8s)
-
-[![Latest Stable Version](https://poser.pugx.org/renoki-co/php-k8s/v/stable)](https://packagist.org/packages/renoki-co/php-k8s)
-[![Total Downloads](https://poser.pugx.org/renoki-co/php-k8s/downloads)](https://packagist.org/packages/renoki-co/php-k8s)
-[![Monthly Downloads](https://poser.pugx.org/renoki-co/php-k8s/d/monthly)](https://packagist.org/packages/renoki-co/php-k8s)
-
 ![v1.32.9 K8s Version](https://img.shields.io/badge/K8s%20v1.32.9-Ready-%23326ce5?colorA=306CE8&colorB=green)
 ![v1.33.5 K8s Version](https://img.shields.io/badge/K8s%20v1.33.5-Ready-%23326ce5?colorA=306CE8&colorB=green)
 ![v1.34.1 K8s Version](https://img.shields.io/badge/K8s%20v1.34.1-Ready-%23326ce5?colorA=306CE8&colorB=green)
@@ -22,7 +12,7 @@ PHP K8s
 
 Control your Kubernetes clusters with this PHP-based Kubernetes client. It supports any form of authentication, the exec API, and it has an easy implementation for CRDs.
 
-For Laravel projects, you might want to use [renoki-co/laravel-php-k8s](https://github.com/renoki-co/laravel-php-k8s) which eases the access for this particular case.
+For Laravel projects, you might want to use [renoki-co/laravel-php-k8s](https://github.com/renoki-co/laravel-php-k8s) (from the upstream project). Note that compatibility with this fork is not guaranteed.
 
 ## ✨ Features
 
@@ -63,12 +53,6 @@ echo $pod->getPodPhase(); // Returns PodPhase enum
 - Laravel 11.x or 12.x (for Laravel integration)
 - Kubernetes cluster access
 
-## 🤝 Supporting
-
-**If you are using one or more Renoki Co. open-source packages in your production apps, in presentation demos, hobby projects, school projects or so, sponsor our work with [Github Sponsors](https://github.com/sponsors/rennokki). 📦**
-
-[<img src="https://github-content.s3.fr-par.scw.cloud/static/36.jpg" height="210" width="418" />](https://github-content.renoki.org/github-repo/36)
-
 ## 📃 Documentation
 
 [Read the full documentation at php-k8s.cuppett.dev](https://php-k8s.cuppett.dev/)
@@ -87,7 +71,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## 🔒  Security
 
-If you discover any security related issues, please email alex@renoki.org instead of using the issue tracker.
+If you discover any security related issues, please email steve@cuppett.com instead of using the issue tracker.
 
 ## 🎉 Credits
 
