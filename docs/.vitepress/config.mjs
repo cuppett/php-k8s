@@ -44,6 +44,7 @@ export default defineConfig({
             { text: 'Watching Resources', link: '/guide/watching-resources' },
             { text: 'Exec & Logs', link: '/guide/exec-logs' },
             { text: 'Patching Resources', link: '/guide/patching' },
+            { text: 'Server Side Apply', link: '/guide/server-side-apply' },
             { text: 'Scaling', link: '/guide/scaling' },
             { text: 'Custom Resources (CRDs)', link: '/guide/custom-resources' }
           ]
@@ -189,7 +190,8 @@ export default defineConfig({
           text: 'Patches',
           items: [
             { text: 'JSON Patch', link: '/api-reference/patches/json-patch' },
-            { text: 'JSON Merge Patch', link: '/api-reference/patches/json-merge-patch' }
+            { text: 'JSON Merge Patch', link: '/api-reference/patches/json-merge-patch' },
+            { text: 'Server Side Apply', link: '/api-reference/patches/server-side-apply' }
           ]
         }
       ],

@@ -1,6 +1,6 @@
-# JSON Patch Support
+# Patch & Apply Support
 
-This library now supports both JSON Patch (RFC 6902) and JSON Merge Patch (RFC 7396) operations for Kubernetes resources.
+This library supports JSON Patch (RFC 6902), JSON Merge Patch (RFC 7396), and Server Side Apply for Kubernetes resources.
 
 ## JSON Patch (RFC 6902)
 
@@ -69,11 +69,33 @@ $patchArray = [
 $deployment->jsonMergePatch($patchArray);
 ```
 
+## Server Side Apply
+
+Server Side Apply provides declarative resource management with automatic field ownership tracking and conflict detection.
+
+### Usage
+
+```php
+// Basic apply
+$configmap = $cluster->configmap()
+    ->setName('app-config')
+    ->setData(['key' => 'value']);
+
+$configmap->apply('my-controller');
+
+// Force apply (override conflicts)
+$configmap->apply('my-controller', true);
+```
+
+See the [Server Side Apply Guide](docs/guide/server-side-apply.md) for complete documentation.
+
 ## When to Use Which
 
 - **JSON Patch** is more precise and allows for atomic operations with validation (via `test` operations). Use it when you need exact control over the changes.
 
 - **JSON Merge Patch** is simpler and more intuitive for straightforward updates. Use it when you want to merge changes into a resource.
+
+- **Server Side Apply** provides field ownership tracking and conflict detection. Use it when multiple controllers manage the same resource or when implementing Kubernetes operators.
 
 ## HTTP Content Types
 
@@ -81,6 +103,7 @@ The library automatically sets the correct Content-Type headers:
 
 - JSON Patch: `application/json-patch+json`
 - JSON Merge Patch: `application/merge-patch+json`
+- Server Side Apply: `application/apply-patch+yaml`
 
 ## Examples
 

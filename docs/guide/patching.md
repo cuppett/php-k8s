@@ -213,6 +213,16 @@ $deployment->jsonMergePatch($patch);
 - ✅ You prefer declarative syntax
 - ✅ You're merging configuration changes
 
+### Use Server Side Apply When:
+
+- ✅ Multiple controllers manage the same resource
+- ✅ You want automatic conflict detection
+- ✅ You need field ownership tracking
+- ✅ You're implementing a controller or operator
+- ✅ You want declarative, idempotent operations
+
+See the [Server Side Apply Guide](/guide/server-side-apply) for more details.
+
 ## HTTP Content Types
 
 The library automatically sets the correct Content-Type headers:
@@ -359,6 +369,7 @@ Both patch methods work with all Kubernetes resources that extend `K8sResource`:
 
 ## Next Steps
 
+- [Server Side Apply](/guide/server-side-apply) - Declarative updates with field ownership
 - [CRUD Operations](/guide/crud-operations) - Traditional update method
 - [Scaling](/guide/scaling) - Scale resources
 - [Examples](/examples/patching) - More patching examples
