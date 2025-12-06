@@ -16,7 +16,20 @@ Before installing PHP K8s, ensure your environment meets these requirements:
 
 ## Composer Installation
 
-Install the package via Composer:
+Since this is a fork, you'll need to add the repository to your `composer.json` file:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/cuppett/php-k8s"
+        }
+    ]
+}
+```
+
+Then install the package via Composer:
 
 ```bash
 composer require renoki-co/php-k8s
@@ -24,11 +37,13 @@ composer require renoki-co/php-k8s
 
 ## Laravel Installation
 
-For Laravel projects, use the Laravel-specific package:
+For Laravel projects, you can use the Laravel-specific package from the upstream project:
 
 ```bash
 composer require renoki-co/laravel-php-k8s
 ```
+
+> **Note:** The [laravel-php-k8s](https://github.com/renoki-co/laravel-php-k8s) package is from the upstream project. Compatibility with this fork is not guaranteed.
 
 After installation, publish the configuration file:
 
