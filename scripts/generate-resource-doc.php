@@ -6,7 +6,6 @@
  *
  * Usage: php scripts/generate-resource-doc.php K8sDeployment workloads
  */
-
 if ($argc < 3) {
     echo "Usage: php scripts/generate-resource-doc.php <ClassName> <category>\n";
     echo "Example: php scripts/generate-resource-doc.php K8sDeployment workloads\n";
@@ -22,18 +21,18 @@ $resourceName = preg_replace('/^K8s/', '', $className);
 $resourceLower = strtolower($resourceName);
 
 // Load the class to get metadata
-$classFile = __DIR__ . "/../src/Kinds/{$className}.php";
+$classFile = __DIR__."/../src/Kinds/{$className}.php";
 
-if (!file_exists($classFile)) {
+if (! file_exists($classFile)) {
     echo "Error: Class file not found: {$classFile}\n";
     exit(1);
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $fullClassName = "RenokiCo\\PhpK8s\\Kinds\\{$className}";
 
-if (!class_exists($fullClassName)) {
+if (! class_exists($fullClassName)) {
     echo "Error: Class {$fullClassName} not found\n";
     exit(1);
 }
@@ -47,11 +46,11 @@ $version = $props['defaultVersion'] ?? 'v1';
 $namespaced = $props['namespaceable'] ?? true;
 
 // Generate documentation
-$docPath = __DIR__ . "/../docs/resources/{$category}/{$resourceLower}.md";
+$docPath = __DIR__."/../docs/resources/{$category}/{$resourceLower}.md";
 
 // Create directory if it doesn't exist
 $docDir = dirname($docPath);
-if (!is_dir($docDir)) {
+if (! is_dir($docDir)) {
     mkdir($docDir, 0755, true);
 }
 

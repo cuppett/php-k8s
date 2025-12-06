@@ -8,8 +8,7 @@
  *
  * Scans docs/ and suggests sidebar entries for new pages
  */
-
-$docsPath = __DIR__ . '/../docs';
+$docsPath = __DIR__.'/../docs';
 $categories = [
     'resources/cluster' => 'Cluster Resources',
     'resources/workloads' => 'Workloads',
@@ -28,7 +27,7 @@ echo "================================\n\n";
 foreach ($categories as $path => $title) {
     $fullPath = "{$docsPath}/{$path}";
 
-    if (!is_dir($fullPath)) {
+    if (! is_dir($fullPath)) {
         continue;
     }
 

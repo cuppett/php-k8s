@@ -5,7 +5,6 @@ namespace RenokiCo\PhpK8s\Kinds;
 use RenokiCo\PhpK8s\Contracts\Dnsable;
 use RenokiCo\PhpK8s\Contracts\InteractsWithK8sCluster;
 use RenokiCo\PhpK8s\Contracts\Watchable;
-use RenokiCo\PhpK8s\Enums\Protocol;
 use RenokiCo\PhpK8s\Enums\ServiceType;
 use RenokiCo\PhpK8s\Traits\Resource\HasSelector;
 use RenokiCo\PhpK8s\Traits\Resource\HasSpec;

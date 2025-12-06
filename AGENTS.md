@@ -12,6 +12,33 @@
 - `tests/*`: PHPUnit tests (unit + integration) including testing‑only CRDs under `tests/Kinds`.
 - `docs/PATCH_SUPPORT.md`: Patch feature docs.
 
+**Code Style Requirements**
+
+This project uses [Laravel Pint](https://laravel.com/docs/pint) with the Laravel preset to enforce PSR-12 coding standards.
+
+**CRITICAL: Always run Pint before committing PHP code changes:**
+```bash
+./vendor/bin/pint
+```
+
+Pint auto-fixes:
+- String concatenation spacing (no spaces around `.`)
+- Negation operator spacing (space after `!`)
+- Trailing commas in multiline arrays
+- Doc block formatting
+- Use statement ordering
+- Class definition formatting
+- PSR-12 compliance
+
+**Manual checks after running Pint:**
+1. Doc comments must end with periods: `/** Comment. */`
+2. No blank lines before `finally` blocks
+
+**If StyleCI reports issues on PR:**
+1. Run `./vendor/bin/pint`
+2. Fix any remaining manual issues
+3. Commit and push fixes
+
 **Stack & Requirements**
 - **PHP:** `^8.3` (CI also exercises 8.4).
 - **Composer deps:** Guzzle 7, Symfony Process 7.3, Illuminate components, Ratchet Pawl, ext‑json; optional `ext-yaml` for YAML helpers.
@@ -27,7 +54,7 @@
 - **Run specific test method:** `vendor/bin/phpunit tests/PriorityClassTest.php --filter test_priority_class_build`.
 - **Run with CI environment:** `CI=true vendor/bin/phpunit` (requires running Kubernetes cluster).
 - **Static analysis:** `vendor/bin/psalm`.
-- **Coding style:** Follow existing code patterns and Laravel/Illuminate conventions; StyleCI covers formatting in CI.
+- **Coding style:** Run `./vendor/bin/pint` before all commits (see "Code Style Requirements" above).
 
 **Running Full Integration Tests Locally**
 These hit a live Kubernetes cluster and mirror CI.
@@ -148,6 +175,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Static analysis:** Keep Psalm clean (config at `psalm.xml`).
 
 **PR Checklist**
+- **Code style:** Run `./vendor/bin/pint` and fix any manual style issues before committing.
 - `composer install` completes and `vendor/bin/psalm` passes.
 - `vendor/bin/phpunit` passes for unit tests; integration suite passes if you ran a local cluster.
 - **Documentation complete:**

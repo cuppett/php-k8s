@@ -6,9 +6,8 @@
  *
  * Usage: php scripts/check-documentation.php
  */
-
-$srcKinds = glob(__DIR__ . '/../src/Kinds/K8s*.php');
-$docsPath = __DIR__ . '/../docs/resources';
+$srcKinds = glob(__DIR__.'/../src/Kinds/K8s*.php');
+$docsPath = __DIR__.'/../docs/resources';
 
 $undocumented = [];
 $documented = [];
@@ -31,18 +30,18 @@ foreach ($srcKinds as $kindFile) {
                 $documented[] = [
                     'class' => $className,
                     'resource' => $resourceName,
-                    'doc' => $file->getPathname()
+                    'doc' => $file->getPathname(),
                 ];
                 break;
             }
         }
     }
 
-    if (!$found) {
+    if (! $found) {
         $undocumented[] = [
             'class' => $className,
             'resource' => $resourceName,
-            'file' => $kindFile
+            'file' => $kindFile,
         ];
     }
 }
@@ -52,15 +51,15 @@ echo "\n";
 echo "Documentation Coverage Report\n";
 echo "============================\n\n";
 
-echo "✓ Documented Resources: " . count($documented) . "\n";
+echo '✓ Documented Resources: '.count($documented)."\n";
 foreach ($documented as $item) {
     echo "  - {$item['class']}\n";
 }
 
 echo "\n";
 
-if (!empty($undocumented)) {
-    echo "⚠️  Undocumented Resources: " . count($undocumented) . "\n";
+if (! empty($undocumented)) {
+    echo '⚠️  Undocumented Resources: '.count($undocumented)."\n";
     foreach ($undocumented as $item) {
         echo "  - {$item['class']} ({$item['resource']})\n";
     }
