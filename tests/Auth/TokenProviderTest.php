@@ -5,107 +5,86 @@ namespace RenokiCo\PhpK8s\Test\Auth;
 use RenokiCo\PhpK8s\Auth\TokenProvider;
 use RenokiCo\PhpK8s\Test\TestCase;
 
+class MockTokenProvider extends TokenProvider
+{
+    public ?string $mockToken = null;
+
+    public ?\DateTimeInterface $mockExpiresAt = null;
+
+    public function refresh(): void
+    {
+        $this->token = $this->mockToken ?? 'test-token';
+        $this->expiresAt = $this->mockExpiresAt;
+    }
+}
+
+class CountingTokenProvider extends TokenProvider
+{
+    public int $refreshCount = 0;
+
+    public function refresh(): void
+    {
+        $this->refreshCount++;
+        $this->token = 'refreshed-token-'.$this->refreshCount;
+        $this->expiresAt = (new \DateTimeImmutable)->modify('+1 hour');
+    }
+}
+
 class TokenProviderTest extends TestCase
 {
     public function test_token_not_expired_without_expiration()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                $this->expiresAt = null; // No expiration
-            }
-        };
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = null;
 
         $this->assertFalse($provider->isExpired());
     }
 
     public function test_token_not_expired_when_far_future()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                $this->expiresAt = (new \DateTimeImmutable)->modify('+1 hour');
-            }
-        };
-
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = (new \DateTimeImmutable)->modify('+1 hour');
         $provider->refresh();
+
         $this->assertFalse($provider->isExpired());
     }
 
     public function test_token_expired_when_past()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                $this->expiresAt = (new \DateTimeImmutable)->modify('-1 hour');
-            }
-        };
-
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = (new \DateTimeImmutable)->modify('-1 hour');
         $provider->refresh();
+
         $this->assertTrue($provider->isExpired());
     }
 
     public function test_token_expired_within_refresh_buffer()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                // Expires in 30 seconds (within default 60s buffer)
-                $this->expiresAt = (new \DateTimeImmutable)->modify('+30 seconds');
-            }
-        };
-
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = (new \DateTimeImmutable)->modify('+30 seconds');
         $provider->refresh();
+
         $this->assertTrue($provider->isExpired()); // Should be considered expired
     }
 
     public function test_get_token_triggers_refresh_when_expired()
     {
-        $refreshCount = 0;
-
-        $provider = new class($refreshCount) extends TokenProvider
-        {
-            public function __construct(private int &$refreshCountRef) {}
-
-            public function refresh(): void
-            {
-                $this->refreshCountRef++;
-                $this->token = 'refreshed-token-'.$this->refreshCountRef;
-                // Set expiration far in future so second call doesn't refresh
-                $this->expiresAt = (new \DateTimeImmutable)->modify('+1 hour');
-            }
-        };
+        $provider = new CountingTokenProvider;
 
         // First call triggers refresh
         $token1 = $provider->getToken();
-        $this->assertEquals(1, $refreshCount);
+        $this->assertEquals(1, $provider->refreshCount);
 
         // Immediately calling again doesn't refresh (not expired yet)
         $token2 = $provider->getToken();
-        $this->assertEquals(1, $refreshCount);
+        $this->assertEquals(1, $provider->refreshCount);
         $this->assertEquals($token1, $token2);
     }
 
     public function test_custom_refresh_buffer()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                // Expires in 90 seconds
-                $this->expiresAt = (new \DateTimeImmutable)->modify('+90 seconds');
-            }
-        };
-
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = (new \DateTimeImmutable)->modify('+90 seconds');
         $provider->refresh();
 
         // With default 60s buffer, not expired
@@ -120,16 +99,10 @@ class TokenProviderTest extends TestCase
 
     public function test_get_expires_at()
     {
-        $provider = new class extends TokenProvider
-        {
-            public function refresh(): void
-            {
-                $this->token = 'test-token';
-                $this->expiresAt = new \DateTimeImmutable('2099-12-31T23:59:59Z');
-            }
-        };
-
+        $provider = new MockTokenProvider;
+        $provider->mockExpiresAt = new \DateTimeImmutable('2099-12-31T23:59:59Z');
         $provider->refresh();
+
         $expiresAt = $provider->getExpiresAt();
 
         $this->assertInstanceOf(\DateTimeInterface::class, $expiresAt);
