@@ -31,6 +31,16 @@ export default defineConfig({
             { text: 'Authentication', link: '/getting-started/authentication' },
             { text: 'Configuration', link: '/getting-started/configuration' }
           ]
+        },
+        {
+          text: 'Advanced Authentication',
+          collapsed: true,
+          items: [
+            { text: 'Exec Credential Plugin', link: '/authentication/exec-credential' },
+            { text: 'AWS EKS', link: '/authentication/eks' },
+            { text: 'OpenShift', link: '/authentication/openshift' },
+            { text: 'ServiceAccount TokenRequest', link: '/authentication/service-account-token' }
+          ]
         }
       ],
 
@@ -263,6 +273,19 @@ export default defineConfig({
           items: [
             { text: 'Laravel', link: '/integrations/laravel' },
             { text: 'CI/CD', link: '/integrations/ci-cd' }
+          ]
+        }
+      ],
+
+      '/authentication/': [
+        {
+          text: 'Authentication',
+          items: [
+            { text: 'Basic Authentication', link: '/getting-started/authentication' },
+            { text: 'Exec Credential Plugin', link: '/authentication/exec-credential' },
+            { text: 'AWS EKS', link: '/authentication/eks' },
+            { text: 'OpenShift', link: '/authentication/openshift' },
+            { text: 'ServiceAccount TokenRequest', link: '/authentication/service-account-token' }
           ]
         }
       ],

@@ -48,8 +48,9 @@ trait MakesWebsocketCalls
             $options['tls']['cafile'] = $this->verify;
         }
 
-        if ($this->token) {
-            $headers['Authorization'] = "Bearer {$this->token}";
+        $authToken = $this->getAuthToken();
+        if ($authToken) {
+            $headers['Authorization'] = "Bearer {$authToken}";
         } elseif ($this->auth) {
             $headers['Authorization'] = 'Basic '.base64_encode(implode(':', $this->auth));
         }
@@ -103,8 +104,9 @@ trait MakesWebsocketCalls
             $sslOptions['cafile'] = $this->verify;
         }
 
-        if ($this->token) {
-            $headers[] = "Authorization: Bearer {$this->token}";
+        $authToken = $this->getAuthToken();
+        if ($authToken) {
+            $headers[] = "Authorization: Bearer {$authToken}";
         } elseif ($this->auth) {
             $headers[] = 'Authorization: Basic '.base64_encode(implode(':', $this->auth));
         }

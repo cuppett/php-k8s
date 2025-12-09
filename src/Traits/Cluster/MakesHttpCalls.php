@@ -81,8 +81,9 @@ trait MakesHttpCalls
             $options[RequestOptions::VERIFY] = $this->verify;
         }
 
-        if ($this->token) {
-            $options[RequestOptions::HEADERS]['authorization'] = "Bearer {$this->token}";
+        $authToken = $this->getAuthToken();
+        if ($authToken) {
+            $options[RequestOptions::HEADERS]['authorization'] = "Bearer {$authToken}";
         }
 
         if ($this->auth) {
