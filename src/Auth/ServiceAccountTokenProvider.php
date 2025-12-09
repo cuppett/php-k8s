@@ -17,11 +17,16 @@ class ServiceAccountTokenProvider extends TokenProvider
 
     protected array $audiences = [];
 
+    protected ?string $bootstrapToken = null;
+
     public function __construct(
         KubernetesCluster $bootstrapCluster,
         string $namespace,
         string $serviceAccount
     ) {
+        // Store the bootstrap cluster's current authentication
+        // to prevent infinite recursion when this provider is set on the same cluster
+        $this->bootstrapToken = $bootstrapCluster->getAuthToken();
         $this->bootstrapCluster = $bootstrapCluster;
         $this->namespace = $namespace;
         $this->serviceAccount = $serviceAccount;
@@ -58,11 +63,9 @@ class ServiceAccountTokenProvider extends TokenProvider
         }
 
         try {
-            $response = $this->bootstrapCluster->call(
-                'POST',
-                $path,
-                json_encode($requestBody)
-            );
+            // Use the bootstrap token directly to avoid infinite recursion
+            // when this provider is set on the same cluster instance
+            $response = $this->makeBootstrapRequest('POST', $path, json_encode($requestBody));
 
             $result = json_decode($response->getBody(), true);
 
@@ -89,6 +92,39 @@ class ServiceAccountTokenProvider extends TokenProvider
                 0,
                 $e
             );
+        }
+    }
+
+    /**
+     * Make a request using the bootstrap cluster's original authentication.
+     * This bypasses the token provider to prevent infinite recursion.
+     */
+    protected function makeBootstrapRequest(string $method, string $path, string $payload = '')
+    {
+        $reflection = new \ReflectionClass($this->bootstrapCluster);
+
+        // Temporarily get the original token and clear the provider
+        $tokenProviderProp = $reflection->getProperty('tokenProvider');
+        $tokenProviderProp->setAccessible(true);
+        $originalProvider = $tokenProviderProp->getValue($this->bootstrapCluster);
+
+        $tokenProp = $reflection->getProperty('token');
+        $tokenProp->setAccessible(true);
+        $originalToken = $tokenProp->getValue($this->bootstrapCluster);
+
+        try {
+            // Clear the provider temporarily and restore the original token
+            $tokenProviderProp->setValue($this->bootstrapCluster, null);
+            $tokenProp->setValue($this->bootstrapCluster, $this->bootstrapToken);
+
+            // Make the request with the bootstrap authentication
+            $response = $this->bootstrapCluster->call($method, $path, $payload);
+
+            return $response;
+        } finally {
+            // Restore the original state
+            $tokenProviderProp->setValue($this->bootstrapCluster, $originalProvider);
+            $tokenProp->setValue($this->bootstrapCluster, $originalToken);
         }
     }
 }
