@@ -6,11 +6,13 @@
 - `src/KubernetesCluster.php`: Core client; builds URLs, performs operations (get/create/replace/delete, exec, attach, watch, logs, patch).
 - `src/Kinds/*`: First‑class resource wrappers (Pod, Deployment, Service, …) extending `K8sResource` with convenience traits.
 - `src/Traits/Cluster/*`: HTTP/WebSocket, auth, kubeconfig loaders, version checks.
+- `src/Auth/*`: Token providers (ExecCredential, EKS, OpenShift OAuth, ServiceAccount TokenRequest) with automatic refresh.
 - `src/Traits/Resource/*`: Reusable capabilities (spec/status/labels/annotations/templates/scale/etc.).
 - `src/K8s.php`: Facade/helper for resource construction, YAML parsing, and CRD registration via macros.
 - `src/Patches/*`: `JsonPatch` (RFC 6902) and `JsonMergePatch` (RFC 7396).
 - `tests/*`: PHPUnit tests (unit + integration) including testing‑only CRDs under `tests/Kinds`.
 - `docs/PATCH_SUPPORT.md`: Patch feature docs.
+- `docs/authentication/*`: Advanced authentication guides (exec plugins, EKS, OpenShift, SA TokenRequest).
 
 **Code Style Requirements**
 
@@ -41,9 +43,10 @@ Pint auto-fixes:
 
 **Stack & Requirements**
 - **PHP:** `^8.3` (CI also exercises 8.4).
-- **Composer deps:** Guzzle 7, Symfony Process 7.3, Illuminate components, Ratchet Pawl, ext‑json; optional `ext-yaml` for YAML helpers.
+- **Composer deps:** Guzzle 7, Symfony Process 7.3, Illuminate components, Ratchet Pawl, ext‑json; optional `ext-yaml` for YAML helpers, optional `aws/aws-sdk-php` for native EKS authentication.
 - **Static analysis:** Psalm (see `psalm.xml`).
 - **License:** Apache‑2.0.
+- **Authentication:** Supports tokens, certificates, kubeconfig, in-cluster config, exec credential plugins, AWS EKS native, OpenShift OAuth, and ServiceAccount TokenRequest API.
 
 **Local Dev Setup**
 - **Install deps:** `composer install`.

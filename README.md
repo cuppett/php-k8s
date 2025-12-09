@@ -23,7 +23,7 @@ For Laravel projects, you might want to use [renoki-co/laravel-php-k8s](https://
 - **Custom Resources (CRDs)**: Easy CRD integration with macros
 - **PHP 8.2+ Modern Features**: Enums, type hints, readonly properties, match expressions
 - **Laravel Integration**: First-class Laravel support via laravel-php-k8s
-- **Flexible Authentication**: Kubeconfig, tokens, certificates, in-cluster config
+- **Flexible Authentication**: Kubeconfig, tokens, certificates, exec plugins, AWS EKS native, OpenShift OAuth
 - **YAML Import**: Load resources directly from YAML files with templating
 
 ## 🚀 Quick Start
@@ -46,6 +46,35 @@ echo $pod->getPodPhase(); // Returns PodPhase enum
 ```
 
 [See more examples →](https://php-k8s.cuppett.dev/examples/)
+
+## 🔐 Advanced Authentication
+
+### AWS EKS Native
+
+```php
+// No AWS CLI required - pure PHP token generation
+$cluster = KubernetesCluster::fromUrl($eksClusterUrl)
+    ->withEksAuth('cluster-name', 'us-east-2')
+    ->withCaCertificate('/path/to/ca.crt');
+```
+
+### OpenShift OAuth
+
+```php
+// Direct username/password authentication
+$cluster = KubernetesCluster::fromUrl($openshiftUrl)
+    ->withOpenShiftAuth('username', 'password');
+```
+
+### Exec Credential Plugins
+
+```php
+// Automatically supported from kubeconfig
+$cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config');
+// Works with AWS EKS, GKE, AKS, and custom credential providers
+```
+
+[See authentication docs →](https://php-k8s.cuppett.dev/getting-started/authentication)
 
 ## 📦 Requirements
 

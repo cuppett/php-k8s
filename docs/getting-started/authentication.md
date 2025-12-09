@@ -192,6 +192,54 @@ If you encounter SSL certificate errors:
 2. Check certificate expiration: `openssl x509 -in ca.crt -text -noout`
 3. Ensure the certificate matches the cluster URL
 
+## Advanced Authentication Methods
+
+PHP K8s also supports cloud provider-specific and modern authentication methods:
+
+### AWS EKS
+
+Native token generation using AWS SDK (no CLI required):
+
+```php
+$cluster = KubernetesCluster::fromUrl($eksUrl)
+    ->withEksAuth('cluster-name', 'us-east-2');
+```
+
+[Learn more about EKS authentication →](/authentication/eks)
+
+### OpenShift
+
+Direct OAuth authentication:
+
+```php
+$cluster = KubernetesCluster::fromUrl($openshiftUrl)
+    ->withOpenShiftAuth('username', 'password');
+```
+
+[Learn more about OpenShift authentication →](/authentication/openshift)
+
+### Exec Credential Plugins
+
+Modern Kubernetes credential plugins (automatic from kubeconfig):
+
+```php
+$cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config');
+// Works with EKS, GKE, AKS, and custom providers
+```
+
+[Learn more about exec plugins →](/authentication/exec-credential)
+
+### ServiceAccount TokenRequest
+
+Request bound service account tokens with automatic refresh:
+
+```php
+$cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config')
+    ->withServiceAccountToken('namespace', 'service-account', 3600);
+```
+
+[Learn more about TokenRequest →](/authentication/service-account-token)
+
 ## Next Steps
 
 - [Configuration](/getting-started/configuration) - Advanced configuration options

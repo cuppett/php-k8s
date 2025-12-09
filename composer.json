@@ -31,16 +31,17 @@
     ],
     "require": {
         "php": "^8.2",
+        "ext-json": "*",
+        "composer/semver": "^3.4",
         "guzzlehttp/guzzle": "^7.10",
         "illuminate/macroable": "^11.0|^12.0",
         "illuminate/support": "^11.0|^12.0",
         "ratchet/pawl": "^0.4.1",
-        "symfony/process": "^7.3.4",
-        "composer/semver": "^3.4",
-        "ext-json": "*"
+        "symfony/process": "^7.3.4"
     },
     "suggest": {
-        "ext-yaml": "YAML extension is used to read or generate YAML from PHP K8s internal classes."
+        "ext-yaml": "YAML extension is used to read or generate YAML from PHP K8s internal classes.",
+        "aws/aws-sdk-php": "Required for native EKS token generation without AWS CLI."
     },
     "autoload": {
         "psr-4": {
