@@ -103,6 +103,8 @@ jobs:
           driver: docker
           container-runtime: containerd
           kubernetes-version: v${{ matrix.kubernetes }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable VolumeSnapshots, CSI hostpath driver, and metrics-server
         run: |
