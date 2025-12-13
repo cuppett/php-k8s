@@ -103,7 +103,10 @@ export default defineConfig({
           items: [
             { text: 'PersistentVolume', link: '/resources/storage/persistentvolume' },
             { text: 'PersistentVolumeClaim', link: '/resources/storage/persistentvolumeclaim' },
-            { text: 'StorageClass', link: '/resources/storage/storageclass' }
+            { text: 'StorageClass', link: '/resources/storage/storageclass' },
+            { text: 'CSIDriver', link: '/resources/storage/csidriver' },
+            { text: 'CSINode', link: '/resources/storage/csinode' },
+            { text: 'VolumeAttributesClass', link: '/resources/storage/volumeattributesclass' }
           ]
         },
         {

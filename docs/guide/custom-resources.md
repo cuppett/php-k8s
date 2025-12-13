@@ -106,6 +106,84 @@ $route = K8s::ingressRoute($cluster)
     ->create();
 ```
 
+## Reference CRD Implementations
+
+The library includes several CRD examples in `tests/Kinds/` that demonstrate best practices for implementing custom resources. These are **not** part of the core library but serve as reference implementations:
+
+### Volume Snapshot CRDs (snapshot.storage.k8s.io/v1)
+
+**Prerequisites:** Install the [external-snapshotter](https://github.com/kubernetes-csi/external-snapshotter) CRDs.
+
+```php
+use RenokiCo\PhpK8s\Test\Kinds\VolumeSnapshot;
+use RenokiCo\PhpK8s\Test\Kinds\VolumeSnapshotClass;
+use RenokiCo\PhpK8s\Test\Kinds\VolumeSnapshotContent;
+
+// Register the CRD classes
+VolumeSnapshot::register();
+VolumeSnapshotClass::register();
+VolumeSnapshotContent::register();
+
+// Create a VolumeSnapshotClass
+$snapClass = $cluster->volumeSnapshotClass()
+    ->setName('csi-hostpath-snapclass')
+    ->setDriver('hostpath.csi.k8s.io')
+    ->setDeletionPolicy('Delete')
+    ->create();
+
+// Create a VolumeSnapshot from a PVC
+$snapshot = $cluster->volumeSnapshot()
+    ->setName('my-snapshot')
+    ->setNamespace('default')
+    ->setVolumeSnapshotClassName('csi-hostpath-snapclass')
+    ->setSourcePvcName('my-pvc')
+    ->create();
+
+// Check if ready
+if ($snapshot->isReady()) {
+    echo "Snapshot is ready to use\n";
+}
+```
+
+### Gateway API CRDs (gateway.networking.k8s.io/v1)
+
+**Prerequisites:** Install the [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs.
+
+```php
+use RenokiCo\PhpK8s\Test\Kinds\Gateway;
+use RenokiCo\PhpK8s\Test\Kinds\GatewayClass;
+
+Gateway::register();
+GatewayClass::register();
+
+$gateway = $cluster->gateway()
+    ->setName('my-gateway')
+    ->setNamespace('default')
+    ->create();
+```
+
+### Sealed Secrets CRD (bitnami.com/v1alpha1)
+
+**Prerequisites:** Install [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets).
+
+```php
+use RenokiCo\PhpK8s\Test\Kinds\SealedSecret;
+
+SealedSecret::register();
+
+$sealedSecret = $cluster->sealedSecret()
+    ->setName('my-secret')
+    ->setNamespace('default')
+    ->create();
+```
+
+::: tip Reference Implementation
+See `tests/Kinds/` directory for complete implementation examples including:
+- Class structure with traits (HasSpec, HasStatus, HasStatusConditions)
+- Custom helper methods
+- Test patterns for CRD resources
+:::
+
 ## Common CRD Examples
 
 ### Traefik IngressRoute

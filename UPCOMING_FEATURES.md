@@ -4,51 +4,32 @@ This document tracks planned Kubernetes resource implementations for future rele
 
 ## Current Status
 
-**Implemented:** 33 core Kubernetes resources
-**Planned:** 15+ additional stable resources
+**Implemented:** 36 core Kubernetes resources
+**Planned:** 9 additional stable resources
 
-## Priority 1: Storage & CSI Resources
+## Recently Implemented (December 2025)
 
-Essential for production backup/restore workflows.
+### Storage & CSI Resources ✅
 
-### VolumeSnapshot (`snapshot.storage.k8s.io/v1`)
-- **Status:** GA (Stable)
-- **Namespace:** Yes
-- **Purpose:** Create point-in-time snapshots of persistent volumes
-- **Use Case:** Backup, disaster recovery, cloning volumes
-- **Note:** Currently exists in `tests/Kinds/` as CRD example, should be promoted to core
+All storage and CSI resources are now implemented:
 
-### VolumeSnapshotClass (`snapshot.storage.k8s.io/v1`)
-- **Status:** GA (Stable)
-- **Namespace:** No (cluster-scoped)
-- **Purpose:** Define how volume snapshots are created (like StorageClass for volumes)
-- **Use Case:** Configure snapshot parameters, driver selection
+**Core API Resources** (in `src/Kinds/`):
+- ✅ **CSIDriver** (`storage.k8s.io/v1`) - CSI driver information and capabilities
+- ✅ **CSINode** (`storage.k8s.io/v1`) - CSI drivers installed on nodes
+- ✅ **VolumeAttributesClass** (`storage.k8s.io/v1`) - Mutable volume attributes (K8s 1.34+)
 
-### VolumeSnapshotContent (`snapshot.storage.k8s.io/v1`)
-- **Status:** GA (Stable)
-- **Namespace:** No (cluster-scoped)
-- **Purpose:** Actual snapshot content (relationship: VolumeSnapshot → VolumeSnapshotContent, like PVC → PV)
-- **Use Case:** Low-level snapshot management
+**CRD Examples** (in `tests/Kinds/` - reference implementations):
+- ✅ **VolumeSnapshot** (`snapshot.storage.k8s.io/v1`) - Point-in-time volume snapshots
+- ✅ **VolumeSnapshotClass** (`snapshot.storage.k8s.io/v1`) - Snapshot class definitions
+- ✅ **VolumeSnapshotContent** (`snapshot.storage.k8s.io/v1`) - Snapshot content bindings
 
-### CSIDriver (`storage.k8s.io/v1`)
-- **Status:** GA (Stable)
-- **Namespace:** No (cluster-scoped)
-- **Purpose:** Information about Container Storage Interface drivers in the cluster
-- **Use Case:** Discover available storage drivers, driver capabilities
+**Benefits:**
+- Backup & restore workflows with volume snapshots
+- CSI driver discovery and management
+- Dynamic volume attribute modification (IOPS, throughput)
+- Production-ready storage operations
 
-### CSINode (`storage.k8s.io/v1`)
-- **Status:** GA (Stable)
-- **Namespace:** No (cluster-scoped)
-- **Purpose:** Information about CSI drivers installed on specific nodes
-- **Use Case:** Node-level storage driver tracking
-
-### VolumeAttributesClass (`storage.k8s.io/v1`)
-- **Status:** GA in Kubernetes 1.34
-- **Namespace:** No (cluster-scoped)
-- **Purpose:** Mutable volume attributes for CSI volumes
-- **Use Case:** Modify volume parameters without recreating (IOPS, throughput, etc.)
-
-## Priority 2: Missing Core Resources
+## Priority 1: Missing Core Resources
 
 Widely used resources surprisingly absent from the library.
 
@@ -59,7 +40,7 @@ Widely used resources surprisingly absent from the library.
 - **Use Case:** Service discovery, load balancing
 - **Note:** Library has EndpointSlice but not Endpoints (still widely used)
 
-## Priority 3: Dynamic Resource Allocation (Kubernetes 1.34)
+## Priority 2: Dynamic Resource Allocation (Kubernetes 1.34)
 
 Enable efficient GPU and specialized hardware management for AI/ML workloads.
 
@@ -88,7 +69,7 @@ Enable efficient GPU and specialized hardware management for AI/ML workloads.
 - **Purpose:** Templates for creating ResourceClaims (like PVC templates in StatefulSets)
 - **Use Case:** Automate resource claim creation for workloads
 
-## Priority 4: Coordination & Runtime
+## Priority 3: Coordination & Runtime
 
 Important for building Kubernetes operators and controllers.
 
@@ -104,7 +85,7 @@ Important for building Kubernetes operators and controllers.
 - **Purpose:** Select container runtime configuration (gVisor, Kata Containers, etc.)
 - **Use Case:** Security isolation, specialized runtime requirements
 
-## Priority 5: API Extensions
+## Priority 4: API Extensions
 
 Advanced use cases for platform builders.
 
@@ -128,22 +109,16 @@ These features will be implemented based on:
 1. **User demand** - Which features are most requested
 2. **Kubernetes adoption** - How widely the features are used in production
 3. **Stability** - Preference for GA (stable) features over beta/alpha
-4. **Dependencies** - Some features build on others (e.g., VolumeSnapshot ecosystem)
+4. **Dependencies** - Some features build on others
 
 Current priorities based on production use:
 
-1. **Storage snapshots** (Weeks 3-4 of future work)
-2. **Missing core resources** (Week 4)
-3. **DRA resources** (Week 5) - For AI/ML workloads
-4. **Coordination resources** (Week 6)
-5. **API extensions** (Week 6)
+1. **Missing core resources** - Endpoints for backward compatibility
+2. **DRA resources** - For AI/ML workloads (requires K8s 1.34+)
+3. **Coordination resources** - For operator development
+4. **API extensions** - For platform builders
 
 ## Benefits of Planned Resources
-
-### Storage Resources
-- **Backup & Restore:** Point-in-time snapshots for disaster recovery
-- **Data Cloning:** Quickly clone volumes for testing/development
-- **CSI Management:** Better visibility into storage drivers
 
 ### DRA Resources
 - **GPU Sharing:** Multiple pods sharing same GPU (cost savings)
@@ -154,9 +129,13 @@ Current priorities based on production use:
 - **Operator Development:** Build robust controllers with leader election
 - **High Availability:** Distributed lock management
 
-### Core Resources
+### Missing Core Resources
 - **Feature Completeness:** Fill gaps in API coverage
 - **Backward Compatibility:** Support legacy resources still in use
+
+### API Extensions
+- **Platform Building:** Programmatic CRD management
+- **API Aggregation:** Custom API server integration
 
 ## How to Request Features
 
@@ -170,9 +149,9 @@ If you need one of these resources implemented sooner:
 
 Watch the repository for updates on feature implementation:
 
-- [GitHub Issues](https://github.com/renoki-co/php-k8s/issues)
-- [GitHub Releases](https://github.com/renoki-co/php-k8s/releases)
-- [Documentation](https://rennokki.gitbook.io/php-k8s/)
+- [GitHub Issues](https://github.com/cuppett/php-k8s/issues)
+- [GitHub Releases](https://github.com/cuppett/php-k8s/releases)
+- [Documentation](https://php-k8s.cuppett.dev)
 
 ## Resources
 
