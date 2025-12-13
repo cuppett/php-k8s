@@ -45,14 +45,8 @@ class VolumeAttributesClassTest extends TestCase
     public function test_volume_attributes_class_api_interaction()
     {
         // VolumeAttributesClass requires Kubernetes 1.34+
-        // Skip test if API is not available
-        try {
-            $this->cluster->getAllVolumeAttributesClasses();
-        } catch (KubernetesAPIException $e) {
-            if (str_contains($e->getMessage(), 'not found') || str_contains($e->getMessage(), 'the server could not find')) {
-                $this->markTestSkipped('VolumeAttributesClass API not available (requires Kubernetes 1.34+)');
-            }
-            throw $e;
+        if (! $this->cluster->newerThan('1.34.0')) {
+            $this->markTestSkipped('VolumeAttributesClass API not available (requires Kubernetes 1.34+)');
         }
 
         $this->runCreationTests();
