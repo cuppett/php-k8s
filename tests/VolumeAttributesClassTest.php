@@ -143,6 +143,13 @@ class VolumeAttributesClassTest extends TestCase
 
         $this->assertTrue($vac->delete());
 
+        // Wait for deletion to complete
+        $timeout = 60; // 60 seconds timeout
+        $start = time();
+        while ($vac->exists() && (time() - $start) < $timeout) {
+            sleep(2);
+        }
+
         $this->expectException(KubernetesAPIException::class);
 
         $this->cluster->getVolumeAttributesClassByName('silver');
