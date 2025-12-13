@@ -43,7 +43,7 @@ kubectl auth can-i list pods --as=system:serviceaccount:default:my-sa
 
 ## See Also
 
-- [Authentication](/getting-started/authentication) - Auth setup guide
+- [Authentication](/guide/getting-started/authentication) - Auth setup guide
 - [Common Errors](/troubleshooting/common-errors) - All common errors
 
 ---

@@ -77,7 +77,7 @@ echo "Created: {$resource->getName()}\n";
 ## See Also
 
 - [Base Resource](/resources/base-resource) - Common resource methods
-- [K8s Facade](/api-reference/k8s-facade) - Factory methods
+- [K8s Facade](/development/api-reference/k8s-facade) - Factory methods
 
 ---
 

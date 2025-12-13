@@ -85,7 +85,7 @@ See [Upstream Attribution](/project/upstream-attribution) for full details.
 
 By contributing to this project, you agree that your contributions will be licensed under the Apache License 2.0.
 
-See [Contributing Guide](/development/contributing) for details.
+See [Contributing Guide](/development/contributing/contributing) for details.
 
 ## Questions About Licensing
 

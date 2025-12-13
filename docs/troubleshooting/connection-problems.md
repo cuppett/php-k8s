@@ -41,7 +41,7 @@ $cluster->setConnectionTimeout(15);  // 15 seconds
 ## See Also
 
 - [Common Errors](/troubleshooting/common-errors) - All common errors
-- [Configuration](/getting-started/configuration) - Connection configuration
+- [Configuration](/guide/getting-started/configuration) - Connection configuration
 
 ---
 

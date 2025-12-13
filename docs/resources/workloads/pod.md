@@ -345,10 +345,10 @@ echo "Recent logs:\n{$logs}\n";
 
 ## See Also
 
-- [Container Instances](/api-reference/instances/container) - Container configuration
-- [Volumes](/api-reference/instances/volume) - Volume types
-- [Affinity](/api-reference/instances/affinity) - Pod and node affinity
-- [Probes](/api-reference/instances/probe) - Liveness and readiness probes
+- [Container Instances](/development/api-reference/instances/container) - Container configuration
+- [Volumes](/development/api-reference/instances/volume) - Volume types
+- [Affinity](/development/api-reference/instances/affinity) - Pod and node affinity
+- [Probes](/development/api-reference/instances/probe) - Liveness and readiness probes
 
 ---
 

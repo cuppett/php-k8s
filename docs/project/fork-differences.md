@@ -132,7 +132,7 @@ If migrating from upstream to this fork, be aware of these breaking changes:
 
 ### Migration Path from Upstream
 
-See the [Upstream to Fork Migration Guide](/migration/upstream-to-fork) for detailed migration instructions.
+See the [Upstream to Fork Migration Guide](/development/migration/upstream-to-fork) for detailed migration instructions.
 
 ## What's the Same
 
@@ -195,7 +195,7 @@ This fork will continue to:
 If you're unsure which version to use or have questions about differences:
 
 - Open an issue: https://github.com/cuppett/php-k8s/issues
-- Check the [Migration Guide](/migration/upstream-to-fork)
+- Check the [Migration Guide](/development/migration/upstream-to-fork)
 - Review the [Project History](/project/history)
 
 ## Acknowledgments

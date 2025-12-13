@@ -14,49 +14,46 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/getting-started/installation' },
+      { text: 'Guide', link: '/guide/getting-started/installation' },
       { text: 'Resources', link: '/resources/base-resource' },
-      { text: 'API Reference', link: '/api-reference/kubernetes-cluster' },
+      { text: 'Development', link: '/development/api-reference/kubernetes-cluster' },
       { text: 'Examples', link: '/examples/basic-crud' },
       { text: 'GitHub', link: 'https://github.com/cuppett/php-k8s' }
     ],
 
     sidebar: {
-      '/getting-started/': [
+      '/guide/': [
         {
           text: 'Getting Started',
           items: [
-            { text: 'Installation', link: '/getting-started/installation' },
-            { text: 'Quick Start', link: '/getting-started/quickstart' },
-            { text: 'Authentication', link: '/getting-started/authentication' },
-            { text: 'Configuration', link: '/getting-started/configuration' }
+            { text: 'Installation', link: '/guide/getting-started/installation' },
+            { text: 'Quick Start', link: '/guide/getting-started/quickstart' },
+            { text: 'Authentication', link: '/guide/getting-started/authentication' },
+            { text: 'Configuration', link: '/guide/getting-started/configuration' }
           ]
         },
         {
           text: 'Advanced Authentication',
           collapsed: true,
           items: [
-            { text: 'Exec Credential Plugin', link: '/authentication/exec-credential' },
-            { text: 'AWS EKS', link: '/authentication/eks' },
-            { text: 'OpenShift', link: '/authentication/openshift' },
-            { text: 'ServiceAccount TokenRequest', link: '/authentication/service-account-token' }
+            { text: 'Exec Credential Plugin', link: '/guide/authentication/exec-credential' },
+            { text: 'AWS EKS', link: '/guide/authentication/eks' },
+            { text: 'OpenShift', link: '/guide/authentication/openshift' },
+            { text: 'ServiceAccount TokenRequest', link: '/guide/authentication/service-account-token' }
           ]
-        }
-      ],
-
-      '/guide/': [
+        },
         {
-          text: 'User Guide',
+          text: 'Usage',
           items: [
-            { text: 'Cluster Interaction', link: '/guide/cluster-interaction' },
-            { text: 'CRUD Operations', link: '/guide/crud-operations' },
-            { text: 'Import from YAML', link: '/guide/yaml-import' },
-            { text: 'Watching Resources', link: '/guide/watching-resources' },
-            { text: 'Exec & Logs', link: '/guide/exec-logs' },
-            { text: 'Patching Resources', link: '/guide/patching' },
-            { text: 'Server Side Apply', link: '/guide/server-side-apply' },
-            { text: 'Scaling', link: '/guide/scaling' },
-            { text: 'Custom Resources (CRDs)', link: '/guide/custom-resources' }
+            { text: 'Cluster Interaction', link: '/guide/usage/cluster-interaction' },
+            { text: 'CRUD Operations', link: '/guide/usage/crud-operations' },
+            { text: 'Import from YAML', link: '/guide/usage/yaml-import' },
+            { text: 'Watching Resources', link: '/guide/usage/watching-resources' },
+            { text: 'Exec & Logs', link: '/guide/usage/exec-logs' },
+            { text: 'Patching Resources', link: '/guide/usage/patching' },
+            { text: 'Server Side Apply', link: '/guide/usage/server-side-apply' },
+            { text: 'Scaling', link: '/guide/usage/scaling' },
+            { text: 'Custom Resources (CRDs)', link: '/guide/usage/custom-resources' }
           ]
         }
       ],
@@ -158,53 +155,97 @@ export default defineConfig({
         }
       ],
 
-      '/api-reference/': [
+      '/development/': [
         {
-          text: 'Core Classes',
+          text: 'API Reference',
           items: [
-            { text: 'KubernetesCluster', link: '/api-reference/kubernetes-cluster' },
-            { text: 'K8sResource', link: '/api-reference/k8s-resource' },
-            { text: 'K8s Facade', link: '/api-reference/k8s-facade' }
+            { text: 'KubernetesCluster', link: '/development/api-reference/kubernetes-cluster' },
+            { text: 'K8sResource', link: '/development/api-reference/k8s-resource' },
+            { text: 'K8s Facade', link: '/development/api-reference/k8s-facade' }
           ]
         },
         {
           text: 'Traits',
           collapsed: true,
           items: [
-            { text: 'Resource Traits', link: '/api-reference/traits/resource-traits' },
-            { text: 'Cluster Traits', link: '/api-reference/traits/cluster-traits' }
+            { text: 'Resource Traits', link: '/development/api-reference/traits/resource-traits' },
+            { text: 'Cluster Traits', link: '/development/api-reference/traits/cluster-traits' }
           ]
         },
         {
           text: 'Contracts',
           collapsed: true,
           items: [
-            { text: 'Interfaces', link: '/api-reference/contracts/interfaces' }
+            { text: 'Interfaces', link: '/development/api-reference/contracts/interfaces' }
           ]
         },
         {
           text: 'Enums',
           collapsed: true,
           items: [
-            { text: 'Enumerations', link: '/api-reference/enums/enumerations' }
+            { text: 'Enumerations', link: '/development/api-reference/enums/enumerations' }
           ]
         },
         {
           text: 'Instances',
           collapsed: true,
           items: [
-            { text: 'Container', link: '/api-reference/instances/container' },
-            { text: 'Affinity', link: '/api-reference/instances/affinity' },
-            { text: 'Probe', link: '/api-reference/instances/probe' },
-            { text: 'Volume', link: '/api-reference/instances/volume' }
+            { text: 'Container', link: '/development/api-reference/instances/container' },
+            { text: 'Affinity', link: '/development/api-reference/instances/affinity' },
+            { text: 'Probe', link: '/development/api-reference/instances/probe' },
+            { text: 'Volume', link: '/development/api-reference/instances/volume' }
           ]
         },
         {
           text: 'Patches',
           items: [
-            { text: 'JSON Patch', link: '/api-reference/patches/json-patch' },
-            { text: 'JSON Merge Patch', link: '/api-reference/patches/json-merge-patch' },
-            { text: 'Server Side Apply', link: '/api-reference/patches/server-side-apply' }
+            { text: 'JSON Patch', link: '/development/api-reference/patches/json-patch' },
+            { text: 'JSON Merge Patch', link: '/development/api-reference/patches/json-merge-patch' },
+            { text: 'Server Side Apply', link: '/development/api-reference/patches/server-side-apply' }
+          ]
+        },
+        {
+          text: 'Architecture',
+          collapsed: true,
+          items: [
+            { text: 'Resource Model', link: '/development/architecture/resource-model' },
+            { text: 'Trait Composition', link: '/development/architecture/trait-composition' },
+            { text: 'Cluster Operations', link: '/development/architecture/cluster-operations' },
+            { text: 'WebSocket Handling', link: '/development/architecture/websocket-handling' },
+            { text: 'Authentication', link: '/development/architecture/authentication' },
+            { text: 'State Tracking', link: '/development/architecture/state-tracking' },
+            { text: 'Extensibility', link: '/development/architecture/extensibility' }
+          ]
+        },
+        {
+          text: 'Contributing',
+          collapsed: true,
+          items: [
+            { text: 'Setup', link: '/development/contributing/setup' },
+            { text: 'Testing', link: '/development/contributing/testing' },
+            { text: 'Minikube Setup', link: '/development/contributing/minikube-setup' },
+            { text: 'Adding Resources', link: '/development/contributing/adding-resources' },
+            { text: 'Documentation', link: '/development/contributing/documentation' },
+            { text: 'Contributing', link: '/development/contributing/contributing' },
+            { text: 'Release Process', link: '/development/contributing/release-process' }
+          ]
+        },
+        {
+          text: 'Migration',
+          collapsed: true,
+          items: [
+            { text: 'Upstream to Fork', link: '/development/migration/upstream-to-fork' },
+            { text: 'PHP 8.2+ Modernization', link: '/development/migration/php-82-modernization' },
+            { text: 'Version Upgrades', link: '/development/migration/version-upgrades' },
+            { text: 'Breaking Changes', link: '/development/migration/breaking-changes' }
+          ]
+        },
+        {
+          text: 'Integrations',
+          collapsed: true,
+          items: [
+            { text: 'Laravel', link: '/development/integrations/laravel' },
+            { text: 'CI/CD', link: '/development/integrations/ci-cd' }
           ]
         }
       ],
@@ -224,71 +265,6 @@ export default defineConfig({
             { text: 'Patching', link: '/examples/patching' },
             { text: 'Custom Resources', link: '/examples/custom-resources' },
             { text: 'Advanced Patterns', link: '/examples/advanced-patterns' }
-          ]
-        }
-      ],
-
-      '/architecture/': [
-        {
-          text: 'Architecture',
-          items: [
-            { text: 'Resource Model', link: '/architecture/resource-model' },
-            { text: 'Trait Composition', link: '/architecture/trait-composition' },
-            { text: 'Cluster Operations', link: '/architecture/cluster-operations' },
-            { text: 'WebSocket Handling', link: '/architecture/websocket-handling' },
-            { text: 'Authentication', link: '/architecture/authentication' },
-            { text: 'State Tracking', link: '/architecture/state-tracking' },
-            { text: 'Extensibility', link: '/architecture/extensibility' }
-          ]
-        }
-      ],
-
-      '/migration/': [
-        {
-          text: 'Migration Guides',
-          items: [
-            { text: 'Upstream to Fork', link: '/migration/upstream-to-fork' },
-            { text: 'PHP 8.2+ Modernization', link: '/migration/php-82-modernization' },
-            { text: 'Version Upgrades', link: '/migration/version-upgrades' },
-            { text: 'Breaking Changes', link: '/migration/breaking-changes' }
-          ]
-        }
-      ],
-
-      '/development/': [
-        {
-          text: 'Development',
-          items: [
-            { text: 'Setup', link: '/development/setup' },
-            { text: 'Testing', link: '/development/testing' },
-            { text: 'Minikube Setup', link: '/development/minikube-setup' },
-            { text: 'Adding Resources', link: '/development/adding-resources' },
-            { text: 'Documentation', link: '/development/documentation' },
-            { text: 'Contributing', link: '/development/contributing' },
-            { text: 'Release Process', link: '/development/release-process' }
-          ]
-        }
-      ],
-
-      '/integrations/': [
-        {
-          text: 'Integrations',
-          items: [
-            { text: 'Laravel', link: '/integrations/laravel' },
-            { text: 'CI/CD', link: '/integrations/ci-cd' }
-          ]
-        }
-      ],
-
-      '/authentication/': [
-        {
-          text: 'Authentication',
-          items: [
-            { text: 'Basic Authentication', link: '/getting-started/authentication' },
-            { text: 'Exec Credential Plugin', link: '/authentication/exec-credential' },
-            { text: 'AWS EKS', link: '/authentication/eks' },
-            { text: 'OpenShift', link: '/authentication/openshift' },
-            { text: 'ServiceAccount TokenRequest', link: '/authentication/service-account-token' }
           ]
         }
       ],

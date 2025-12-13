@@ -69,8 +69,8 @@ See the sidebar for documentation on specific resource types:
 
 ## See Also
 
-- [K8sResource API](/api-reference/k8s-resource) - Base class documentation
-- [Resource Model](/architecture/resource-model) - Architecture details
+- [K8sResource API](/development/api-reference/k8s-resource) - Base class documentation
+- [Resource Model](/development/architecture/resource-model) - Architecture details
 - [Pod](/resources/workloads/pod) - Example resource documentation
 
 ---

@@ -185,7 +185,7 @@ The fork maintains its own trajectory focused on PHP 8.2+ and modern features. H
 
 ### Can I migrate from upstream to fork?
 
-Yes! See the [Upstream to Fork Migration Guide](/migration/upstream-to-fork) for detailed instructions.
+Yes! See the [Upstream to Fork Migration Guide](/development/migration/upstream-to-fork) for detailed instructions.
 
 ### Which should I use?
 
