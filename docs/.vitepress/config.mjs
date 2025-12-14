@@ -17,7 +17,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started/installation' },
       { text: 'Resources', link: '/resources/base-resource' },
       { text: 'Development', link: '/development/api-reference/kubernetes-cluster' },
-      { text: 'Examples', link: '/examples/basic-crud' },
+      { text: 'About', link: '/project/history' },
       { text: 'GitHub', link: 'https://github.com/cuppett/php-k8s' }
     ],
 
@@ -247,31 +247,10 @@ export default defineConfig({
             { text: 'Laravel', link: '/development/integrations/laravel' },
             { text: 'CI/CD', link: '/development/integrations/ci-cd' }
           ]
-        }
-      ],
-
-      '/examples/': [
-        {
-          text: 'Examples',
-          items: [
-            { text: 'Basic CRUD', link: '/examples/basic-crud' },
-            { text: 'Deployment Management', link: '/examples/deployment-management' },
-            { text: 'Pod Operations', link: '/examples/pod-operations' },
-            { text: 'ConfigMap & Secrets', link: '/examples/configmap-secrets' },
-            { text: 'Autoscaling', link: '/examples/autoscaling' },
-            { text: 'RBAC Setup', link: '/examples/rbac-setup' },
-            { text: 'Storage Management', link: '/examples/storage-management' },
-            { text: 'Networking', link: '/examples/networking' },
-            { text: 'Patching', link: '/examples/patching' },
-            { text: 'Custom Resources', link: '/examples/custom-resources' },
-            { text: 'Advanced Patterns', link: '/examples/advanced-patterns' }
-          ]
-        }
-      ],
-
-      '/troubleshooting/': [
+        },
         {
           text: 'Troubleshooting',
+          collapsed: true,
           items: [
             { text: 'Common Errors', link: '/troubleshooting/common-errors' },
             { text: 'Authentication Issues', link: '/troubleshooting/authentication-issues' },
@@ -283,7 +262,7 @@ export default defineConfig({
 
       '/project/': [
         {
-          text: 'Project Information',
+          text: 'About',
           items: [
             { text: 'History', link: '/project/history' },
             { text: 'Fork Differences', link: '/project/fork-differences' },

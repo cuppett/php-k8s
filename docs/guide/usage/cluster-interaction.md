@@ -132,6 +132,27 @@ $pod->exists(); // true
 - [Watching Resources](/guide/usage/watching-resources) - Monitor resource changes in real-time
 - [Exec & Logs](/guide/usage/exec-logs) - Execute commands and stream logs
 
+## Multi-Cluster Management
+
+Work with multiple Kubernetes clusters simultaneously:
+
+```php
+$clusters = [
+    'prod' => KubernetesCluster::fromKubeConfigYamlFile(null, 'prod'),
+    'staging' => KubernetesCluster::fromKubeConfigYamlFile(null, 'staging'),
+];
+
+foreach ($clusters as $env => $cluster) {
+    $pods = $cluster->getAllPods();
+    echo "{$env}: {$pods->count()} pods\n";
+}
+```
+
+This pattern is useful for:
+- Comparing resource states across environments
+- Deploying to multiple clusters simultaneously
+- Aggregating metrics from different clusters
+
 ## Laravel Integration
 
 If you're using Laravel, the `laravel-php-k8s` package provides additional conveniences:
