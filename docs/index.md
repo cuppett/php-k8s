@@ -14,7 +14,7 @@ hero:
       link: /resources/base-resource
     - theme: alt
       text: Examples
-      link: /examples/basic-crud
+      link: /guide/usage/cluster-interaction
 
 features:
   - icon: 🚀
