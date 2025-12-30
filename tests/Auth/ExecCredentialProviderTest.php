@@ -98,7 +98,7 @@ class ExecCredentialProviderTest extends TestCase
         $provider = new ExecCredentialProvider($execConfig);
 
         $this->expectException(AuthenticationException::class);
-        $this->expectExceptionMessage('missing status.token');
+        $this->expectExceptionMessage('Invalid JSON output from exec credential provider');
 
         $provider->getToken();
     }

@@ -86,6 +86,6 @@ class EksTokenProviderTest extends TestCase
         $ttlProp = $reflection->getProperty('tokenTtl');
         $ttlProp->setAccessible(true);
 
-        $this->assertEquals(60, $ttlProp->getValue($provider));
+        $this->assertEquals(900, $ttlProp->getValue($provider)); // 15 minutes (EKS maximum)
     }
 }

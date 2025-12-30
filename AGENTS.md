@@ -1,8 +1,8 @@
-**Purpose**
+## Purpose
 - **Project:** PHP client for Kubernetes clusters with HTTP/WebSocket support, CRD ergonomics, exec/logs/watch, and JSON Patch/Merge Patch.
 - **Audience:** Human contributors and code agents working on features, fixes, or docs.
 
-**Quick Repo Map**
+## Quick Repo Map
 - `src/KubernetesCluster.php`: Core client; builds URLs, performs operations (get/create/replace/delete, exec, attach, watch, logs, patch).
 - `src/Kinds/*`: First‑class resource wrappers (Pod, Deployment, Service, …) extending `K8sResource` with convenience traits.
 - `src/Traits/Cluster/*`: HTTP/WebSocket, auth, kubeconfig loaders, version checks.
@@ -11,10 +11,8 @@
 - `src/K8s.php`: Facade/helper for resource construction, YAML parsing, and CRD registration via macros.
 - `src/Patches/*`: `JsonPatch` (RFC 6902) and `JsonMergePatch` (RFC 7396).
 - `tests/*`: PHPUnit tests (unit + integration) including testing‑only CRDs under `tests/Kinds`.
-- `docs/PATCH_SUPPORT.md`: Patch feature docs.
-- `docs/authentication/*`: Advanced authentication guides (exec plugins, EKS, OpenShift, SA TokenRequest).
 
-**Code Style Requirements**
+## Code Style Requirements
 
 This project uses [Laravel Pint](https://laravel.com/docs/pint) with the Laravel preset to enforce PSR-12 coding standards.
 
@@ -41,14 +39,14 @@ Pint auto-fixes:
 2. Fix any remaining manual issues
 3. Commit and push fixes
 
-**Stack & Requirements**
-- **PHP:** `^8.3` (CI also exercises 8.4).
+## Stack & Requirements
+- **PHP:** `^8.2` (CI also exercises 8.5).
 - **Composer deps:** Guzzle 7, Symfony Process 7.3, Illuminate components, Ratchet Pawl, ext‑json; optional `ext-yaml` for YAML helpers, optional `aws/aws-sdk-php` for native EKS authentication.
 - **Static analysis:** Psalm (see `psalm.xml`).
 - **License:** Apache‑2.0.
 - **Authentication:** Supports tokens, certificates, kubeconfig, in-cluster config, exec credential plugins, AWS EKS native, OpenShift OAuth, and ServiceAccount TokenRequest API.
 
-**Local Dev Setup**
+## Local Dev Setup
 - **Install deps:** `composer install`.
 - **Update deps:** `composer update`.
 - **Run all tests:** `vendor/bin/phpunit`.
@@ -59,7 +57,7 @@ Pint auto-fixes:
 - **Static analysis:** `vendor/bin/psalm`.
 - **Coding style:** Run `./vendor/bin/pint` before all commits (see "Code Style Requirements" above).
 
-**Running Full Integration Tests Locally**
+## Running Full Integration Tests Locally
 These hit a live Kubernetes cluster and mirror CI.
 - **Start cluster:** Minikube is the reference. Example: `minikube start --kubernetes-version=v1.33.1`.
 - **Enable addons:** `minikube addons enable volumesnapshots && minikube addons enable csi-hostpath-driver && minikube addons enable metrics-server`.
@@ -79,7 +77,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Run tests:** `CI=true vendor/bin/phpunit`.
 - **Important:** Tests expect the Kubernetes API accessible at `http://127.0.0.1:8080` (see `tests/TestCase.php`).
 
-**Key Concepts**
+## Key Concepts
 - **Resources:** Each kind extends `Kinds\K8sResource` and composes traits from `Traits\Resource` for spec/status/metadata helpers.
   - Resource pattern: `K8sResource` (base) → Uses Traits (HasSpec, HasStatus, etc.) → Implements Contracts (InteractsWithK8sCluster, Watchable, etc.) → Extended by specific classes (K8sPod, K8sDeployment, etc.)
   - Namespaced resources: Set `protected static $namespaceable = true` (most resources)
@@ -101,11 +99,11 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Cluster Ops:** `KubernetesCluster` provides typed creators/getters (e.g., `pod()`, `getPodByName()`, `getAllPods()`), plus `exec`, `attach`, `watch`, `logs`, and patch operations.
 - **YAML helpers:** `K8s::fromYaml($cluster, $yaml)` and `K8s::fromYamlFile($cluster, $path)` create object(s) from YAML. Templating is supported via `fromTemplatedYamlFile`.
 - **CRDs:** Register custom kinds at runtime with `K8s::registerCrd(YourClass::class, 'alias')` or rely on the unique CRD macro computed from kind + apiVersion.
-- **Patching:** Use `$resource->jsonPatch($patch)` or `$resource->jsonMergePatch($patch)` with `Patches\JsonPatch`/`JsonMergePatch` or raw arrays. See `docs/PATCH_SUPPORT.md`.
+- **Patching:** Use `$resource->jsonPatch($patch)` or `$resource->jsonMergePatch($patch)` with `Patches\JsonPatch`/`JsonMergePatch` or raw arrays.
 - **State tracking:** `isSynced()` - resource has been synced with cluster; `exists()` - resource currently exists in cluster.
 
-**Common Tasks**
-- **Add a new builtin kind:**
+## Common Tasks
+- **Add a new built-in kind:**
   1. Create `src/Kinds/K8sYourKind.php` extending `K8sResource`:
      ```php
      <?php
@@ -139,10 +137,11 @@ These hit a live Kubernetes cluster and mirror CI.
      # Generate documentation stub (determines category from class name or specify manually)
      php scripts/generate-resource-doc.php K8sYourKind category
 
-     # Edit generated file: docs/resources/category/yourkind.md
+     # Edit generated file: docs/resources/category/yourkind.yaml.md
      # Add to sidebar in docs/.vitepress/config.mjs
      # Verify: npm run docs:build
      ```
+
 - **Test structure:** (`tests/TestCase.php` sets up cluster at `http://127.0.0.1:8080`)
   - Build test: Verify resource construction with fluent API
   - YAML test: Load and validate from YAML file
@@ -155,7 +154,7 @@ These hit a live Kubernetes cluster and mirror CI.
   - Provide YAML examples for `K8s::fromYaml*()` parsing.
 - **Extend cluster operations:** Add behavior in `Traits/Cluster/*` or `Traits/RunsClusterOperations.php` with matching tests.
 
-**Documentation**
+## Documentation
 - **VitePress setup:** Documentation is in `docs/` with config at `docs/.vitepress/config.mjs`. Deployed to `https://php-k8s.cuppett.dev` via GitHub Actions.
 - **Local preview:** `npm install` (once), then `npm run docs:dev` (opens http://localhost:5173).
 - **Build check:** `npm run docs:build` to verify docs compile (required before commits touching docs).
@@ -170,14 +169,14 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Deployment:** Documentation auto-deploys when changes to `docs/**` are merged to `main`. See `.github/workflows/docs-deploy.yml`.
 - **See also:** `DOCS_README.md` for full documentation system overview, `docs/development/documentation.md` for maintenance guide.
 
-**Style & Quality**
+## Style & Quality
 - **Tests first:** Add/adjust tests for all behavior changes. Use PHPUnit; integration tests may require a live cluster.
 - **API stability:** Follow SemVer; avoid breaking public APIs. Prefer additive changes.
 - **Consistency:** Mirror naming and patterns used by existing kinds and traits. Keep methods fluent and chainable where appropriate.
 - **Docs:** Update `README.md` and/or add focused docs in `docs/` for new features. Keep examples runnable.
 - **Static analysis:** Keep Psalm clean (config at `psalm.xml`).
 
-**PR Checklist**
+## PR Checklist
 - **Code style:** Run `./vendor/bin/pint` and fix any manual style issues before committing.
 - `composer install` completes and `vendor/bin/psalm` passes.
 - `vendor/bin/phpunit` passes for unit tests; integration suite passes if you ran a local cluster.
@@ -190,7 +189,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - Public APIs documented; new options/settings covered with tests and examples.
 - Changes are scoped; one concern per PR.
 
-**Gotchas**
+## Gotchas
 - **Cluster URL:** Tests default to `http://127.0.0.1:8080` via `kubectl proxy` and disable SSL verification for local runs.
 - **Namespace handling:** Cluster-scoped resources (`$namespaceable = false`) should not include namespace in specs or API calls.
 - **YAML extension:** `ext-yaml` is optional but required for YAML helpers (parsing/serialization). Guard features accordingly. Tests using `fromYamlFile()` will fail without the yaml PHP extension installed.
@@ -200,7 +199,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - **WebSockets:** Exec/attach/watch rely on Ratchet Pawl; ensure TLS headers/certs are passed through from `KubernetesCluster` when touching WS paths.
 - **Patches:** Use proper content types (`application/json-patch+json` vs `application/merge-patch+json`). The client handles this if you use the provided patch helpers.
 
-**Current Resource Types (33+)**
+## Current Resource Types (33+)
 - **Workload:** Pod, Deployment, StatefulSet, DaemonSet, Job, CronJob, ReplicaSet
 - **Networking:** Service, Ingress, NetworkPolicy, EndpointSlice
 - **Storage:** PersistentVolume, PersistentVolumeClaim, StorageClass
@@ -211,7 +210,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Webhooks:** ValidatingWebhookConfiguration, MutatingWebhookConfiguration
 - **Cluster:** Namespace, Node, Event
 
-**Kubernetes API Versions Reference**
+## Kubernetes API Versions Reference
 - Core resources (Pod, Service, etc.): `v1`
 - Apps resources (Deployment, StatefulSet, etc.): `apps/v1`
 - Networking: `networking.k8s.io/v1`
@@ -220,7 +219,7 @@ These hit a live Kubernetes cluster and mirror CI.
 - Policy: `policy/v1`
 - RBAC: `rbac.authorization.k8s.io/v1`
 
-**Development Workflow (Fork-Specific)**
+## Development Workflow (Fork-Specific)
 - **Main branch:** `master` (upstream: renoki-co/php-k8s)
 - **Fork:** `cuppett/php-k8s` with branch `main`
 - **Feature branches:** Use descriptive names (e.g., `feat/add-core-policy-resources`)
@@ -233,12 +232,12 @@ These hit a live Kubernetes cluster and mirror CI.
   6. Push to fork: `git push -u origin {branch-name}`
   7. Create PR against `cuppett/php-k8s` main branch: `gh pr create --repo cuppett/php-k8s --base main --title "..." --body "..."`
 
-**Releasing & CI (Reference)**
-- CI matrix runs PHP 8.3/8.4 across Kubernetes v1.32.9, v1.33.5, v1.34.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
+## Releasing & CI (Reference)
+- CI matrix runs PHP 8.2-8.5 across Kubernetes v1.32.9, v1.33.5, v1.34.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
 - Minikube v1.37.0 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
 - Timeout: 25 minutes per job.
 
-**Useful References**
+## Useful References
 - **Fork Documentation:** https://php-k8s.cuppett.dev
 - **Upstream Documentation:** https://php-k8s.renoki.org
 - **Fork Repository:** https://github.com/cuppett/php-k8s

@@ -172,7 +172,7 @@ class KubernetesCluster
     {
         // Convert string to Operation enum for backward compatibility
         if (is_string($operation)) {
-            $operation = Operation::from($operation);
+            $operation = Operation::tryFrom($operation) ?? Operation::GET;
         }
 
         return match ($operation) {
@@ -190,7 +190,7 @@ class KubernetesCluster
     /**
      * Watch for the current resource or a resource list.
      *
-     * @return bool
+     * @return mixed|null
      */
     protected function watchPath(string $path, Closure $callback, array $query = ['pretty' => 1]): mixed
     {
@@ -275,7 +275,7 @@ class KubernetesCluster
     /**
      * Watch for the logs for the resource.
      *
-     * @return bool
+     * @return mixed|null
      */
     protected function watchLogsPath(string $path, Closure $callback, array $query = ['pretty' => 1]): mixed
     {

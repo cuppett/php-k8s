@@ -85,7 +85,15 @@ class ExecCredentialProvider extends TokenProvider
 
     protected function parseExecCredential(string $output): void
     {
-        $credential = json_decode($output, true);
+        try {
+            $credential = json_decode($output, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            $snippet = strlen($output) > 100 ? substr($output, 0, 100).'...' : $output;
+
+            throw new AuthenticationException(
+                "Invalid JSON output from exec credential provider: {$e->getMessage()}. Output: {$snippet}"
+            );
+        }
 
         if (! $credential || ! isset($credential['status']['token'])) {
             throw new AuthenticationException(

@@ -4,11 +4,11 @@ Describe what this PR does and why.
 
 ## Type of change
 
-- [ ] Bug fix
-- [ ] Feature
-- [ ] Documentation
-- [ ] Refactor/Chore
-- [ ] Other
+- Bug fix
+- Feature
+- Documentation
+- Refactor/Chore
+- Other
 
 ## Checklist
 

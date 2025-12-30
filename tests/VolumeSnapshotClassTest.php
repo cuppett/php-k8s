@@ -31,17 +31,8 @@ class VolumeSnapshotClassTest extends TestCase
     {
         VolumeSnapshotClass::register();
 
+        // fromYaml() returns a single object for single-document YAML
         $vsc = $this->cluster->fromYamlFile(__DIR__.'/yaml/volumesnapshotclass.yaml');
-
-        // Handle case where CRD registration returns array
-        if (is_array($vsc)) {
-            foreach ($vsc as $instance) {
-                if ($instance instanceof VolumeSnapshotClass) {
-                    $vsc = $instance;
-                    break;
-                }
-            }
-        }
 
         $this->assertInstanceOf(VolumeSnapshotClass::class, $vsc);
         $this->assertEquals('snapshot.storage.k8s.io/v1', $vsc->getApiVersion());
@@ -144,6 +135,13 @@ class VolumeSnapshotClassTest extends TestCase
         $vsc = $this->cluster->volumeSnapshotClass()->getByName('test-snapclass');
 
         $this->assertTrue($vsc->delete());
+
+        // Wait for deletion to complete
+        $timeout = 60;
+        $start = time();
+        while ($vsc->exists() && (time() - $start) < $timeout) {
+            sleep(2);
+        }
 
         $this->expectException(KubernetesAPIException::class);
 

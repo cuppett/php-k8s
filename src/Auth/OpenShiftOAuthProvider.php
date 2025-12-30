@@ -61,8 +61,18 @@ class OpenShiftOAuthProvider extends TokenProvider
 
         try {
             $response = $client->get($authorizeUrl);
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $response = $e->getResponse();
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            // Check if the exception has a response (HTTP errors like 4xx/5xx)
+            if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse() !== null) {
+                $response = $e->getResponse();
+            } else {
+                // Network errors, timeouts, connection failures, etc.
+                throw new AuthenticationException(
+                    "OpenShift OAuth failed: {$e->getMessage()}",
+                    0,
+                    $e
+                );
+            }
         }
 
         // Expect 302 redirect with token in Location header fragment
@@ -72,7 +82,20 @@ class OpenShiftOAuthProvider extends TokenProvider
             );
         }
 
-        $location = $response->getHeader('Location')[0] ?? '';
+        // Validate Location header exists and is non-empty
+        if (! $response->hasHeader('Location')) {
+            throw new AuthenticationException(
+                'OpenShift OAuth failed: missing Location header in redirect'
+            );
+        }
+
+        $location = $response->getHeaderLine('Location');
+
+        if ($location === '') {
+            throw new AuthenticationException(
+                'OpenShift OAuth failed: empty Location header in redirect'
+            );
+        }
 
         // Parse token from fragment: ...#access_token=TOKEN&expires_in=SECONDS&...
         if (! preg_match('/access_token=([^&]+)/', $location, $tokenMatch)) {
@@ -117,6 +140,12 @@ class OpenShiftOAuthProvider extends TokenProvider
 
         // Default OpenShift OAuth route pattern
         $parsed = parse_url($this->clusterUrl);
+
+        // Validate parse_url result and host key
+        if ($parsed === false || ! isset($parsed['host'])) {
+            return $this->clusterUrl;
+        }
+
         $host = $parsed['host'];
 
         // Try common patterns: api.cluster.example.com -> oauth-openshift.apps.cluster.example.com

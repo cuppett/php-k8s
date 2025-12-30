@@ -187,4 +187,35 @@ trait MakesHttpCalls
 
         return (new $resourceClass($this, $json))->synced();
     }
+
+    /**
+     * Make a request using a specific token.
+     *
+     * WARNING: This method temporarily mutates instance authentication state and is NOT safe
+     * for concurrent or async use (e.g., ReactPHP, Amp, Swoole). Only use in synchronous,
+     * single-threaded contexts. Internal use only.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     */
+    public function callWithToken(string $token, string $method, string $path, string $payload = '', array $query = ['pretty' => 1], array $options = [])
+    {
+        // Temporarily store current authentication state
+        $originalToken = $this->token;
+        $originalTokenProvider = $this->tokenProvider;
+
+        try {
+            // Override with bootstrap token
+            $this->token = $token;
+            $this->tokenProvider = null;
+
+            // Make the request
+            return $this->call($method, $path, $payload, $query, $options);
+        } finally {
+            // Restore original state
+            $this->token = $originalToken;
+            $this->tokenProvider = $originalTokenProvider;
+        }
+    }
 }
