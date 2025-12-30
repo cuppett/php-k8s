@@ -151,7 +151,7 @@ All methods now have proper type hints for parameters and return values, improvi
 
 ### PHP Version Requirements
 
-- **Minimum PHP version:** 8.2 (down from 8.3)
+- **Minimum PHP version:** 8.2
 - **Tested on:** PHP 8.2, 8.3, 8.4, 8.5
 - **Laravel compatibility:** 11.x and 12.x
 

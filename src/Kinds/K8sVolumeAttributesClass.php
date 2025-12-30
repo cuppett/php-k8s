@@ -40,10 +40,8 @@ class K8sVolumeAttributesClass extends K8sResource implements InteractsWithK8sCl
 
     /**
      * Get the CSI driver name.
-     *
-     * @return string|null
      */
-    public function getDriverName()
+    public function getDriverName(): ?string
     {
         return $this->getAttribute('driverName');
     }

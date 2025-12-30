@@ -39,16 +39,6 @@ class VolumeSnapshotContentTest extends TestCase
 
         $vsc = $this->cluster->fromYamlFile(__DIR__.'/yaml/volumesnapshotcontent.yaml');
 
-        // Handle case where CRD registration returns array
-        if (is_array($vsc)) {
-            foreach ($vsc as $instance) {
-                if ($instance instanceof VolumeSnapshotContent) {
-                    $vsc = $instance;
-                    break;
-                }
-            }
-        }
-
         $this->assertInstanceOf(VolumeSnapshotContent::class, $vsc);
         $this->assertEquals('snapshot.storage.k8s.io/v1', $vsc->getApiVersion());
         $this->assertEquals('snapcontent-test', $vsc->getName());
@@ -174,6 +164,13 @@ class VolumeSnapshotContentTest extends TestCase
         $vsc = $this->cluster->volumeSnapshotContent()->getByName('test-snapcontent');
 
         $this->assertTrue($vsc->delete());
+
+        // Wait for deletion to complete
+        $timeout = 60;
+        $start = time();
+        while ($vsc->exists() && (time() - $start) < $timeout) {
+            sleep(2);
+        }
 
         $this->expectException(KubernetesAPIException::class);
 

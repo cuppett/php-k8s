@@ -31,6 +31,9 @@ class ServiceAccountTokenIntegrationTest extends TestCase
 
     public function test_service_account_token_request()
     {
+        // Set up bootstrap credentials (kubectl proxy accepts any token)
+        $this->cluster->withToken('bootstrap-token');
+
         // Create test service account
         $sa = $this->cluster->serviceAccount()
             ->setName('test-token-requester')
@@ -67,6 +70,9 @@ class ServiceAccountTokenIntegrationTest extends TestCase
 
     public function test_service_account_token_with_audiences()
     {
+        // Set up bootstrap credentials (kubectl proxy accepts any token)
+        $this->cluster->withToken('bootstrap-token');
+
         $sa = $this->cluster->serviceAccount()
             ->setName('test-token-audience')
             ->setNamespace('default')
@@ -89,14 +95,18 @@ class ServiceAccountTokenIntegrationTest extends TestCase
 
     public function test_convenience_method_with_service_account_token()
     {
+        // Set up bootstrap credentials for service account creation
+        $this->cluster->withToken('bootstrap-token');
+
         $sa = $this->cluster->serviceAccount()
             ->setName('test-convenience-sa')
             ->setNamespace('default')
             ->createOrUpdate();
 
         try {
-            // Use convenience method
+            // Use convenience method (need bootstrap token for TokenRequest API)
             $newCluster = KubernetesCluster::fromUrl('http://127.0.0.1:8080')
+                ->withToken('bootstrap-token')
                 ->withServiceAccountToken('default', 'test-convenience-sa', 1800);
 
             $token = $newCluster->getAuthToken();

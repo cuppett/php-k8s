@@ -188,40 +188,32 @@ class VolumeSnapshotContent extends K8sResource implements InteractsWithK8sClust
 
     /**
      * Get the restore size.
-     *
-     * @return string|null
      */
-    public function getRestoreSize()
+    public function getRestoreSize(): ?string
     {
         return $this->getStatus('restoreSize');
     }
 
     /**
      * Get the snapshot handle from status.
-     *
-     * @return string|null
      */
-    public function getSnapshotHandleFromStatus()
+    public function getSnapshotHandleFromStatus(): ?string
     {
         return $this->getStatus('snapshotHandle');
     }
 
     /**
      * Get the creation time.
-     *
-     * @return int|null
      */
-    public function getCreationTime()
+    public function getCreationTime(): ?int
     {
         return $this->getStatus('creationTime');
     }
 
     /**
      * Get any error information.
-     *
-     * @return array|null
      */
-    public function getError()
+    public function getError(): ?array
     {
         return $this->getStatus('error');
     }

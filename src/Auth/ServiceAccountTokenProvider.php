@@ -2,6 +2,7 @@
 
 namespace RenokiCo\PhpK8s\Auth;
 
+use Psr\Http\Message\ResponseInterface;
 use RenokiCo\PhpK8s\Exceptions\AuthenticationException;
 use RenokiCo\PhpK8s\KubernetesCluster;
 
@@ -27,6 +28,21 @@ class ServiceAccountTokenProvider extends TokenProvider
         // Store the bootstrap cluster's current authentication
         // to prevent infinite recursion when this provider is set on the same cluster
         $this->bootstrapToken = $bootstrapCluster->getAuthToken();
+
+        if ($this->bootstrapToken === null) {
+            throw new AuthenticationException(
+                'Bootstrap cluster has no authentication token; ServiceAccountTokenProvider requires bootstrap credentials'
+            );
+        }
+
+        if (trim($namespace) === '') {
+            throw new \InvalidArgumentException('Namespace cannot be empty');
+        }
+
+        if (trim($serviceAccount) === '') {
+            throw new \InvalidArgumentException('Service account name cannot be empty');
+        }
+
         $this->bootstrapCluster = $bootstrapCluster;
         $this->namespace = $namespace;
         $this->serviceAccount = $serviceAccount;
@@ -48,7 +64,11 @@ class ServiceAccountTokenProvider extends TokenProvider
 
     public function refresh(): void
     {
-        $path = "/api/v1/namespaces/{$this->namespace}/serviceaccounts/{$this->serviceAccount}/token";
+        $path = sprintf(
+            '/api/v1/namespaces/%s/serviceaccounts/%s/token',
+            rawurlencode($this->namespace),
+            rawurlencode($this->serviceAccount)
+        );
 
         $requestBody = [
             'apiVersion' => 'authentication.k8s.io/v1',
@@ -86,7 +106,11 @@ class ServiceAccountTokenProvider extends TokenProvider
                 $this->expiresAt = (new \DateTimeImmutable)
                     ->modify("+{$this->expirationSeconds} seconds");
             }
+        } catch (AuthenticationException $e) {
+            // Re-throw our own exceptions as-is
+            throw $e;
         } catch (\Exception $e) {
+            // Wrap other exceptions (network errors, JSON errors, etc.)
             throw new AuthenticationException(
                 "Failed to request service account token: {$e->getMessage()}",
                 0,
@@ -99,32 +123,13 @@ class ServiceAccountTokenProvider extends TokenProvider
      * Make a request using the bootstrap cluster's original authentication.
      * This bypasses the token provider to prevent infinite recursion.
      */
-    protected function makeBootstrapRequest(string $method, string $path, string $payload = '')
+    protected function makeBootstrapRequest(string $method, string $path, string $payload = ''): ResponseInterface
     {
-        $reflection = new \ReflectionClass($this->bootstrapCluster);
-
-        // Temporarily get the original token and clear the provider
-        $tokenProviderProp = $reflection->getProperty('tokenProvider');
-        $tokenProviderProp->setAccessible(true);
-        $originalProvider = $tokenProviderProp->getValue($this->bootstrapCluster);
-
-        $tokenProp = $reflection->getProperty('token');
-        $tokenProp->setAccessible(true);
-        $originalToken = $tokenProp->getValue($this->bootstrapCluster);
-
-        try {
-            // Clear the provider temporarily and restore the original token
-            $tokenProviderProp->setValue($this->bootstrapCluster, null);
-            $tokenProp->setValue($this->bootstrapCluster, $this->bootstrapToken);
-
-            // Make the request with the bootstrap authentication
-            $response = $this->bootstrapCluster->call($method, $path, $payload);
-
-            return $response;
-        } finally {
-            // Restore the original state
-            $tokenProviderProp->setValue($this->bootstrapCluster, $originalProvider);
-            $tokenProp->setValue($this->bootstrapCluster, $originalToken);
-        }
+        return $this->bootstrapCluster->callWithToken(
+            $this->bootstrapToken,
+            $method,
+            $path,
+            $payload
+        );
     }
 }

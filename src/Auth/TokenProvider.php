@@ -31,7 +31,8 @@ abstract class TokenProvider implements TokenProviderInterface
             return false; // No expiration known, assume valid
         }
 
-        $bufferTime = (new \DateTime)->modify("+{$this->refreshBuffer} seconds");
+        $bufferTime = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+            ->modify("+{$this->refreshBuffer} seconds");
 
         return $this->expiresAt <= $bufferTime;
     }

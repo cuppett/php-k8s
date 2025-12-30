@@ -33,7 +33,10 @@ class K8sService extends K8sResource implements Dnsable, InteractsWithK8sCluster
      */
     public function getClusterDns(): ?string
     {
-        return "{$this->getName()}.{$this->getNamespace()}.svc.cluster.local";
+        $name = $this->getName();
+        $namespace = $this->getNamespace();
+
+        return ($name && $namespace) ? "{$name}.{$namespace}.svc.cluster.local" : null;
     }
 
     /**
