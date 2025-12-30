@@ -15,12 +15,18 @@
         "kube"
     ],
     "license": "Apache-2.0",
-    "homepage": "https://github.com/renoki-co/php-k8s",
+    "homepage": "https://github.com/cuppett/php-k8s",
     "authors": [
         {
             "name": "Alex Renoki",
             "homepage": "https://github.com/rennokki",
             "role": "Developer"
+        },
+        {
+            "name": "Stephen Cuppett",
+            "email": "steve@cuppett.com",
+            "homepage": "https://github.com/cuppett",
+            "role": "Fork Maintainer"
         }
     ],
     "require": {

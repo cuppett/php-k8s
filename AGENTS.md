@@ -132,6 +132,15 @@ These hit a live Kubernetes cluster and mirror CI.
      - Run methods: `runCreationTests()`, `runGetAllTests()`, `runGetTests()`, `runUpdateTests()`, `runWatchAllTests()`, `runWatchTests()`, `runDeletionTests()`
      - Note: Cluster-scoped resources typically omit watch tests
   4. Create YAML fixture in `tests/yaml/yourkind.yaml` for YAML parsing tests
+  5. **Document the resource** (REQUIRED):
+     ```bash
+     # Generate documentation stub (determines category from class name or specify manually)
+     php scripts/generate-resource-doc.php K8sYourKind category
+
+     # Edit generated file: docs/resources/category/yourkind.yaml.md
+     # Add to sidebar in docs/.vitepress/config.mjs
+     # Verify: npm run docs:build
+     ```
 
 - **Test structure:** (`tests/TestCase.php` sets up cluster at `http://127.0.0.1:8080`)
   - Build test: Verify resource construction with fluent API
@@ -145,6 +154,21 @@ These hit a live Kubernetes cluster and mirror CI.
   - Provide YAML examples for `K8s::fromYaml*()` parsing.
 - **Extend cluster operations:** Add behavior in `Traits/Cluster/*` or `Traits/RunsClusterOperations.php` with matching tests.
 
+## Documentation
+- **VitePress setup:** Documentation is in `docs/` with config at `docs/.vitepress/config.mjs`. Deployed to `https://php-k8s.cuppett.dev` via GitHub Actions.
+- **Local preview:** `npm install` (once), then `npm run docs:dev` (opens http://localhost:5173).
+- **Build check:** `npm run docs:build` to verify docs compile (required before commits touching docs).
+- **Adding new resource docs:**
+  1. Generate stub: `php scripts/generate-resource-doc.php K8sYourKind category`
+  2. Edit generated `docs/resources/category/yourkind.md` using the template as a guide
+  3. Add to sidebar in `docs/.vitepress/config.mjs` under the appropriate section
+  4. Build and verify: `npm run docs:build` and `npm run docs:dev`
+- **Documentation coverage check:** Run `php scripts/check-documentation.php` before PRs to ensure all resources are documented.
+- **Templates:** Use `docs/_templates/resource-template.md` or `docs/_templates/example-template.md` for new pages.
+- **Attribution:** Adapted upstream pages include footer: `*Originally from renoki-co/php-k8s documentation, adapted for cuppett/php-k8s fork*`. New fork-only pages use: `*Documentation for cuppett/php-k8s fork*`.
+- **Deployment:** Documentation auto-deploys when changes to `docs/**` are merged to `main`. See `.github/workflows/docs-deploy.yml`.
+- **See also:** `DOCS_README.md` for full documentation system overview, `docs/development/documentation.md` for maintenance guide.
+
 ## Style & Quality
 - **Tests first:** Add/adjust tests for all behavior changes. Use PHPUnit; integration tests may require a live cluster.
 - **API stability:** Follow SemVer; avoid breaking public APIs. Prefer additive changes.
@@ -156,7 +180,13 @@ These hit a live Kubernetes cluster and mirror CI.
 - **Code style:** Run `./vendor/bin/pint` and fix any manual style issues before committing.
 - `composer install` completes and `vendor/bin/psalm` passes.
 - `vendor/bin/phpunit` passes for unit tests; integration suite passes if you ran a local cluster.
-- New options/settings covered with tests.
+- **Documentation complete:**
+  - New resources have documentation: `php scripts/check-documentation.php`
+  - Documentation builds successfully: `npm run docs:build`
+  - Sidebar updated in `docs/.vitepress/config.mjs` if new pages added
+  - Code examples in docs are tested and work
+  - Attribution footer present on all pages
+- Public APIs documented; new options/settings covered with tests and examples.
 - Changes are scoped; one concern per PR.
 
 ## Gotchas
@@ -189,15 +219,30 @@ These hit a live Kubernetes cluster and mirror CI.
 - Policy: `policy/v1`
 - RBAC: `rbac.authorization.k8s.io/v1`
 
+## Development Workflow (Fork-Specific)
+- **Main branch:** `master` (upstream: renoki-co/php-k8s)
+- **Fork:** `cuppett/php-k8s` with branch `main`
+- **Feature branches:** Use descriptive names (e.g., `feat/add-core-policy-resources`)
+- **Pull request process:**
+  1. Create feature branch from current working branch
+  2. Implement changes following existing patterns
+  3. Run full test suite locally: `vendor/bin/phpunit`
+  4. Run integration tests with minikube: `CI=true vendor/bin/phpunit`
+  5. Commit changes with descriptive message
+  6. Push to fork: `git push -u origin {branch-name}`
+  7. Create PR against `cuppett/php-k8s` main branch: `gh pr create --repo cuppett/php-k8s --base main --title "..." --body "..."`
+
 ## Releasing & CI (Reference)
 - CI matrix runs PHP 8.2-8.5 across Kubernetes v1.32.9, v1.33.5, v1.34.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
 - Minikube v1.37.0 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
 - Timeout: 25 minutes per job.
 
 ## Useful References
-- [Documentation](https://php-k8s.renoki.org)
-- [Upstream Repository](https://github.com/renoki-co/php-k8s)
-- [Kubernetes API Reference](https://kubernetes.io/docs/reference/kubernetes-api/)
+- **Fork Documentation:** https://php-k8s.cuppett.dev
+- **Upstream Documentation:** https://php-k8s.renoki.org
+- **Fork Repository:** https://github.com/cuppett/php-k8s
+- **Upstream Repository:** https://github.com/renoki-co/php-k8s
+- **Kubernetes API Reference:** https://kubernetes.io/docs/reference/kubernetes-api/
 
 If anything is unclear or you need deeper context for a change, open a draft PR with your approach and questions. Keeping changes small and well‑tested speeds up reviews.
 
