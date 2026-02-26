@@ -18,6 +18,7 @@ use RenokiCo\PhpK8s\Traits\Resource\HasKind;
 use RenokiCo\PhpK8s\Traits\Resource\HasLabels;
 use RenokiCo\PhpK8s\Traits\Resource\HasName;
 use RenokiCo\PhpK8s\Traits\Resource\HasNamespace;
+use RenokiCo\PhpK8s\Traits\Resource\HasOwnerReferences;
 use RenokiCo\PhpK8s\Traits\Resource\HasVersion;
 use RenokiCo\PhpK8s\Traits\RunsClusterOperations;
 
@@ -31,6 +32,7 @@ class K8sResource implements Arrayable, Jsonable
     use HasLabels;
     use HasName;
     use HasNamespace;
+    use HasOwnerReferences;
     use HasVersion;
     use RunsClusterOperations;
 
