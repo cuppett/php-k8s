@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap-with-finalizer
+  namespace: default
+  finalizers:
+    - test/cleanup
+data:
+  key1: value1

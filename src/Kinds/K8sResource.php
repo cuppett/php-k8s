@@ -13,6 +13,7 @@ use RenokiCo\PhpK8s\KubernetesCluster;
 use RenokiCo\PhpK8s\Traits\Resource\HasAnnotations;
 use RenokiCo\PhpK8s\Traits\Resource\HasAttributes;
 use RenokiCo\PhpK8s\Traits\Resource\HasEvents;
+use RenokiCo\PhpK8s\Traits\Resource\HasFinalizers;
 use RenokiCo\PhpK8s\Traits\Resource\HasKind;
 use RenokiCo\PhpK8s\Traits\Resource\HasLabels;
 use RenokiCo\PhpK8s\Traits\Resource\HasName;
@@ -25,6 +26,7 @@ class K8sResource implements Arrayable, Jsonable
     use HasAnnotations;
     use HasAttributes;
     use HasEvents;
+    use HasFinalizers;
     use HasKind;
     use HasLabels;
     use HasName;
