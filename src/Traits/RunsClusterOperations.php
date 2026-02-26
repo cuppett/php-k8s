@@ -612,6 +612,70 @@ trait RunsClusterOperations
     }
 
     /**
+     * Get the path, prefixed by '/', that points to the resource status.
+     */
+    public function resourceStatusPath(): string
+    {
+        return "{$this->getApiPathPrefix()}/".static::getPlural()."/{$this->getIdentifier()}/status";
+    }
+
+    /**
+     * Update the status subresource.
+     */
+    public function updateStatus(array $query = ['pretty' => 1]): self
+    {
+        $this->refreshOriginal();
+        $this->refreshResourceVersion();
+
+        return $this->syncWith(
+            $this->cluster->runOperation(
+                Operation::REPLACE,
+                $this->resourceStatusPath(),
+                $this->toJsonPayload(),
+                $query
+            )
+        );
+    }
+
+    /**
+     * JSON Patch (RFC 6902) the status subresource.
+     */
+    public function jsonPatchStatus($patch, array $query = ['pretty' => 1]): self
+    {
+        if (! $patch instanceof \RenokiCo\PhpK8s\Patches\JsonPatch) {
+            $patch = new \RenokiCo\PhpK8s\Patches\JsonPatch($patch);
+        }
+
+        return $this->syncWith(
+            $this->cluster->runOperation(
+                Operation::JSON_PATCH,
+                $this->resourceStatusPath(),
+                $patch->toArray(),
+                $query
+            )
+        );
+    }
+
+    /**
+     * JSON Merge Patch (RFC 7396) the status subresource.
+     */
+    public function jsonMergePatchStatus($patch, array $query = ['pretty' => 1]): self
+    {
+        if (! $patch instanceof \RenokiCo\PhpK8s\Patches\JsonMergePatch) {
+            $patch = new \RenokiCo\PhpK8s\Patches\JsonMergePatch($patch);
+        }
+
+        return $this->syncWith(
+            $this->cluster->runOperation(
+                Operation::JSON_MERGE_PATCH,
+                $this->resourceStatusPath(),
+                $patch->toArray(),
+                $query
+            )
+        );
+    }
+
+    /**
      * Get the path, prefixed by '/', that points to the specific resource to log.
      */
     public function resourceLogPath(): string
