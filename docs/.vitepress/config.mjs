@@ -55,6 +55,14 @@ export default defineConfig({
             { text: 'Scaling', link: '/guide/usage/scaling' },
             { text: 'Custom Resources (CRDs)', link: '/guide/usage/custom-resources' }
           ]
+        },
+        {
+          text: 'Operators & Controllers',
+          items: [
+            { text: 'Finalizers', link: '/guide/usage/finalizers' },
+            { text: 'Owner References', link: '/guide/usage/owner-references' },
+            { text: 'Status Updates', link: '/guide/usage/status-updates' }
+          ]
         }
       ],
 
@@ -70,7 +78,8 @@ export default defineConfig({
           items: [
             { text: 'Namespace', link: '/resources/cluster/namespace' },
             { text: 'Node', link: '/resources/cluster/node' },
-            { text: 'Event', link: '/resources/cluster/event' }
+            { text: 'Event', link: '/resources/cluster/event' },
+            { text: 'Lease', link: '/resources/cluster/lease' }
           ]
         },
         {
