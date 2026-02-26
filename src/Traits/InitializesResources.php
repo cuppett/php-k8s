@@ -15,6 +15,7 @@ use RenokiCo\PhpK8s\Kinds\K8sEvent;
 use RenokiCo\PhpK8s\Kinds\K8sHorizontalPodAutoscaler;
 use RenokiCo\PhpK8s\Kinds\K8sIngress;
 use RenokiCo\PhpK8s\Kinds\K8sJob;
+use RenokiCo\PhpK8s\Kinds\K8sLease;
 use RenokiCo\PhpK8s\Kinds\K8sLimitRange;
 use RenokiCo\PhpK8s\Kinds\K8sMutatingWebhookConfiguration;
 use RenokiCo\PhpK8s\Kinds\K8sNamespace;
@@ -412,6 +413,17 @@ trait InitializesResources
     public static function limitRange($cluster = null, array $attributes = [])
     {
         return new K8sLimitRange($cluster, $attributes);
+    }
+
+    /**
+     * Create a new Lease kind.
+     *
+     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @return \RenokiCo\PhpK8s\Kinds\K8sLease
+     */
+    public static function lease($cluster = null, array $attributes = [])
+    {
+        return new K8sLease($cluster, $attributes);
     }
 
     /**
