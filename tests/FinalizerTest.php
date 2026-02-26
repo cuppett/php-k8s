@@ -79,6 +79,16 @@ class FinalizerTest extends TestCase
 
     public function test_finalizer_api_interaction()
     {
+        // Cleanup any leftover resources from previous test runs.
+        try {
+            $existing = $this->cluster->getConfigMapByName('test-cm-with-finalizer');
+            $existing->jsonMergePatch(['metadata' => ['finalizers' => []]]);
+            $existing->delete();
+            sleep(2);
+        } catch (KubernetesAPIException $e) {
+            // Resource doesn't exist, which is fine.
+        }
+
         $this->runCreationTests();
         $this->runDeletionTests();
     }
@@ -122,8 +132,12 @@ class FinalizerTest extends TestCase
         $cm = $this->cluster->getConfigMapByName('test-cm-with-finalizer');
         $this->assertTrue($cm->exists());
 
-        // Remove finalizer and update.
-        $cm->removeFinalizer('test/cleanup')->update();
+        // Remove finalizer using JSON Merge Patch (can't use update on resource being deleted).
+        $cm->jsonMergePatch([
+            'metadata' => [
+                'finalizers' => [],
+            ],
+        ]);
 
         // Wait for deletion to complete.
         sleep(2);

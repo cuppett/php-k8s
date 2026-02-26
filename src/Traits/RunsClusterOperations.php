@@ -646,14 +646,18 @@ trait RunsClusterOperations
             $patch = new \RenokiCo\PhpK8s\Patches\JsonPatch($patch);
         }
 
-        return $this->syncWith(
-            $this->cluster->runOperation(
+        $instance = $this->cluster
+            ->setResourceClass(get_class($this))
+            ->runOperation(
                 Operation::JSON_PATCH,
                 $this->resourceStatusPath(),
-                $patch->toArray(),
+                $patch->toJson(),
                 $query
-            )
-        );
+            );
+
+        $this->syncWith($instance->toArray());
+
+        return $this;
     }
 
     /**
@@ -665,14 +669,18 @@ trait RunsClusterOperations
             $patch = new \RenokiCo\PhpK8s\Patches\JsonMergePatch($patch);
         }
 
-        return $this->syncWith(
-            $this->cluster->runOperation(
+        $instance = $this->cluster
+            ->setResourceClass(get_class($this))
+            ->runOperation(
                 Operation::JSON_MERGE_PATCH,
                 $this->resourceStatusPath(),
-                $patch->toArray(),
+                $patch->toJson(),
                 $query
-            )
-        );
+            );
+
+        $this->syncWith($instance->toArray());
+
+        return $this;
     }
 
     /**
