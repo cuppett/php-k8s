@@ -191,6 +191,11 @@ class KubeConfigTest extends TestCase
 
     public function test_in_cluster_config()
     {
+        // Skip if not running in a Kubernetes cluster
+        if (! file_exists('/var/run/secrets/kubernetes.io/serviceaccount/token')) {
+            $this->markTestSkipped('Not running in a Kubernetes cluster');
+        }
+
         $cluster = KubernetesCluster::inClusterConfiguration();
 
         [
