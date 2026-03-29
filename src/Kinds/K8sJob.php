@@ -26,24 +26,18 @@ class K8sJob extends K8sResource implements InteractsWithK8sCluster, Podable, Wa
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'Job';
+    protected static ?string $kind = 'Job';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'batch/v1';
+    protected static string $defaultVersion = 'batch/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the TTL for the job availability.
@@ -58,6 +52,7 @@ class K8sJob extends K8sResource implements InteractsWithK8sCluster, Podable, Wa
     /**
      * Get the selector for the pods that are owned by this resource.
      */
+    #[\Override]
     public function podsSelector(): array
     {
         if ($podsSelector = $this->customPodsSelector()) {

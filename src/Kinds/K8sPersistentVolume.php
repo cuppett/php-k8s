@@ -24,10 +24,8 @@ class K8sPersistentVolume extends K8sResource implements InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'PersistentVolume';
+    protected static ?string $kind = 'PersistentVolume';
 
     /**
      * Set the PV source with parameters.

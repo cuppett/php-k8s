@@ -30,28 +30,23 @@ class K8sReplicaSet extends K8sResource implements InteractsWithK8sCluster, Poda
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'ReplicaSet';
+    protected static ?string $kind = 'ReplicaSet';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'apps/v1';
+    protected static string $defaultVersion = 'apps/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Get the selector for the pods that are owned by this resource.
      */
+    #[\Override]
     public function podsSelector(): array
     {
         if ($podsSelector = $this->customPodsSelector()) {

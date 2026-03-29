@@ -43,6 +43,7 @@ class OpenShiftOAuthProvider extends TokenProvider
         return $this;
     }
 
+    #[\Override]
     public function refresh(): void
     {
         $oauthUrl = $this->oauthEndpoint ?? $this->discoverOAuthEndpoint();

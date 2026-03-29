@@ -14,14 +14,13 @@ abstract class TestCase extends Orchestra
 {
     /**
      * The cluster to the Kubernetes cluster.
-     *
-     * @var KubernetesCluster
      */
-    protected $cluster;
+    protected KubernetesCluster $cluster;
 
     /**
      * Set up the tests.
      */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +45,7 @@ abstract class TestCase extends Orchestra
      * @param  mixed  $app
      * @return array
      */
+    #[\Override]
     protected function getPackageProviders($app)
     {
         return [
@@ -59,6 +59,7 @@ abstract class TestCase extends Orchestra
      * @param  mixed  $app
      * @return void
      */
+    #[\Override]
     public function getEnvironmentSetUp($app)
     {
         //

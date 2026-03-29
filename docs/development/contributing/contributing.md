@@ -32,7 +32,7 @@ vendor/bin/psalm
 ## Code Style
 
 - Follow PSR-12
-- Use PHP 8.2+ features (enums, type hints, match expressions)
+- Use PHP 8.3+ features (enums, type hints, match expressions, typed class constants)
 - Add type hints to all parameters and return types
 - Write tests for new features
 

@@ -8,17 +8,15 @@ class ResourceObject extends ResourceMetric
 {
     /**
      * The resource metric type.
-     *
-     * @var string
      */
-    protected static $type = 'Object';
+    protected static string $type = 'Object';
 
     /**
      * Attach a resource to the object.
      *
      * @return $this
      */
-    public function setResource(K8sResource $resource)
+    public function setResource(K8sResource $resource): static
     {
         return $this->setAttribute('object.describedObject', [
             'apiVersion' => $resource->getApiVersion(),
@@ -30,10 +28,10 @@ class ResourceObject extends ResourceMetric
     /**
      * Set average utilization for the metric.
      *
-     * @param  int|string  $utilization
      * @return $this
      */
-    public function averageUtilization($utilization = 50)
+    #[\Override]
+    public function averageUtilization(int|string $utilization = 50): static
     {
         return $this->setAttribute('object.target.type', 'Utilization')
             ->setAttribute('object.target.averageUtilization', $utilization);
@@ -41,10 +39,9 @@ class ResourceObject extends ResourceMetric
 
     /**
      * Get the average utilization.
-     *
-     * @return string|int|float
      */
-    public function getAverageUtilization()
+    #[\Override]
+    public function getAverageUtilization(): string|int|float
     {
         return $this->getAttribute('object.target.averageUtilization', 0);
     }
@@ -52,10 +49,10 @@ class ResourceObject extends ResourceMetric
     /**
      * Set average value for the metric.
      *
-     * @param  string|int|float  $value
      * @return $this
      */
-    public function averageValue($value)
+    #[\Override]
+    public function averageValue(string|int|float $value): static
     {
         return $this->setAttribute('object.target.type', 'AverageValue')
             ->setAttribute('object.target.averageValue', $value);
@@ -63,10 +60,9 @@ class ResourceObject extends ResourceMetric
 
     /**
      * Get the average value size.
-     *
-     * @return string|int|float
      */
-    public function getAverageValue()
+    #[\Override]
+    public function getAverageValue(): string|int|float
     {
         return $this->getAttribute('object.target.averageValue');
     }
@@ -74,10 +70,10 @@ class ResourceObject extends ResourceMetric
     /**
      * Set the specific value for the metric.
      *
-     * @param  string|int|float  $value
      * @return $this
      */
-    public function value($value)
+    #[\Override]
+    public function value(string|int|float $value): static
     {
         return $this->setAttribute('object.target.type', 'Value')
             ->setAttribute('object.target.value', $value);
@@ -85,10 +81,9 @@ class ResourceObject extends ResourceMetric
 
     /**
      * Get the value size.
-     *
-     * @return string|int|float
      */
-    public function getValue()
+    #[\Override]
+    public function getValue(): string|int|float
     {
         return $this->getAttribute('object.target.value');
     }
@@ -96,6 +91,7 @@ class ResourceObject extends ResourceMetric
     /**
      * Get the resource target type.
      */
+    #[\Override]
     public function getType(): string
     {
         return $this->getAttribute('object.target.type', 'Utilization');
@@ -106,18 +102,17 @@ class ResourceObject extends ResourceMetric
      *
      * @return $this
      */
-    public function setName(string $name)
+    #[\Override]
+    public function setName(string $name): static
     {
         return $this->setAttribute('object.metric.name', $name);
     }
 
     /**
      * Get the resource metric name.
-     *
-     * @param  string  $name
-     * @return $this
      */
-    public function getName()
+    #[\Override]
+    public function getName(): string
     {
         return $this->getAttribute('object.metric.name');
     }

@@ -12,24 +12,18 @@ class HTTPRoute extends K8sResource implements InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'HTTPRoute';
+    protected static ?string $kind = 'HTTPRoute';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'gateway.networking.k8s.io/v1';
+    protected static string $defaultVersion = 'gateway.networking.k8s.io/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the parent references.

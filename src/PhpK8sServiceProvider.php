@@ -8,20 +8,17 @@ class PhpK8sServiceProvider extends ServiceProvider
 {
     /**
      * Boot the service provider.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
-    public function register()
+    #[\Override]
+    public function register(): void
     {
         //
     }

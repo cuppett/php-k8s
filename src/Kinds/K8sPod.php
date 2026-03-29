@@ -28,24 +28,19 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'Pod';
+    protected static ?string $kind = 'Pod';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Get the DNS name within the cluster.
-     *
-     * @return string|null
      */
-    public function getClusterDns()
+    #[\Override]
+    public function getClusterDns(): ?string
     {
         $ipSlug = str_replace('.', '-', $this->getPodIps()[0]['ip'] ?? '');
 

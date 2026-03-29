@@ -62,6 +62,7 @@ class ServiceAccountTokenProvider extends TokenProvider
         return $this;
     }
 
+    #[\Override]
     public function refresh(): void
     {
         $path = sprintf(

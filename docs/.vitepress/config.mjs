@@ -244,7 +244,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Upstream to Fork', link: '/development/migration/upstream-to-fork' },
-            { text: 'PHP 8.2+ Modernization', link: '/development/migration/php-82-modernization' },
+            { text: 'PHP 8.3+ Modernization', link: '/development/migration/php-83-modernization' },
             { text: 'Version Upgrades', link: '/development/migration/version-upgrades' },
             { text: 'Breaking Changes', link: '/development/migration/breaking-changes' }
           ]

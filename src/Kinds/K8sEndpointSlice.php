@@ -9,24 +9,18 @@ class K8sEndpointSlice extends K8sResource implements InteractsWithK8sCluster, W
 {
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'EndpointSlice';
+    protected static ?string $kind = 'EndpointSlice';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'discovery.k8s.io/v1';
+    protected static string $defaultVersion = 'discovery.k8s.io/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the address type for the endpoint slice.

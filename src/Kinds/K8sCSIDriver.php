@@ -12,24 +12,18 @@ class K8sCSIDriver extends K8sResource implements InteractsWithK8sCluster, Watch
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'CSIDriver';
+    protected static ?string $kind = 'CSIDriver';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'storage.k8s.io/v1';
+    protected static string $defaultVersion = 'storage.k8s.io/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = false;
+    protected static bool $namespaceable = false;
 
     /**
      * Set whether attach is required.

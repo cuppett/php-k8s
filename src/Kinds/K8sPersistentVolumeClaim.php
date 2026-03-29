@@ -22,17 +22,13 @@ class K8sPersistentVolumeClaim extends K8sResource implements InteractsWithK8sCl
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'PersistentVolumeClaim';
+    protected static ?string $kind = 'PersistentVolumeClaim';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the capacity of the PV.

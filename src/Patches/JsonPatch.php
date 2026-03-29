@@ -14,18 +14,15 @@ class JsonPatch implements Arrayable, Jsonable
 {
     /**
      * The patch operations.
-     *
-     * @var array
      */
-    protected $operations = [];
+    protected array $operations = [];
 
     /**
      * Add an operation to add a value at the specified path.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function add(string $path, $value)
+    public function add(string $path, mixed $value): static
     {
         $this->operations[] = [
             'op' => 'add',
@@ -41,7 +38,7 @@ class JsonPatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function remove(string $path)
+    public function remove(string $path): static
     {
         $this->operations[] = [
             'op' => 'remove',
@@ -54,10 +51,9 @@ class JsonPatch implements Arrayable, Jsonable
     /**
      * Add an operation to replace a value at the specified path.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function replace(string $path, $value)
+    public function replace(string $path, mixed $value): static
     {
         $this->operations[] = [
             'op' => 'replace',
@@ -73,7 +69,7 @@ class JsonPatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function move(string $from, string $path)
+    public function move(string $from, string $path): static
     {
         $this->operations[] = [
             'op' => 'move',
@@ -89,7 +85,7 @@ class JsonPatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function copy(string $from, string $path)
+    public function copy(string $from, string $path): static
     {
         $this->operations[] = [
             'op' => 'copy',
@@ -103,10 +99,9 @@ class JsonPatch implements Arrayable, Jsonable
     /**
      * Add an operation to test a value at the specified path.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function test(string $path, $value)
+    public function test(string $path, mixed $value): static
     {
         $this->operations[] = [
             'op' => 'test',
@@ -122,7 +117,7 @@ class JsonPatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function clear()
+    public function clear(): static
     {
         $this->operations = [];
 
@@ -147,10 +142,9 @@ class JsonPatch implements Arrayable, Jsonable
 
     /**
      * Get the instance as an array.
-     *
-     * @return array
      */
-    public function toArray()
+    #[\Override]
+    public function toArray(): array
     {
         return $this->operations;
     }
@@ -162,6 +156,7 @@ class JsonPatch implements Arrayable, Jsonable
      *
      * @throws \JsonException
      */
+    #[\Override]
     public function toJson($options = 0): string
     {
         return json_encode($this->toArray(), $options | JSON_THROW_ON_ERROR);

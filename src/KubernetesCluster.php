@@ -139,11 +139,6 @@ class KubernetesCluster
     use Traits\Cluster\MakesWebsocketCalls;
 
     /**
-     * The Cluster API port.
-     */
-    protected ?string $url = null;
-
-    /**
      * The class name for the K8s resource.
      */
     protected ?string $resourceClass = null;
@@ -151,10 +146,7 @@ class KubernetesCluster
     /**
      * Create a new class instance.
      */
-    public function __construct(?string $url = null)
-    {
-        $this->url = $url;
-    }
+    public function __construct(protected ?string $url = null) {}
 
     /**
      * Set the K8s resource class.
@@ -257,8 +249,7 @@ class KubernetesCluster
 
                 ['type' => $type, 'object' => $attributes] = $data;
 
-                $call = call_user_func(
-                    $callback,
+                $call = $callback(
                     $type,
                     new $resourceClass($this, $attributes)
                 );
@@ -329,7 +320,7 @@ class KubernetesCluster
                 $line = substr($buffer, 0, $pos);
                 $buffer = substr($buffer, $pos + 1);
 
-                $call = call_user_func($callback, $line."\n");
+                $call = $callback($line."\n");
 
                 if (! is_null($call)) {
                     fclose($sock);

@@ -12,17 +12,13 @@ class K8sNode extends K8sResource implements InteractsWithK8sCluster, Watchable
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'Node';
+    protected static ?string $kind = 'Node';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = false;
+    protected static bool $namespaceable = false;
 
     /**
      * Get the node info.

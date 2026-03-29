@@ -18,24 +18,18 @@ class K8sCronJob extends K8sResource implements InteractsWithK8sCluster, Watchab
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'CronJob';
+    protected static ?string $kind = 'CronJob';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'batch/v1';
+    protected static string $defaultVersion = 'batch/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the job template.

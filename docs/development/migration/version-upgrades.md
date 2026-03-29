@@ -17,14 +17,14 @@ Check the [Changelog](/project/changelog) for any breaking changes.
 | Upstream Version | Fork Version | Notes |
 |------------------|--------------|-------|
 | 3.x | 3.x+ | Fork maintains compatibility where possible |
-| 2.x | Not supported | PHP 8.2+ required |
-| 1.x | Not supported | PHP 8.2+ required |
+| 2.x | Not supported | PHP 8.3+ required |
+| 1.x | Not supported | PHP 8.3+ required |
 
 ## Breaking Changes
 
 ### PHP Version Requirements
 
-This fork requires PHP 8.2+. If you need PHP 8.0 or 8.1 support, use the upstream package.
+This fork requires PHP 8.3+. If you need PHP 8.0, 8.1, or 8.2 support, use the upstream package.
 
 ### Enum Return Values
 
@@ -42,7 +42,7 @@ $phase = $pod->getPodPhase();  // PodPhase::RUNNING
 ## See Also
 
 - [Upstream to Fork Migration](/development/migration/upstream-to-fork) - Migrating from upstream
-- [PHP 8.2+ Modernization](/development/migration/php-82-modernization) - Modern PHP features
+- [PHP 8.3+ Modernization](/development/migration/php-83-modernization) - Modern PHP features
 - [Breaking Changes](/development/migration/breaking-changes) - All breaking changes
 
 ---

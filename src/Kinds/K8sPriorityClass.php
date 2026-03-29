@@ -8,24 +8,18 @@ class K8sPriorityClass extends K8sResource implements InteractsWithK8sCluster
 {
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'PriorityClass';
+    protected static ?string $kind = 'PriorityClass';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'scheduling.k8s.io/v1';
+    protected static string $defaultVersion = 'scheduling.k8s.io/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = false;
+    protected static bool $namespaceable = false;
 
     /**
      * Set the priority value.

@@ -14,34 +14,27 @@ trait HasAttributes
 
     /**
      * The Kubernetes resource's attributes.
-     *
-     * @var array
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * The Kubernetes resource's attributes,
      * but stored as being the original ones.
-     *
-     * @var array
      */
-    protected $original = [];
+    protected array $original = [];
 
     /**
      * Wether the current state is synced
      * with the cluster.
-     *
-     * @var bool
      */
-    protected $synced = false;
+    protected bool $synced = false;
 
     /**
      * Set an attribute.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, mixed $value): static
     {
         Arr::set($this->attributes, $name, $value);
 
@@ -51,10 +44,9 @@ trait HasAttributes
     /**
      * For an array attribute, append a new element to the list.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function addToAttribute(string $name, $value)
+    public function addToAttribute(string $name, mixed $value): static
     {
         $current = $this->getAttribute($name, []);
 
@@ -70,7 +62,7 @@ trait HasAttributes
      *
      * @return $this
      */
-    public function removeAttribute(string $name)
+    public function removeAttribute(string $name): static
     {
         Arr::forget($this->attributes, $name);
 
@@ -89,10 +81,8 @@ trait HasAttributes
 
     /**
      * Check if the given instance is the same as this one.
-     *
-     * @return bool
      */
-    public function is(self $instance)
+    public function is(self $instance): bool
     {
         return $instance->toJson() === $this->toJson();
     }
@@ -103,7 +93,7 @@ trait HasAttributes
      *
      * @return $this
      */
-    public function synced()
+    public function synced(): static
     {
         $this->synced = true;
 
@@ -132,7 +122,7 @@ trait HasAttributes
      *
      * @return $this
      */
-    public function syncWith(array $attributes = [])
+    public function syncWith(array $attributes = []): static
     {
         $this->attributes = $attributes;
 
@@ -146,7 +136,7 @@ trait HasAttributes
      *
      * @return $this
      */
-    public function syncOriginalWith(array $attributes = [])
+    public function syncOriginalWith(array $attributes = []): static
     {
         $this->original = $attributes;
 

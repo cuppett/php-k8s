@@ -8,64 +8,49 @@ use RenokiCo\PhpK8s\Auth\OpenShiftOAuthProvider;
 use RenokiCo\PhpK8s\Auth\ServiceAccountTokenProvider;
 use RenokiCo\PhpK8s\Contracts\TokenProviderInterface;
 use RenokiCo\PhpK8s\Kinds\K8sResource;
-use RenokiCo\PhpK8s\KubernetesCluster;
 use Symfony\Component\Process\Process;
 
 trait AuthenticatesCluster
 {
     /**
      * The Bearer Token used for authentication.
-     *
-     * @var string|null
      */
-    private $token;
+    private ?string $token = null;
 
     /**
      * The token provider for dynamic token management.
-     *
-     * @var TokenProviderInterface|null
      */
-    private $tokenProvider;
+    private ?TokenProviderInterface $tokenProvider = null;
 
     /**
      * The key pair of username & password used
      * for HTTP authentication.
-     *
-     * @var array
      */
-    private $auth = [];
+    private array $auth = [];
 
     /**
      * The path to the Client certificate (if any)
      * used for SSL connections.
-     *
-     * @var string|null
      */
-    private $cert;
+    private ?string $cert = null;
 
     /**
      * The path to the Client Key (if any)
      * used for SSL connections.
-     *
-     * @var string|null
      */
-    private $sslKey;
+    private ?string $sslKey = null;
 
     /**
      * Wether SSL should be verified. Defaults to true,
      * if set to false will ignore checks. If set as string,
      * it should be the path to the CA certificate.
-     *
-     * @var string|null|bool
      */
-    private $verify;
+    private string|bool|null $verify = null;
 
     /**
      * Start the current cluster with URL.
-     *
-     * @return KubernetesCluster
      */
-    public static function fromUrl(string $url)
+    public static function fromUrl(string $url): static
     {
         return new static($url);
     }
@@ -75,7 +60,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withToken(?string $token = null)
+    public function withToken(?string $token = null): static
     {
         $this->token = $this->normalize($token);
 
@@ -87,7 +72,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withTokenFromCommandProvider(string $cmdPath, ?string $cmdArgs = null, ?string $tokenPath = null)
+    public function withTokenFromCommandProvider(string $cmdPath, ?string $cmdArgs = null, ?string $tokenPath = null): static
     {
         $process = Process::fromShellCommandline("{$cmdPath} {$cmdArgs}");
 
@@ -115,7 +100,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function loadTokenFromFile(?string $path = null)
+    public function loadTokenFromFile(?string $path = null): static
     {
         return $this->withToken(file_get_contents($path));
     }
@@ -125,7 +110,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function httpAuthentication(?string $username = null, ?string $password = null)
+    public function httpAuthentication(?string $username = null, ?string $password = null): static
     {
         if (! is_null($username) || ! is_null($password)) {
             $this->auth = [$username, $password];
@@ -139,7 +124,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withCertificate(?string $path = null)
+    public function withCertificate(?string $path = null): static
     {
         $this->cert = $path;
 
@@ -151,7 +136,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withPrivateKey(?string $path = null)
+    public function withPrivateKey(?string $path = null): static
     {
         $this->sslKey = $path;
 
@@ -163,7 +148,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withCaCertificate(?string $path = null)
+    public function withCaCertificate(?string $path = null): static
     {
         $this->verify = $path;
 
@@ -175,7 +160,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withoutSslChecks()
+    public function withoutSslChecks(): static
     {
         $this->verify = false;
 
@@ -188,7 +173,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public static function inClusterConfiguration(string $url = 'https://kubernetes.default.svc')
+    public static function inClusterConfiguration(string $url = 'https://kubernetes.default.svc'): static
     {
         $cluster = new static($url);
 
@@ -212,7 +197,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withTokenProvider(TokenProviderInterface $provider)
+    public function withTokenProvider(TokenProviderInterface $provider): static
     {
         $this->tokenProvider = $provider;
         $this->token = null; // Clear static token
@@ -226,11 +211,7 @@ trait AuthenticatesCluster
      */
     public function getAuthToken(): ?string
     {
-        if ($this->tokenProvider !== null) {
-            return $this->tokenProvider->getToken();
-        }
-
-        return $this->token;
+        return $this->tokenProvider?->getToken() ?? $this->token;
     }
 
     /**
@@ -238,7 +219,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withEksAuth(string $clusterName, string $region)
+    public function withEksAuth(string $clusterName, string $region): static
     {
         $provider = new EksTokenProvider($clusterName, $region);
 
@@ -250,7 +231,7 @@ trait AuthenticatesCluster
      *
      * @return $this
      */
-    public function withOpenShiftAuth(string $username, string $password)
+    public function withOpenShiftAuth(string $username, string $password): static
     {
         $provider = new OpenShiftOAuthProvider(
             $this->url,
@@ -275,7 +256,7 @@ trait AuthenticatesCluster
         string $serviceAccount,
         int $expirationSeconds = 3600,
         ?array $audiences = null
-    ) {
+    ): static {
         $provider = new ServiceAccountTokenProvider(
             $this,
             $namespace,

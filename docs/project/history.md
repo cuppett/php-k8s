@@ -29,7 +29,7 @@ The upstream project grew to support:
 The `cuppett/php-k8s` fork was created to:
 
 1. **Continue Active Development** - Ensure ongoing maintenance and support
-2. **Modernize for PHP 8.2+** - Leverage new language features
+2. **Modernize for PHP 8.3+** - Leverage new language features
 3. **Enhance Type Safety** - Add enums and strict type hints
 4. **Expand Documentation** - Provide comprehensive guides and examples
 
@@ -38,7 +38,7 @@ The `cuppett/php-k8s` fork was created to:
 Both projects continue to exist:
 
 - **Upstream (`renoki-co/php-k8s`)** - Original project by Alex Renoki
-- **Fork (`cuppett/php-k8s`)** - PHP 8.2+ modernized version by Stephen Cuppett
+- **Fork (`cuppett/php-k8s`)** - PHP 8.3+ modernized version by Stephen Cuppett
 
 ## Rationale for Fork
 
@@ -46,10 +46,10 @@ Both projects continue to exist:
 
 The decision to fork was made after considering several factors:
 
-1. **PHP Version Requirements** - Breaking changes for PHP 8.2+ minimum
+1. **PHP Version Requirements** - Breaking changes for PHP 8.3+ minimum
 2. **Enum Migration** - Significant API changes from strings to enums
 3. **Maintenance Velocity** - Need for faster iteration and updates
-4. **Modern Features** - Full adoption of PHP 8.2+ features
+4. **Modern Features** - Full adoption of PHP 8.3+ features
 5. **Community Needs** - Specific requirements for active Kubernetes users
 
 ### Strategic Independence
@@ -75,7 +75,7 @@ This fork maintains a respectful relationship with upstream:
 
 ### What We Enhance
 
-- 🚀 PHP 8.2+ modern syntax
+- 🚀 PHP 8.3+ modern syntax
 - 🚀 Type-safe enums
 - 🚀 Enhanced documentation
 - 🚀 Additional resource types
@@ -92,7 +92,7 @@ Where appropriate, improvements that benefit both projects may be contributed ba
 ```
 Upstream:    PHP 7.4+ → 8.0+ → 8.1+
                                ↓
-Fork:                        8.2+ → 8.3+ → 8.4+
+Fork:                        8.3+ → 8.4+ → 8.5+
 ```
 
 ### Feature Adoption Timeline
@@ -102,6 +102,7 @@ Fork:                        8.2+ → 8.3+ → 8.4+
 | PHP 8.0 Features | ✅ | ✅ |
 | PHP 8.1 Features | ✅ | ✅ |
 | PHP 8.2 Features | Partial | ✅ Full |
+| PHP 8.3 Features | ❌ | ✅ Full |
 | Enums | ❌ | ✅ |
 | Readonly Properties | ❌ | ✅ |
 | Match Expressions | Limited | ✅ Extensive |
@@ -126,7 +127,7 @@ Fork:                        8.2+ → 8.3+ → 8.4+
 ### User Base
 
 - **Upstream Users** - Those using PHP 8.0-8.1 or preferring established stability
-- **Fork Users** - Those using PHP 8.2+ and wanting modern features
+- **Fork Users** - Those using PHP 8.3+ and wanting modern features
 
 Both communities are valued and supported.
 
@@ -140,11 +141,11 @@ Both communities are valued and supported.
 
 ### Fork Roadmap
 
-1. **Maintain PHP 8.2+ Support** - Keep current with latest PHP versions
+1. **Maintain PHP 8.3+ Support** - Keep current with latest PHP versions
 2. **Expand Resource Coverage** - Support new Kubernetes resources
 3. **Enhance Documentation** - Continuous improvement of guides
 4. **Community Engagement** - Responsive to user feedback
-5. **Performance Optimization** - Leverage PHP 8.2+ performance gains
+5. **Performance Optimization** - Leverage PHP 8.3+ performance gains
 
 ### Long-Term Vision
 
@@ -169,7 +170,7 @@ The fork aims to:
 **Stephen Cuppett** ([@cuppett](https://github.com/cuppett))
 - Fork maintenance and modernization
 - Documentation overhaul
-- PHP 8.2+ enhancements
+- PHP 8.3+ enhancements
 
 ### Contributors
 
@@ -181,7 +182,7 @@ Both projects benefit from community contributions. See:
 
 ### Will the fork merge back with upstream?
 
-The fork maintains its own trajectory focused on PHP 8.2+ and modern features. However, improvements that benefit both projects may be contributed upstream.
+The fork maintains its own trajectory focused on PHP 8.3+ and modern features. However, improvements that benefit both projects may be contributed upstream.
 
 ### Can I migrate from upstream to fork?
 

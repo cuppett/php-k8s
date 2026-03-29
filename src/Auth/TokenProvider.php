@@ -16,6 +16,7 @@ abstract class TokenProvider implements TokenProviderInterface
      */
     protected int $refreshBuffer = 60;
 
+    #[\Override]
     public function getToken(): string
     {
         if ($this->token === null || $this->isExpired()) {
@@ -25,6 +26,7 @@ abstract class TokenProvider implements TokenProviderInterface
         return $this->token;
     }
 
+    #[\Override]
     public function isExpired(): bool
     {
         if ($this->expiresAt === null) {
@@ -37,6 +39,7 @@ abstract class TokenProvider implements TokenProviderInterface
         return $this->expiresAt <= $bufferTime;
     }
 
+    #[\Override]
     public function getExpiresAt(): ?DateTimeInterface
     {
         return $this->expiresAt;
@@ -52,5 +55,6 @@ abstract class TokenProvider implements TokenProviderInterface
         return $this;
     }
 
+    #[\Override]
     abstract public function refresh(): void;
 }

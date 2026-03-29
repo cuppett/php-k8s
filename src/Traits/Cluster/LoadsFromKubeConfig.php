@@ -19,17 +19,13 @@ trait LoadsFromKubeConfig
      * The absolute path to the temporary folder
      * used to write base64-encoded SSL certs and keys
      * to be able to load them in Guzzle.
-     *
-     * @var null|string
      */
-    protected static $tempFolder;
+    protected static ?string $tempFolder = null;
 
     /**
      * Set the temporary folder for the writings.
-     *
-     * @return void
      */
-    public static function setTempFolder(string $tempFolder)
+    public static function setTempFolder(string $tempFolder): void
     {
         static::$tempFolder = $tempFolder;
     }
@@ -44,7 +40,7 @@ trait LoadsFromKubeConfig
      * @throws KubeConfigContextNotFound
      * @throws KubeConfigUserNotFound
      */
-    public static function fromKubeConfigVariable(?string $context = null)
+    public static function fromKubeConfigVariable(?string $context = null): static
     {
         /** @var KubernetesCluster $this */
         $cluster = new static;
@@ -80,7 +76,7 @@ trait LoadsFromKubeConfig
      *
      * @return KubernetesCluster
      */
-    public static function fromKubeConfigYaml(string $yaml, ?string $context = null)
+    public static function fromKubeConfigYaml(string $yaml, ?string $context = null): static
     {
         /** @var KubernetesCluster $this */
         $cluster = new static;
@@ -93,7 +89,7 @@ trait LoadsFromKubeConfig
      *
      * @return KubernetesCluster
      */
-    public static function fromKubeConfigYamlFile(string $path = '/.kube/config', ?string $context = null)
+    public static function fromKubeConfigYamlFile(string $path = '/.kube/config', ?string $context = null): static
     {
         return (new static)->fromKubeConfigYaml(file_get_contents($path), $context);
     }
@@ -103,7 +99,7 @@ trait LoadsFromKubeConfig
      *
      * @return KubernetesCluster
      */
-    public static function fromKubeConfigArray(array $kubeConfigArray, ?string $context = null)
+    public static function fromKubeConfigArray(array $kubeConfigArray, ?string $context = null): static
     {
         $cluster = new static;
 
@@ -120,7 +116,7 @@ trait LoadsFromKubeConfig
      * @throws KubeConfigContextNotFound
      * @throws KubeConfigUserNotFound
      */
-    protected function loadKubeConfigFromArray(array $kubeconfig, ?string $context = null)
+    protected function loadKubeConfigFromArray(array $kubeconfig, ?string $context = null): static
     {
         /** @var KubernetesCluster $this */
 
@@ -249,7 +245,6 @@ trait LoadsFromKubeConfig
      * Create a file in the temporary directory for base-encoded data
      * coming from the KubeConfig file.
      *
-     * @return string
      *
      * @throws Exception
      */
@@ -259,7 +254,7 @@ trait LoadsFromKubeConfig
         string $url,
         string $fileName,
         string $contents
-    ) {
+    ): string {
         /** @var KubernetesCluster $this */
         $tempFolder = static::$tempFolder ?: sys_get_temp_dir();
 

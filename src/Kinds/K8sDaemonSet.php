@@ -27,24 +27,18 @@ class K8sDaemonSet extends K8sResource implements InteractsWithK8sCluster, Podab
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'DaemonSet';
+    protected static ?string $kind = 'DaemonSet';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'apps/v1';
+    protected static string $defaultVersion = 'apps/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the updating strategy for the set.
@@ -63,6 +57,7 @@ class K8sDaemonSet extends K8sResource implements InteractsWithK8sCluster, Podab
     /**
      * Get the selector for the pods that are owned by this resource.
      */
+    #[\Override]
     public function podsSelector(): array
     {
         if ($podsSelector = $this->customPodsSelector()) {

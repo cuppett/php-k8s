@@ -6,15 +6,11 @@ class K8sClusterRoleBinding extends K8sRoleBinding
 {
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'ClusterRoleBinding';
+    protected static ?string $kind = 'ClusterRoleBinding';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = false;
+    protected static bool $namespaceable = false;
 }

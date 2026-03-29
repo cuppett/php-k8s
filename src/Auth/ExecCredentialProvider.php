@@ -46,6 +46,7 @@ class ExecCredentialProvider extends TokenProvider
         return $this;
     }
 
+    #[\Override]
     public function refresh(): void
     {
         $commandLine = $this->command;

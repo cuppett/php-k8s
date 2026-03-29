@@ -12,24 +12,18 @@ class K8sCSINode extends K8sResource implements InteractsWithK8sCluster, Watchab
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'CSINode';
+    protected static ?string $kind = 'CSINode';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'storage.k8s.io/v1';
+    protected static string $defaultVersion = 'storage.k8s.io/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = false;
+    protected static bool $namespaceable = false;
 
     /**
      * Get all CSI drivers installed on this node.

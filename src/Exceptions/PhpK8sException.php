@@ -7,31 +7,17 @@ use Exception;
 class PhpK8sException extends Exception
 {
     /**
-     * The payload coming from the Guzzle client.
-     *
-     * @var array
-     */
-    protected $payload = [];
-
-    /**
      * Initialize the exception.
-     *
-     * @param  string|null  $message
-     * @param  int  $code
      */
-    public function __construct($message = null, $code = 0, ?array $payload = null)
+    public function __construct(?string $message = null, int $code = 0, protected ?array $payload = null)
     {
         parent::__construct($message, $code);
-
-        $this->payload = $payload;
     }
 
     /**
      * Get the payload instance.
-     *
-     * @return null|array
      */
-    public function getPayload()
+    public function getPayload(): ?array
     {
         return $this->payload;
     }

@@ -4,7 +4,7 @@
 
 Before installing PHP K8s, ensure your environment meets these requirements:
 
-- **PHP**: 8.2 or higher (8.3+ recommended)
+- **PHP**: 8.3 or higher (8.4+ recommended)
 - **Extensions**:
   - `ext-json` (required)
   - `ext-yaml` (optional, but recommended for YAML support)
