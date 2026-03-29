@@ -2,6 +2,9 @@
 
 namespace RenokiCo\PhpK8s\Test;
 
+use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
+use RenokiCo\PhpK8s\Kinds\K8sDeployment;
+
 class StatusSubresourceTest extends TestCase
 {
     public function test_resource_status_path()
@@ -101,8 +104,8 @@ class StatusSubresourceTest extends TestCase
                 ],
             ]);
 
-            $this->assertInstanceOf(\RenokiCo\PhpK8s\Kinds\K8sDeployment::class, $result);
-        } catch (\RenokiCo\PhpK8s\Exceptions\KubernetesAPIException $e) {
+            $this->assertInstanceOf(K8sDeployment::class, $result);
+        } catch (KubernetesAPIException $e) {
             // 409 Conflict is expected when the controller races with our update.
             // This proves the status endpoint is working correctly.
             if ($e->getCode() !== 409) {

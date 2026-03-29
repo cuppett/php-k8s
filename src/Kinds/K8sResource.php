@@ -8,6 +8,8 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
+use RenokiCo\PhpK8s\Exceptions\KubernetesLogsException;
+use RenokiCo\PhpK8s\Exceptions\KubernetesWatchException;
 use RenokiCo\PhpK8s\K8s;
 use RenokiCo\PhpK8s\KubernetesCluster;
 use RenokiCo\PhpK8s\Traits\Resource\HasAnnotations;
@@ -39,7 +41,7 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Create a new resource.
      *
-     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  KubernetesCluster|null  $cluster
      * @return void
      */
     public function __construct($cluster = null, array $attributes = [])
@@ -104,7 +106,7 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Get a resource by name.
      *
-     * @return \RenokiCo\PhpK8s\Kinds\K8sResource
+     * @return K8sResource
      */
     public function getByName(string $name, array $query = ['pretty' => 1])
     {
@@ -172,7 +174,7 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return mixed
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesWatchException
+     * @throws KubernetesWatchException
      */
     public function watchByName(string $name, Closure $callback, array $query = ['pretty' => 1])
     {
@@ -184,8 +186,8 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return string
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesLogsException
+     * @throws KubernetesAPIException
      */
     public function containerLogs(string $container, array $query = ['pretty' => 1])
     {
@@ -198,8 +200,8 @@ class K8sResource implements Arrayable, Jsonable
      * @param  Closure  $callback
      * @return string
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesLogsException
+     * @throws KubernetesAPIException
      */
     public function logsByName(string $name, array $query = ['pretty' => 1])
     {
@@ -212,8 +214,8 @@ class K8sResource implements Arrayable, Jsonable
      * @param  Closure  $callback
      * @return string
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesLogsException
+     * @throws KubernetesAPIException
      */
     public function containerLogsByName(string $name, string $container, array $query = ['pretty' => 1])
     {
@@ -225,8 +227,8 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return mixed
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesWatchException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
+     * @throws KubernetesWatchException
+     * @throws KubernetesLogsException
      */
     public function watchContainerLogs(string $container, Closure $callback, array $query = ['pretty' => 1])
     {
@@ -238,8 +240,8 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return mixed
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesWatchException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
+     * @throws KubernetesWatchException
+     * @throws KubernetesLogsException
      */
     public function watchLogsByName(string $name, Closure $callback, array $query = ['pretty' => 1])
     {
@@ -251,8 +253,8 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return mixed
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesWatchException
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesLogsException
+     * @throws KubernetesWatchException
+     * @throws KubernetesLogsException
      */
     public function watchContainerLogsByName(string $name, string $container, Closure $callback, array $query = ['pretty' => 1])
     {

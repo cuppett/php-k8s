@@ -18,7 +18,7 @@ trait InitializesInstances
     /**
      * Create a new container instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Container
+     * @return Container
      */
     public static function container(array $attributes = [])
     {
@@ -28,7 +28,7 @@ trait InitializesInstances
     /**
      * Create a new probe instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Probe
+     * @return Probe
      */
     public static function probe(array $attributes = [])
     {
@@ -38,7 +38,7 @@ trait InitializesInstances
     /**
      * Create a new metric instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\ResourceMetric
+     * @return ResourceMetric
      */
     public static function metric(array $attributes = [])
     {
@@ -48,7 +48,7 @@ trait InitializesInstances
     /**
      * Create a new object instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\ResourceObject
+     * @return ResourceObject
      */
     public static function object(array $attributes = [])
     {
@@ -58,7 +58,7 @@ trait InitializesInstances
     /**
      * Create a new rule instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Rule
+     * @return Rule
      */
     public static function rule(array $attributes = [])
     {
@@ -68,7 +68,7 @@ trait InitializesInstances
     /**
      * Create a new subject instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Subject
+     * @return Subject
      */
     public static function subject(array $attributes = [])
     {
@@ -78,7 +78,7 @@ trait InitializesInstances
     /**
      * Create a new volume instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Volume
+     * @return Volume
      */
     public static function volume(array $attributes = [])
     {
@@ -88,7 +88,7 @@ trait InitializesInstances
     /**
      * Create a new affinity instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Affinity
+     * @return Affinity
      */
     public static function affinity(array $attributes = [])
     {
@@ -98,7 +98,7 @@ trait InitializesInstances
     /**
      * Create a new expression instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Expression
+     * @return Expression
      */
     public static function expression(array $attributes = [])
     {
@@ -108,7 +108,7 @@ trait InitializesInstances
     /**
      * Create a new webhook instance.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Webhook
+     * @return Webhook
      */
     public static function webhook(array $attributes = [])
     {

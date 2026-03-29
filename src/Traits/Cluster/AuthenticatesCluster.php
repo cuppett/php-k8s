@@ -3,8 +3,12 @@
 namespace RenokiCo\PhpK8s\Traits\Cluster;
 
 use Illuminate\Support\Arr;
+use RenokiCo\PhpK8s\Auth\EksTokenProvider;
+use RenokiCo\PhpK8s\Auth\OpenShiftOAuthProvider;
+use RenokiCo\PhpK8s\Auth\ServiceAccountTokenProvider;
 use RenokiCo\PhpK8s\Contracts\TokenProviderInterface;
 use RenokiCo\PhpK8s\Kinds\K8sResource;
+use RenokiCo\PhpK8s\KubernetesCluster;
 use Symfony\Component\Process\Process;
 
 trait AuthenticatesCluster
@@ -59,7 +63,7 @@ trait AuthenticatesCluster
     /**
      * Start the current cluster with URL.
      *
-     * @return \RenokiCo\PhpK8s\KubernetesCluster
+     * @return KubernetesCluster
      */
     public static function fromUrl(string $url)
     {
@@ -236,7 +240,7 @@ trait AuthenticatesCluster
      */
     public function withEksAuth(string $clusterName, string $region)
     {
-        $provider = new \RenokiCo\PhpK8s\Auth\EksTokenProvider($clusterName, $region);
+        $provider = new EksTokenProvider($clusterName, $region);
 
         return $this->withTokenProvider($provider);
     }
@@ -248,7 +252,7 @@ trait AuthenticatesCluster
      */
     public function withOpenShiftAuth(string $username, string $password)
     {
-        $provider = new \RenokiCo\PhpK8s\Auth\OpenShiftOAuthProvider(
+        $provider = new OpenShiftOAuthProvider(
             $this->url,
             $username,
             $password
@@ -272,7 +276,7 @@ trait AuthenticatesCluster
         int $expirationSeconds = 3600,
         ?array $audiences = null
     ) {
-        $provider = new \RenokiCo\PhpK8s\Auth\ServiceAccountTokenProvider(
+        $provider = new ServiceAccountTokenProvider(
             $this,
             $namespace,
             $serviceAccount

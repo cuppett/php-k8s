@@ -128,7 +128,7 @@ use RenokiCo\PhpK8s\Kinds\K8sResource;
  * @method \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource] fromTemplatedYamlFile(string $path, array $replace, \Closure $callback = null)
  * @method static void registerCrd(string $class, string $name = null)
  *
- * @see \RenokiCo\PhpK8s\K8s
+ * @see K8s
  */
 class KubernetesCluster
 {
@@ -170,7 +170,7 @@ class KubernetesCluster
      * Run a specific operation for the API path with a specific payload.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     public function runOperation(Operation|string $operation, string $path, string|null|Closure $payload = '', array $query = ['pretty' => 1]): mixed
     {
@@ -348,7 +348,7 @@ class KubernetesCluster
      * Call exec on the resource.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function execPath(
         string $path,
@@ -376,7 +376,7 @@ class KubernetesCluster
      * Call attach on the resource.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function attachPath(
         string $path,
@@ -405,7 +405,7 @@ class KubernetesCluster
      * Apply server-side apply to the resource.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function applyPath(string $path, string $payload, array $query = ['pretty' => 1]): mixed
     {
@@ -422,7 +422,7 @@ class KubernetesCluster
      * Apply JSON Patch (RFC 6902) to the resource.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function jsonPatchPath(string $path, string $payload, array $query = ['pretty' => 1]): mixed
     {
@@ -439,7 +439,7 @@ class KubernetesCluster
      * Apply JSON Merge Patch (RFC 7396) to the resource.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function jsonMergePatchPath(string $path, string $payload, array $query = ['pretty' => 1]): mixed
     {

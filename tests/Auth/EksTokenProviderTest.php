@@ -2,6 +2,8 @@
 
 namespace RenokiCo\PhpK8s\Test\Auth;
 
+use Aws\Credentials\CredentialProvider;
+use Aws\Sts\StsClient;
 use RenokiCo\PhpK8s\Auth\EksTokenProvider;
 use RenokiCo\PhpK8s\Exceptions\AuthenticationException;
 use RenokiCo\PhpK8s\Test\TestCase;
@@ -18,8 +20,8 @@ class EksTokenProviderTest extends TestCase
 
         // If available, the classes should exist
         if ($isAvailable) {
-            $this->assertTrue(class_exists(\Aws\Sts\StsClient::class));
-            $this->assertTrue(class_exists(\Aws\Credentials\CredentialProvider::class));
+            $this->assertTrue(class_exists(StsClient::class));
+            $this->assertTrue(class_exists(CredentialProvider::class));
         }
     }
 

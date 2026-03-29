@@ -9,7 +9,7 @@ trait HasTemplate
     /**
      * Set the template pod.
      *
-     * @param  array|\RenokiCo\PhpK8s\Kinds\K8sPod  $pod
+     * @param  array|K8sPod  $pod
      * @return $this
      */
     public function setTemplate($pod)
@@ -24,7 +24,7 @@ trait HasTemplate
     /**
      * Get the template pod.
      *
-     * @return array|\RenokiCo\PhpK8s\Kinds\K8sPod
+     * @return array|K8sPod
      */
     public function getTemplate(bool $asInstance = true)
     {

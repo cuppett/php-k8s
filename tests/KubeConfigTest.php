@@ -2,6 +2,7 @@
 
 namespace RenokiCo\PhpK8s\Test;
 
+use RenokiCo\PhpK8s\Auth\ExecCredentialProvider;
 use RenokiCo\PhpK8s\Exceptions\KubeConfigBaseEncodedDataInvalid;
 use RenokiCo\PhpK8s\Exceptions\KubeConfigClusterNotFound;
 use RenokiCo\PhpK8s\Exceptions\KubeConfigContextNotFound;
@@ -276,7 +277,7 @@ class KubeConfigTest extends TestCase
         $property->setAccessible(true);
         $tokenProvider = $property->getValue($cluster);
 
-        $this->assertInstanceOf(\RenokiCo\PhpK8s\Auth\ExecCredentialProvider::class, $tokenProvider);
+        $this->assertInstanceOf(ExecCredentialProvider::class, $tokenProvider);
     }
 
     public function test_kube_config_exec_provider_from_array()
@@ -316,7 +317,7 @@ class KubeConfigTest extends TestCase
         $this->assertEquals('static-token', $cluster->getAuthToken());
 
         // Now add a token provider
-        $provider = new \RenokiCo\PhpK8s\Auth\ExecCredentialProvider([
+        $provider = new ExecCredentialProvider([
             'command' => 'echo',
             'args' => ['{"apiVersion":"client.authentication.k8s.io/v1","kind":"ExecCredential","status":{"token":"provider-token"}}'],
         ]);

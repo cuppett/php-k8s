@@ -38,7 +38,7 @@ trait HasWebhooks
     /**
      * Get webhook by name.
      *
-     * @return null|array|\RenokiCo\PhpK8s\Instances\Webhook
+     * @return null|array|Webhook
      */
     public function getWebhook(string $webhookName, bool $asInstance = true)
     {

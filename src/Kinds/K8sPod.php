@@ -145,7 +145,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Add a new volume to the list.
      *
-     * @param  array|\RenokiCo\PhpK8s\Instances\Volume  $volume
+     * @param  array|Volume  $volume
      * @return $this
      */
     public function addVolume($volume)
@@ -241,7 +241,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Set the node affinity.
      *
-     * @param  \RenokiCo\PhpK8s\Instances\Affinity  $affinity
+     * @param  Affinity  $affinity
      * @return $this
      */
     public function setNodeAffinity($affinity)
@@ -256,7 +256,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Get the node affinity.
      *
-     * @return array|\RenokiCo\PhpK8s\Instances\Affinity
+     * @return array|Affinity
      */
     public function getNodeAffinity(bool $asInstance = true)
     {
@@ -272,7 +272,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Set the pod affinity.
      *
-     * @param  \RenokiCo\PhpK8s\Instances\Affinity  $affinity
+     * @param  Affinity  $affinity
      * @return $this
      */
     public function setPodAffinity($affinity)
@@ -287,7 +287,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Get the pod affinity.
      *
-     * @return array|\RenokiCo\PhpK8s\Instances\Affinity
+     * @return array|Affinity
      */
     public function getPodAffinity(bool $asInstance = true)
     {
@@ -367,7 +367,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Get the container status for a specific container.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Container|array|null
+     * @return Container|array|null
      */
     public function getContainer(string $containerName, bool $asInstance = true)
     {
@@ -383,7 +383,7 @@ class K8sPod extends K8sResource implements Attachable, Dnsable, Executable, Int
     /**
      * Get the container status for a specific init container.
      *
-     * @return \RenokiCo\PhpK8s\Instances\Container|array|null
+     * @return Container|array|null
      */
     public function getInitContainer(string $containerName, bool $asInstance = true)
     {

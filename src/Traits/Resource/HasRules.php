@@ -10,7 +10,7 @@ trait HasRules
     /**
      * Add a new rule.
      *
-     * @param  array|\RenokiCo\PhpK8s\Instances\Rule  $rule
+     * @param  array|Rule  $rule
      * @return $this
      */
     public function addRule($rule)

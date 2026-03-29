@@ -3,6 +3,8 @@
 namespace RenokiCo\PhpK8s\Auth;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use RenokiCo\PhpK8s\Exceptions\AuthenticationException;
 
@@ -61,9 +63,9 @@ class OpenShiftOAuthProvider extends TokenProvider
 
         try {
             $response = $client->get($authorizeUrl);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        } catch (GuzzleException $e) {
             // Check if the exception has a response (HTTP errors like 4xx/5xx)
-            if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse() !== null) {
+            if ($e instanceof RequestException && $e->getResponse() !== null) {
                 $response = $e->getResponse();
             } else {
                 // Network errors, timeouts, connection failures, etc.

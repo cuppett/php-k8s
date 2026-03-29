@@ -9,7 +9,7 @@ trait HasStorageClass
     /**
      * Set the storageClassName parameter.
      *
-     * @param  \RenokiCo\PhpK8s\Kinds\K8sStorageClass|string  $storageClass
+     * @param  K8sStorageClass|string  $storageClass
      * @return $this
      */
     public function setStorageClass($storageClass)
