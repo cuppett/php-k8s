@@ -68,7 +68,7 @@ jobs:
       - uses: medyagh/setup-minikube@latest
         name: Setup Minikube
         with:
-          minikube-version: 1.37.0
+          minikube-version: 1.38.1
           driver: docker
           container-runtime: containerd
           kubernetes-version: v${{ matrix.kubernetes }}
