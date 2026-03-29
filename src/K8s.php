@@ -21,7 +21,7 @@ class K8s
     /**
      * Load Kind configuration from an YAML text.
      *
-     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  KubernetesCluster|null  $cluster
      * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
      */
     public static function fromYaml($cluster, string $yaml)
@@ -51,7 +51,7 @@ class K8s
     /**
      * Load Kind configuration from an YAML file.
      *
-     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  KubernetesCluster|null  $cluster
      * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
      */
     public static function fromYamlFile($cluster, string $path, ?Closure $callback = null)
@@ -70,7 +70,7 @@ class K8s
      * replace all variables in curly braces with the values from
      * the given array.
      *
-     * @param  \RenokiCo\PhpK8s\KubernetesCluster|null  $cluster
+     * @param  KubernetesCluster|null  $cluster
      * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
      */
     public static function fromTemplatedYamlFile($cluster, string $path, array $replace, ?Closure $callback = null)

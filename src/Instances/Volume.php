@@ -66,7 +66,7 @@ class Volume extends Instance
     /**
      * Mount the volume to a specific path.
      *
-     * @return \RenokiCo\PhpK8s\Instances\MountedVolume
+     * @return MountedVolume
      */
     public function mountTo(string $mountPath, ?string $subPath = null)
     {

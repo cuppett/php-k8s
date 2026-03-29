@@ -2,13 +2,16 @@
 
 namespace RenokiCo\PhpK8s\Traits\Resource;
 
+use RenokiCo\PhpK8s\Kinds\K8sEvent;
+use RenokiCo\PhpK8s\ResourcesList;
+
 trait HasEvents
 {
     /**
      * Creates a new event with the resource
      * pointing to the current resource.
      *
-     * @return \RenokiCo\PhpK8s\Kinds\K8sEvent
+     * @return K8sEvent
      */
     public function newEvent()
     {
@@ -21,7 +24,7 @@ trait HasEvents
     /**
      * Get the list of events for this resource.
      *
-     * @return \RenokiCo\PhpK8s\ResourcesList
+     * @return ResourcesList
      */
     public function getEvents(array $query = ['pretty' => 1])
     {

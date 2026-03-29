@@ -36,7 +36,7 @@ trait HasNamespace
     /**
      * Set the namespace of the resource.
      *
-     * @param  \RenokiCo\PhpK8s\Kinds\K8sNamespace|string  $namespace
+     * @param  K8sNamespace|string  $namespace
      * @return $this
      */
     public function setNamespace($namespace)
@@ -57,7 +57,7 @@ trait HasNamespace
     /**
      * Alias for ->setNamespace().
      *
-     * @param  \RenokiCo\PhpK8s\Kinds\K8sNamespace|string  $namespace
+     * @param  K8sNamespace|string  $namespace
      * @return $this
      */
     public function whereNamespace($namespace)

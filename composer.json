@@ -30,14 +30,14 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-json": "*",
         "composer/semver": "^3.4",
         "guzzlehttp/guzzle": "^7.10",
-        "illuminate/macroable": "^11.0|^12.0",
-        "illuminate/support": "^11.0|^12.0",
+        "illuminate/macroable": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
         "ratchet/pawl": "^0.4.1",
-        "symfony/process": "^7.3.4"
+        "symfony/process": "^7.3.4|^8.0"
     },
     "suggest": {
         "ext-yaml": "YAML extension is used to read or generate YAML from PHP K8s internal classes.",
@@ -59,8 +59,8 @@
     "require-dev": {
         "laravel/pint": "dev-main",
         "mockery/mockery": "^1.6",
-        "orchestra/testbench": "^10.9.0",
-        "phpunit/phpunit": "^10.0|^11.5",
+        "orchestra/testbench": "^10.9.0|^11.0",
+        "phpunit/phpunit": "^11.5",
         "vimeo/psalm": "^6.16.1"
     },
     "config": {

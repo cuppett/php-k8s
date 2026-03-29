@@ -3,6 +3,7 @@
 namespace RenokiCo\PhpK8s\Test;
 
 use Exception;
+use React\EventLoop\Loop;
 use RenokiCo\PhpK8s\KubernetesCluster;
 
 class WebsocketTest extends TestCase
@@ -111,7 +112,7 @@ class WebsocketTest extends TestCase
 
                 // Set a timer to close the connection after 2 seconds
                 $connection->on('open', function () use ($connection) {
-                    \React\EventLoop\Loop::get()->addTimer(2, function () use ($connection) {
+                    Loop::get()->addTimer(2, function () use ($connection) {
                         $connection->close();
                     });
                 });

@@ -4,6 +4,7 @@ namespace RenokiCo\PhpK8s\Kinds;
 
 use RenokiCo\PhpK8s\Contracts\InteractsWithK8sCluster;
 use RenokiCo\PhpK8s\Enums\Operation;
+use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
 use RenokiCo\PhpK8s\Traits\Resource\HasReplicas;
 use RenokiCo\PhpK8s\Traits\Resource\HasSpec;
 
@@ -22,7 +23,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
     /**
      * The original scalable resource for this scale.
      *
-     * @var \RenokiCo\PhpK8s\Kinds\K8sResource
+     * @var K8sResource
      */
     protected $resource;
 
@@ -89,9 +90,9 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      * Scale subresources should use replace (PUT) operations, not create (POST).
      * Scale subresources don't support POST, so we use PUT to the scale subresource path.
      *
-     * @return \RenokiCo\PhpK8s\Kinds\K8sResource
+     * @return K8sResource
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     public function create(array $query = ['pretty' => 1])
     {
@@ -111,7 +112,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      * Scale is updated via PUT to the scale subresource path.
      *
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     public function update(array $query = ['pretty' => 1]): bool
     {

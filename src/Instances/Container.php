@@ -31,7 +31,7 @@ class Container extends Instance
     /**
      * Add a volume mount.
      *
-     * @param  array|\RenokiCo\PhpK8s\Instances\MountedVolume  $volume
+     * @param  array|MountedVolume  $volume
      * @return $this
      */
     public function addMountedVolume($volume)
@@ -327,7 +327,7 @@ class Container extends Instance
     /**
      * Get the readiness probe.
      *
-     * @return null|array|\RenokiCo\PhpK8s\Instances\Probe
+     * @return null|array|Probe
      */
     public function getReadinessProbe(bool $asInstance = true)
     {
@@ -353,7 +353,7 @@ class Container extends Instance
     /**
      * Get the liveness probe.
      *
-     * @return null|array|\RenokiCo\PhpK8s\Instances\Probe
+     * @return null|array|Probe
      */
     public function getLivenessProbe(bool $asInstance = true)
     {
@@ -379,7 +379,7 @@ class Container extends Instance
     /**
      * Get the startup probe.
      *
-     * @return null|array|\RenokiCo\PhpK8s\Instances\Probe
+     * @return null|array|Probe
      */
     public function getStartupProbe(bool $asInstance = true)
     {

@@ -141,16 +141,16 @@ composer require renoki-co/laravel-php-k8s
 
 This library is tested against multiple Kubernetes versions:
 
-- **v1.32.9** ✅
-- **v1.33.5** ✅
-- **v1.34.1** ✅
+- **v1.33.10** ✅
+- **v1.34.6** ✅
+- **v1.35.3** ✅
 
 ## Requirements
 
-- PHP 8.2 or higher
+- PHP 8.3 or higher
 - ext-json
 - Guzzle 7.x
-- Symfony Process 7.x
+- Symfony Process 7.x or 8.x
 
 ## Community & Support
 

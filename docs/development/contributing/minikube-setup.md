@@ -9,7 +9,7 @@ Detailed Minikube configuration for PHP K8s development.
 # See https://minikube.sigs.k8s.io/docs/start/
 
 # Start cluster
-minikube start --kubernetes-version=v1.33.1
+minikube start --kubernetes-version=v1.34.6
 ```
 
 ## Enable Addons

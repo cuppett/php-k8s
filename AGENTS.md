@@ -40,7 +40,7 @@ Pint auto-fixes:
 3. Commit and push fixes
 
 ## Stack & Requirements
-- **PHP:** `^8.2` (CI also exercises 8.5).
+- **PHP:** `^8.3` (CI also exercises 8.5).
 - **Composer deps:** Guzzle 7, Symfony Process 7.3, Illuminate components, Ratchet Pawl, ext‑json; optional `ext-yaml` for YAML helpers, optional `aws/aws-sdk-php` for native EKS authentication.
 - **Static analysis:** Psalm (see `psalm.xml`).
 - **License:** Apache‑2.0.
@@ -59,7 +59,7 @@ Pint auto-fixes:
 
 ## Running Full Integration Tests Locally
 These hit a live Kubernetes cluster and mirror CI.
-- **Start cluster:** Minikube is the reference. Example: `minikube start --kubernetes-version=v1.33.1`.
+- **Start cluster:** Minikube is the reference. Example: `minikube start --kubernetes-version=v1.34.6`.
 - **Enable addons:** `minikube addons enable volumesnapshots && minikube addons enable csi-hostpath-driver && minikube addons enable metrics-server`.
 - **Install VPA:** Clone `kubernetes/autoscaler` and run `./vertical-pod-autoscaler/hack/vpa-up.sh`. Alternatively:
   ```bash
@@ -233,7 +233,7 @@ These hit a live Kubernetes cluster and mirror CI.
   7. Create PR against `cuppett/php-k8s` main branch: `gh pr create --repo cuppett/php-k8s --base main --title "..." --body "..."`
 
 ## Releasing & CI (Reference)
-- CI matrix runs PHP 8.2-8.5 across Kubernetes v1.32.9, v1.33.5, v1.34.1 and Laravel 11/12 with both `prefer-lowest` and `prefer-stable`.
+- CI matrix runs PHP 8.3-8.5 across Kubernetes v1.33.10, v1.34.6, v1.35.3 and Laravel 12/13 with both `prefer-lowest` and `prefer-stable`.
 - Minikube v1.37.0 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
 - Timeout: 25 minutes per job.
 

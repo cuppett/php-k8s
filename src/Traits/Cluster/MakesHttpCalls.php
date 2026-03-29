@@ -5,6 +5,7 @@ namespace RenokiCo\PhpK8s\Traits\Cluster;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use RenokiCo\PhpK8s\Exceptions\KubernetesAPIException;
 use RenokiCo\PhpK8s\ResourcesList;
 
@@ -65,7 +66,7 @@ trait MakesHttpCalls
     /**
      * Get the Guzzle Client to perform requests on.
      *
-     * @return \GuzzleHttp\Client
+     * @return Client
      */
     public function getClient()
     {
@@ -104,9 +105,9 @@ trait MakesHttpCalls
     /**
      * Make a HTTP call to a given path with a method and payload.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     public function call(string $method, string $path, string $payload = '', array $query = ['pretty' => 1], array $options = [])
     {
@@ -150,7 +151,7 @@ trait MakesHttpCalls
      *
      * @return mixed
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     protected function makeRequest(string $method, string $path, string $payload = '', array $query = ['pretty' => 1], array $options = [])
     {
@@ -195,9 +196,9 @@ trait MakesHttpCalls
      * for concurrent or async use (e.g., ReactPHP, Amp, Swoole). Only use in synchronous,
      * single-threaded contexts. Internal use only.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      *
-     * @throws \RenokiCo\PhpK8s\Exceptions\KubernetesAPIException
+     * @throws KubernetesAPIException
      */
     public function callWithToken(string $token, string $method, string $path, string $payload = '', array $query = ['pretty' => 1], array $options = [])
     {

@@ -10,7 +10,7 @@ trait HasSubjects
     /**
      * Add a new subject.
      *
-     * @param  array|\RenokiCo\PhpK8s\Instances\Subject  $subject
+     * @param  array|Subject  $subject
      * @return $this
      */
     public function addSubject($subject)

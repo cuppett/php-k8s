@@ -3,6 +3,7 @@
 namespace RenokiCo\PhpK8s\Traits\Resource;
 
 use Closure;
+use RenokiCo\PhpK8s\ResourcesList;
 
 trait HasPods
 {
@@ -46,7 +47,7 @@ trait HasPods
     /**
      * Get the pods owned by this resource.
      *
-     * @return \RenokiCo\PhpK8s\ResourcesList
+     * @return ResourcesList
      */
     public function getPods(array $query = ['pretty' => 1])
     {
