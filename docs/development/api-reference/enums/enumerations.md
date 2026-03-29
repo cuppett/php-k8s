@@ -109,7 +109,7 @@ $phaseString = $phase->value;   // "Running" string
 
 ## See Also
 
-- [PHP 8.2+ Modernization](/development/migration/php-82-modernization) - Enum usage guide
+- [PHP 8.3+ Modernization](/development/migration/php-83-modernization) - Enum usage guide
 
 ---
 

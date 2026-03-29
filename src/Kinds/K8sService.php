@@ -16,21 +16,18 @@ class K8sService extends K8sResource implements Dnsable, InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'Service';
+    protected static ?string $kind = 'Service';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Get the DNS name within the cluster.
      */
+    #[\Override]
     public function getClusterDns(): ?string
     {
         $name = $this->getName();

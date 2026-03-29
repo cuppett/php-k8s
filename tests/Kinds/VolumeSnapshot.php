@@ -16,24 +16,18 @@ class VolumeSnapshot extends K8sResource implements InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var string|null
      */
-    protected static $kind = 'VolumeSnapshot';
+    protected static ?string $kind = 'VolumeSnapshot';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'snapshot.storage.k8s.io/v1';
+    protected static string $defaultVersion = 'snapshot.storage.k8s.io/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the VolumeSnapshotClass name.

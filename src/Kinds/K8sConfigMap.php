@@ -12,17 +12,13 @@ class K8sConfigMap extends K8sResource implements InteractsWithK8sCluster, Watch
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'ConfigMap';
+    protected static ?string $kind = 'ConfigMap';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Get the data attribute.

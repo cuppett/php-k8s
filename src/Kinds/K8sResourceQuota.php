@@ -14,24 +14,18 @@ class K8sResourceQuota extends K8sResource implements InteractsWithK8sCluster, W
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'ResourceQuota';
+    protected static ?string $kind = 'ResourceQuota';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'v1';
+    protected static string $defaultVersion = 'v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the hard limits for the resource quota.

@@ -12,24 +12,18 @@ class K8sNetworkPolicy extends K8sResource implements InteractsWithK8sCluster, W
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'NetworkPolicy';
+    protected static ?string $kind = 'NetworkPolicy';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'networking.k8s.io/v1';
+    protected static string $defaultVersion = 'networking.k8s.io/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the pod selector for the network policy.

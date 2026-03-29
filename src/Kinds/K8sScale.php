@@ -15,35 +15,28 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'Scale';
+    protected static ?string $kind = 'Scale';
 
     /**
      * The original scalable resource for this scale.
-     *
-     * @var K8sResource
      */
-    protected $resource;
+    protected K8sResource $resource;
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'autoscaling/v1';
+    protected static string $defaultVersion = 'autoscaling/v1';
 
     /**
      * Get the path, prefixed by '/', that points to the specific resource.
      */
+    #[\Override]
     public function resourcePath(): string
     {
         return $this->resource->resourceScalePath();
@@ -54,7 +47,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      *
      * @return $this
      */
-    public function setScalableResource(K8sResource $resource)
+    public function setScalableResource(K8sResource $resource): static
     {
         $this->resource = $resource;
 
@@ -66,7 +59,8 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      *
      * @return $this
      */
-    public function refresh(array $query = ['pretty' => 1])
+    #[\Override]
+    public function refresh(array $query = ['pretty' => 1]): static
     {
         $this->resource->refresh($query);
 
@@ -78,7 +72,8 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      *
      * @return $this
      */
-    public function refreshOriginal(array $query = ['pretty' => 1])
+    #[\Override]
+    public function refreshOriginal(array $query = ['pretty' => 1]): static
     {
         $this->resource->refreshOriginal($query);
 
@@ -90,11 +85,11 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      * Scale subresources should use replace (PUT) operations, not create (POST).
      * Scale subresources don't support POST, so we use PUT to the scale subresource path.
      *
-     * @return K8sResource
      *
      * @throws KubernetesAPIException
      */
-    public function create(array $query = ['pretty' => 1])
+    #[\Override]
+    public function create(array $query = ['pretty' => 1]): K8sResource
     {
         return $this->cluster
             ->setResourceClass(get_class($this))
@@ -114,6 +109,7 @@ class K8sScale extends K8sResource implements InteractsWithK8sCluster
      *
      * @throws KubernetesAPIException
      */
+    #[\Override]
     public function update(array $query = ['pretty' => 1]): bool
     {
         $this->refreshOriginal();

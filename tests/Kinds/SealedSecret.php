@@ -20,22 +20,16 @@ class SealedSecret extends K8sResource implements InteractsWithK8sCluster
 
     /**
      * The resource Kind parameter.
-     *
-     * @var string|null
      */
-    protected static $kind = 'SealedSecret';
+    protected static ?string $kind = 'SealedSecret';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'bitnami.com/v1alpha1';
+    protected static string $defaultVersion = 'bitnami.com/v1alpha1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 }

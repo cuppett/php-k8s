@@ -8,10 +8,8 @@ trait HasVersion
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'v1';
+    protected static string $defaultVersion = 'v1';
 
     /**
      * Overwrite, at runtime, the stable version of the resource.

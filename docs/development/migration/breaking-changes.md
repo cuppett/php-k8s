@@ -4,13 +4,13 @@ This page documents all breaking changes in the fork compared to upstream.
 
 ## PHP Version Requirement
 
-**Breaking:** Minimum PHP version is now 8.2
+**Breaking:** Minimum PHP version is now 8.3
 
 ```php
 // composer.json
 {
     "require": {
-        "php": "^8.2"  // Was ^8.0 in upstream
+        "php": "^8.3"  // Was ^8.0 in upstream
     }
 }
 ```
@@ -55,7 +55,7 @@ See the [Upstream to Fork Migration Guide](/development/migration/upstream-to-fo
 ## See Also
 
 - [Fork Differences](/project/fork-differences) - Complete comparison
-- [PHP 8.2+ Modernization](/development/migration/php-82-modernization) - Modern PHP features
+- [PHP 8.3+ Modernization](/development/migration/php-83-modernization) - Modern PHP features
 
 ---
 

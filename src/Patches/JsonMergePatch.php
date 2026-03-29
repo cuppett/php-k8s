@@ -13,29 +13,16 @@ use Illuminate\Contracts\Support\Jsonable;
 class JsonMergePatch implements Arrayable, Jsonable
 {
     /**
-     * The merge patch data.
-     *
-     * @var array
-     */
-    protected $patch = [];
-
-    /**
      * Create a new JSON Merge Patch instance.
-     *
-     * @return void
      */
-    public function __construct(array $patch = [])
-    {
-        $this->patch = $patch;
-    }
+    public function __construct(protected array $patch = []) {}
 
     /**
      * Set a value in the patch.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function set(string $key, $value)
+    public function set(string $key, mixed $value): static
     {
         data_set($this->patch, $key, $value);
 
@@ -47,7 +34,7 @@ class JsonMergePatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function remove(string $key)
+    public function remove(string $key): static
     {
         data_set($this->patch, $key, null);
 
@@ -57,10 +44,9 @@ class JsonMergePatch implements Arrayable, Jsonable
     /**
      * Merge another patch into this one.
      *
-     * @param  array|JsonMergePatch|Arrayable  $patch
      * @return $this
      */
-    public function merge($patch)
+    public function merge(array|JsonMergePatch|Arrayable $patch): static
     {
         if ($patch instanceof Arrayable) {
             $patch = $patch->toArray();
@@ -78,7 +64,7 @@ class JsonMergePatch implements Arrayable, Jsonable
      *
      * @return $this
      */
-    public function clear()
+    public function clear(): static
     {
         $this->patch = [];
 
@@ -113,10 +99,9 @@ class JsonMergePatch implements Arrayable, Jsonable
 
     /**
      * Get the instance as an array.
-     *
-     * @return array
      */
-    public function toArray()
+    #[\Override]
+    public function toArray(): array
     {
         return $this->patch;
     }
@@ -128,6 +113,7 @@ class JsonMergePatch implements Arrayable, Jsonable
      *
      * @throws \JsonException
      */
+    #[\Override]
     public function toJson($options = 0): string
     {
         return json_encode($this->toArray(), $options | JSON_THROW_ON_ERROR);

@@ -1,8 +1,8 @@
-# PHP 8.2+ Modernization
+# PHP 8.3+ Modernization
 
-This fork leverages PHP 8.2+ features for improved type safety, performance, and developer experience.
+This fork leverages PHP 8.3+ features for improved type safety, performance, and developer experience.
 
-## PHP 8.2+ Features Used
+## PHP 8.3+ Features Used
 
 ### Enumerations (Enums)
 
@@ -44,6 +44,50 @@ $action = match ($pod->getPodPhase()) {
     PodPhase::SUCCEEDED => 'cleanup',
     default => 'investigate',
 };
+```
+
+### Typed Class Constants (PHP 8.3)
+
+PHP 8.3 adds support for typed constants in classes and interfaces:
+
+```php
+class K8sResource
+{
+    public const string DEFAULT_NAMESPACE = 'default';
+    public const int DEFAULT_REPLICAS = 1;
+}
+```
+
+### #[\Override] Attribute (PHP 8.3)
+
+Explicitly mark methods that override a parent method, catching typos at compile time:
+
+```php
+class K8sPod extends K8sResource
+{
+    #[\Override]
+    public function toArray(): array
+    {
+        // ...
+    }
+}
+```
+
+### json_validate() (PHP 8.3)
+
+Validate JSON without decoding it:
+
+```php
+// Before
+$decoded = json_decode($json);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    throw new \InvalidArgumentException('Invalid JSON');
+}
+
+// After (PHP 8.3)
+if (! json_validate($json)) {
+    throw new \InvalidArgumentException('Invalid JSON');
+}
 ```
 
 ### Nullable Types & Union Types
@@ -374,6 +418,16 @@ if ($pod->getPodPhase() === 'Running') {
    }
    ```
 
+5. **Use typed class constants** (PHP 8.3):
+   ```php
+   class ApiVersions
+   {
+       public const string APPS = 'apps/v1';
+       public const string CORE = 'v1';
+       public const string NETWORKING = 'networking.k8s.io/v1';
+   }
+   ```
+
 ## See Also
 
 - [Upstream to Fork Migration](/development/migration/upstream-to-fork) - Migrating from upstream
@@ -382,4 +436,4 @@ if ($pod->getPodPhase() === 'Running') {
 
 ---
 
-*PHP 8.2+ modernization guide for cuppett/php-k8s fork*
+*PHP 8.3+ modernization guide for cuppett/php-k8s fork*

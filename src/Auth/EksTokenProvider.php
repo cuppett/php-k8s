@@ -56,6 +56,7 @@ class EksTokenProvider extends TokenProvider
         return $this;
     }
 
+    #[\Override]
     public function refresh(): void
     {
         if (! self::isAvailable()) {

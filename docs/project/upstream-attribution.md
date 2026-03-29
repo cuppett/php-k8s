@@ -24,7 +24,7 @@ This documentation is adapted from the original GitBook documentation at https:/
 
 ### What We've Enhanced
 
-- PHP 8.2+ modern syntax and features
+- PHP 8.3+ modern syntax and features
 - Enum usage for type safety
 - Enhanced type hints and readonly properties
 - Additional examples and use cases

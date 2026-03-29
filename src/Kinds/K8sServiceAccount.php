@@ -9,17 +9,13 @@ class K8sServiceAccount extends K8sResource implements InteractsWithK8sCluster, 
 {
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'ServiceAccount';
+    protected static ?string $kind = 'ServiceAccount';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Attach a new secret to the secrets list.

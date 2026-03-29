@@ -30,24 +30,18 @@ class K8sStatefulSet extends K8sResource implements InteractsWithK8sCluster, Pod
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'StatefulSet';
+    protected static ?string $kind = 'StatefulSet';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'apps/v1';
+    protected static string $defaultVersion = 'apps/v1';
 
     /**
      * Wether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the updating strategy for the set.
@@ -137,6 +131,7 @@ class K8sStatefulSet extends K8sResource implements InteractsWithK8sCluster, Pod
     /**
      * Get the selector for the pods that are owned by this resource.
      */
+    #[\Override]
     public function podsSelector(): array
     {
         if ($podsSelector = $this->customPodsSelector()) {

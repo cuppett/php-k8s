@@ -21,10 +21,9 @@ class K8s
     /**
      * Load Kind configuration from an YAML text.
      *
-     * @param  KubernetesCluster|null  $cluster
-     * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
+     * @return K8sResource|array<K8sResource>
      */
-    public static function fromYaml($cluster, string $yaml)
+    public static function fromYaml(?KubernetesCluster $cluster, string $yaml): K8sResource|array
     {
         $instances = collect(yaml_parse($yaml, -1))->reduce(function ($classes, $yaml) use ($cluster) {
             $kind = $yaml['kind'];
@@ -51,10 +50,9 @@ class K8s
     /**
      * Load Kind configuration from an YAML file.
      *
-     * @param  KubernetesCluster|null  $cluster
-     * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
+     * @return K8sResource|array<K8sResource>
      */
-    public static function fromYamlFile($cluster, string $path, ?Closure $callback = null)
+    public static function fromYamlFile(?KubernetesCluster $cluster, string $path, ?Closure $callback = null): K8sResource|array
     {
         $content = file_get_contents($path);
 
@@ -70,10 +68,9 @@ class K8s
      * replace all variables in curly braces with the values from
      * the given array.
      *
-     * @param  KubernetesCluster|null  $cluster
-     * @return \RenokiCo\PhpK8s\Kinds\K8sResource|array[\RenokiCo\PhpK8s\Kinds\K8sResource]
+     * @return K8sResource|array<K8sResource>
      */
-    public static function fromTemplatedYamlFile($cluster, string $path, array $replace, ?Closure $callback = null)
+    public static function fromTemplatedYamlFile(?KubernetesCluster $cluster, string $path, array $replace, ?Closure $callback = null): K8sResource|array
     {
         return static::fromYamlFile($cluster, $path, function ($content) use ($replace, $callback) {
             foreach ($replace as $search => $replacement) {

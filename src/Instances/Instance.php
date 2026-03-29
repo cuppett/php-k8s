@@ -20,6 +20,7 @@ class Instance implements Arrayable
     /**
      * Get the instance as an array.
      */
+    #[\Override]
     public function toArray(): array
     {
         return $this->attributes;

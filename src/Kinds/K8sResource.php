@@ -41,10 +41,9 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Create a new resource.
      *
-     * @param  KubernetesCluster|null  $cluster
      * @return void
      */
-    public function __construct($cluster = null, array $attributes = [])
+    public function __construct(?KubernetesCluster $cluster = null, array $attributes = [])
     {
         $this->attributes = $attributes;
         $this->original = $attributes;
@@ -77,10 +76,8 @@ class K8sResource implements Arrayable, Jsonable
 
     /**
      * Get the plural resource name.
-     *
-     * @return string
      */
-    public static function getPlural()
+    public static function getPlural(): string
     {
         return strtolower(Str::plural(static::getKind()));
     }
@@ -105,10 +102,8 @@ class K8sResource implements Arrayable, Jsonable
 
     /**
      * Get a resource by name.
-     *
-     * @return K8sResource
      */
-    public function getByName(string $name, array $query = ['pretty' => 1])
+    public function getByName(string $name, array $query = ['pretty' => 1]): K8sResource
     {
         return $this->whereName($name)->get($query);
     }
@@ -116,10 +111,9 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Get the instance as an array.
      * Optionally, you can specify the Kind attribute to replace.
-     *
-     * @return array
      */
-    public function toArray(?string $kind = null)
+    #[\Override]
+    public function toArray(?string $kind = null): array
     {
         $attributes = $this->attributes;
 
@@ -144,6 +138,7 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @param  int  $options
      */
+    #[\Override]
     public function toJson($options = 0, ?string $kind = null): string|false
     {
         return json_encode($this->toArray($kind), $options);
@@ -156,7 +151,7 @@ class K8sResource implements Arrayable, Jsonable
      *
      * @return string
      */
-    public function toJsonPayload(?string $kind = null)
+    public function toJsonPayload(?string $kind = null): string|false
     {
         $attributes = $this->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES, $kind);
 
@@ -172,11 +167,10 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Watch the specific resource by name.
      *
-     * @return mixed
      *
      * @throws KubernetesWatchException
      */
-    public function watchByName(string $name, Closure $callback, array $query = ['pretty' => 1])
+    public function watchByName(string $name, Closure $callback, array $query = ['pretty' => 1]): mixed
     {
         return $this->whereName($name)->watch($callback, $query);
     }
@@ -184,12 +178,11 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Get logs for a specific container.
      *
-     * @return string
      *
      * @throws KubernetesLogsException
      * @throws KubernetesAPIException
      */
-    public function containerLogs(string $container, array $query = ['pretty' => 1])
+    public function containerLogs(string $container, array $query = ['pretty' => 1]): string
     {
         return $this->logs(array_merge($query, ['container' => $container]));
     }
@@ -198,12 +191,11 @@ class K8sResource implements Arrayable, Jsonable
      * Watch the specific resource by name.
      *
      * @param  Closure  $callback
-     * @return string
      *
      * @throws KubernetesLogsException
      * @throws KubernetesAPIException
      */
-    public function logsByName(string $name, array $query = ['pretty' => 1])
+    public function logsByName(string $name, array $query = ['pretty' => 1]): string
     {
         return $this->whereName($name)->logs($query);
     }
@@ -212,12 +204,11 @@ class K8sResource implements Arrayable, Jsonable
      * Watch the specific resource by name.
      *
      * @param  Closure  $callback
-     * @return string
      *
      * @throws KubernetesLogsException
      * @throws KubernetesAPIException
      */
-    public function containerLogsByName(string $name, string $container, array $query = ['pretty' => 1])
+    public function containerLogsByName(string $name, string $container, array $query = ['pretty' => 1]): string
     {
         return $this->whereName($name)->containerLogs($container, $query);
     }
@@ -225,12 +216,11 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Watch the specific resource's container logs until the closure returns true or false.
      *
-     * @return mixed
      *
      * @throws KubernetesWatchException
      * @throws KubernetesLogsException
      */
-    public function watchContainerLogs(string $container, Closure $callback, array $query = ['pretty' => 1])
+    public function watchContainerLogs(string $container, Closure $callback, array $query = ['pretty' => 1]): mixed
     {
         return $this->watchLogs($callback, array_merge($query, ['container' => $container]));
     }
@@ -238,12 +228,11 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Watch the specific resource's logs by name.
      *
-     * @return mixed
      *
      * @throws KubernetesWatchException
      * @throws KubernetesLogsException
      */
-    public function watchLogsByName(string $name, Closure $callback, array $query = ['pretty' => 1])
+    public function watchLogsByName(string $name, Closure $callback, array $query = ['pretty' => 1]): mixed
     {
         return $this->whereName($name)->watchLogs($callback, $query);
     }
@@ -251,12 +240,11 @@ class K8sResource implements Arrayable, Jsonable
     /**
      * Watch the specific resource's container logs by names.
      *
-     * @return mixed
      *
      * @throws KubernetesWatchException
      * @throws KubernetesLogsException
      */
-    public function watchContainerLogsByName(string $name, string $container, Closure $callback, array $query = ['pretty' => 1])
+    public function watchContainerLogsByName(string $name, string $container, Closure $callback, array $query = ['pretty' => 1]): mixed
     {
         return $this->whereName($name)->watchContainerLogs($container, $callback, $query);
     }

@@ -6,7 +6,7 @@ This guide helps you migrate from `renoki-co/php-k8s` (upstream) to `cuppett/php
 
 Consider migrating if you:
 
-- ✅ Are using or plan to use PHP 8.2+
+- ✅ Are using or plan to use PHP 8.3+
 - ✅ Want type-safe enums for Kubernetes states
 - ✅ Need the latest Kubernetes version support
 - ✅ Value comprehensive documentation
@@ -14,14 +14,14 @@ Consider migrating if you:
 
 Stay with upstream if you:
 
-- ❌ Need PHP 8.0 or 8.1 support
+- ❌ Need PHP 8.0, 8.1, or 8.2 support
 - ❌ Prefer string-based status values
 - ❌ Have deeply integrated with upstream-specific features
 - ❌ Want the "official" package from the original author
 
 ## Prerequisites
 
-- PHP 8.2 or higher installed
+- PHP 8.3 or higher installed
 - Composer
 - Existing project using `renoki-co/php-k8s`
 
@@ -43,12 +43,12 @@ The fork maintains the same package name for easier migration. Configure your co
 
 ### 2. Update PHP Version
 
-Ensure your project uses PHP 8.2+:
+Ensure your project uses PHP 8.3+:
 
 ```json
 {
     "require": {
-        "php": "^8.2"
+        "php": "^8.3"
     }
 }
 ```
@@ -346,7 +346,7 @@ if ($pod->getPodPhase() === PodPhase::RUNNING) {
 ## Next Steps
 
 - [Fork Differences](/project/fork-differences) - Detailed comparison
-- [PHP 8.2+ Modernization](/development/migration/php-82-modernization) - Modern PHP features
+- [PHP 8.3+ Modernization](/development/migration/php-83-modernization) - Modern PHP features
 - [Examples](/examples/basic-crud) - See fork in action
 
 ---

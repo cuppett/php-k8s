@@ -13,24 +13,18 @@ class K8sVerticalPodAutoscaler extends K8sResource implements InteractsWithK8sCl
 
     /**
      * The resource Kind parameter.
-     *
-     * @var null|string
      */
-    protected static $kind = 'VerticalPodAutoscaler';
+    protected static ?string $kind = 'VerticalPodAutoscaler';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'autoscaling.k8s.io/v1';
+    protected static string $defaultVersion = 'autoscaling.k8s.io/v1';
 
     /**
      * Whether the resource has a namespace.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the target resource reference.

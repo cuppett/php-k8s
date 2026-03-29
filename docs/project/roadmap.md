@@ -4,7 +4,7 @@ Future development plans for the PHP K8s fork.
 
 ## Ongoing
 
-- ✅ **PHP 8.2+ Support** - Continue leveraging latest PHP features
+- ✅ **PHP 8.3+ Support** - Continue leveraging latest PHP features
 - ✅ **Kubernetes API Updates** - Support new Kubernetes versions as released
 - ✅ **Documentation** - Comprehensive guides and examples
 - ✅ **Bug Fixes** - Responsive issue resolution
@@ -15,7 +15,7 @@ Future development plans for the PHP K8s fork.
 
 - 🔄 **Additional Resource Types** - Support for new Kubernetes resources
 - 🔄 **Enhanced Examples** - More real-world usage patterns
-- 🔄 **Performance Optimization** - Leverage PHP 8.2+ performance improvements
+- 🔄 **Performance Optimization** - Leverage PHP 8.3+ performance improvements
 
 ### Medium Term
 

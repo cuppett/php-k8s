@@ -12,24 +12,18 @@ class K8sLease extends K8sResource implements InteractsWithK8sCluster, Watchable
 
     /**
      * The resource kind.
-     *
-     * @var string
      */
-    protected static $kind = 'Lease';
+    protected static ?string $kind = 'Lease';
 
     /**
      * The default version for the resource.
-     *
-     * @var string
      */
-    protected static $defaultVersion = 'coordination.k8s.io/v1';
+    protected static string $defaultVersion = 'coordination.k8s.io/v1';
 
     /**
      * Whether the resource is namespaceable.
-     *
-     * @var bool
      */
-    protected static $namespaceable = true;
+    protected static bool $namespaceable = true;
 
     /**
      * Set the holder identity.

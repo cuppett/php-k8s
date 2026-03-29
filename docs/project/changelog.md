@@ -4,11 +4,11 @@ All notable changes to this fork will be documented in this file.
 
 ## Fork History
 
-This fork (`cuppett/php-k8s`) was created to continue active development of the PHP Kubernetes client with modern PHP 8.2+ features.
+This fork (`cuppett/php-k8s`) was created to continue active development of the PHP Kubernetes client with modern PHP 8.3+ features.
 
 ### Key Changes from Upstream
 
-- ✅ **PHP 8.2+ Requirement** - Leverages modern PHP features
+- ✅ **PHP 8.3+ Requirement** - Leverages modern PHP features
 - ✅ **Enumerations** - Type-safe enums for statuses (PodPhase, ServiceType, etc.)
 - ✅ **Enhanced Type Hints** - Strict typing throughout
 - ✅ **Readonly Properties** - Immutable class properties
