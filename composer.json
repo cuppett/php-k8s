@@ -59,7 +59,7 @@
     "require-dev": {
         "laravel/pint": "dev-main",
         "mockery/mockery": "^1.6",
-        "orchestra/testbench": "^10.9.0|^11.0",
+        "orchestra/testbench": "^11.1.0",
         "phpunit/phpunit": "^11.5",
         "vimeo/psalm": "^6.16.1"
     },
