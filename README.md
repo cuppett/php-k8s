@@ -1,7 +1,7 @@
 PHP K8s
 =======
 
-> **Note:** This is a maintained fork of [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s) with PHP 8.3+ support and additional features. See [fork differences](https://php-k8s.cuppett.dev/project/fork-differences.html) for details.
+> **Note:** This is a maintained fork of [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s) with PHP 8.3+ support and additional features. See [fork differences](https://php-k8s.cuppett.dev/project/fork-differences) for details.
 
 ![v1.33.10 K8s Version](https://img.shields.io/badge/K8s%20v1.33.10-Ready-%23326ce5?colorA=306CE8&colorB=green)
 ![v1.34.6 K8s Version](https://img.shields.io/badge/K8s%20v1.34.6-Ready-%23326ce5?colorA=306CE8&colorB=green)
@@ -45,7 +45,7 @@ echo $pod->getName(); // my-pod
 echo $pod->getPodPhase(); // Returns PodPhase enum
 ```
 
-[See more examples →](https://php-k8s.cuppett.dev/examples/)
+[See more examples →](https://php-k8s.cuppett.dev/guide/usage/cluster-interaction)
 
 ## 🔐 Advanced Authentication
 
@@ -74,7 +74,7 @@ $cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config');
 // Works with AWS EKS, GKE, AKS, and custom credential providers
 ```
 
-[See authentication docs →](https://php-k8s.cuppett.dev/getting-started/authentication)
+[See authentication docs →](https://php-k8s.cuppett.dev/guide/getting-started/authentication)
 
 ## 📦 Requirements
 
@@ -86,7 +86,7 @@ $cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config');
 
 [Read the full documentation at php-k8s.cuppett.dev](https://php-k8s.cuppett.dev/)
 
-This fork is based on [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s). See the [project history](https://php-k8s.cuppett.dev/project/history.html) and [upstream documentation](https://php-k8s.renoki.org/) for more details.
+This fork is based on [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s). See the [project history](https://php-k8s.cuppett.dev/project/history) and [upstream documentation](https://php-k8s.renoki.org/) for more details.
 
 ## 🐛 Testing
 
