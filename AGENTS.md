@@ -59,7 +59,7 @@ Pint auto-fixes:
 
 ## Running Full Integration Tests Locally
 These hit a live Kubernetes cluster and mirror CI.
-- **Start cluster:** Minikube is the reference. Example: `minikube start --kubernetes-version=v1.34.6`.
+- **Start cluster:** Minikube is the reference. Example: `minikube start --kubernetes-version=v1.36.1`.
 - **Enable addons:** `minikube addons enable volumesnapshots && minikube addons enable csi-hostpath-driver && minikube addons enable metrics-server`.
 - **Install VPA:** Clone `kubernetes/autoscaler` and run `./vertical-pod-autoscaler/hack/vpa-up.sh`. Alternatively:
   ```bash
@@ -233,8 +233,8 @@ These hit a live Kubernetes cluster and mirror CI.
   7. Create PR against `cuppett/php-k8s` main branch: `gh pr create --repo cuppett/php-k8s --base main --title "..." --body "..."`
 
 ## Releasing & CI (Reference)
-- CI matrix runs PHP 8.3-8.5 across Kubernetes v1.33.10, v1.34.6, v1.35.3 and Laravel 12/13 with both `prefer-lowest` and `prefer-stable`.
-- Minikube v1.37.0 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
+- CI matrix runs PHP 8.3-8.5 across Kubernetes v1.35.5, v1.36.1 and Laravel 12/13 with both `prefer-lowest` and `prefer-stable`.
+- Minikube v1.38.1 is provisioned in CI with VolumeSnapshots, CSI hostpath, metrics‑server, VPA, Sealed Secrets CRD, and Gateway API CRDs before running tests.
 - Timeout: 25 minutes per job.
 
 ## Useful References

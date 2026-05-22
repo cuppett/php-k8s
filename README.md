@@ -3,9 +3,8 @@ PHP K8s
 
 > **Note:** This is a maintained fork of [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s) with PHP 8.3+ support and additional features. See [fork differences](https://php-k8s.cuppett.dev/project/fork-differences) for details.
 
-![v1.33.10 K8s Version](https://img.shields.io/badge/K8s%20v1.33.10-Ready-%23326ce5?colorA=306CE8&colorB=green)
-![v1.34.6 K8s Version](https://img.shields.io/badge/K8s%20v1.34.6-Ready-%23326ce5?colorA=306CE8&colorB=green)
-![v1.35.3 K8s Version](https://img.shields.io/badge/K8s%20v1.35.3-Ready-%23326ce5?colorA=306CE8&colorB=green)
+![v1.35.5 K8s Version](https://img.shields.io/badge/K8s%20v1.35.5-Ready-%23326ce5?colorA=306CE8&colorB=green)
+![v1.36.1 K8s Version](https://img.shields.io/badge/K8s%20v1.36.1-Ready-%23326ce5?colorA=306CE8&colorB=green)
 
 [![Client Capabilities](https://img.shields.io/badge/Kubernetes%20Client-Silver-blue.svg?colorB=C0C0C0&colorA=306CE8)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/csi-new-client-library-procedure.md#client-capabilities)
 [![Client Support Level](https://img.shields.io/badge/Kubernetes%20Client-stable-green.svg?colorA=306CE8)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/csi-new-client-library-procedure.md#client-support-level)
@@ -21,7 +20,7 @@ For Laravel projects, you might want to use [renoki-co/laravel-php-k8s](https://
 - **Watch API**: Real-time event streaming for resource changes
 - **JSON Patch & Merge Patch**: RFC 6902 and RFC 7396 support for precise updates
 - **Custom Resources (CRDs)**: Easy CRD integration with macros
-- **PHP 8.2+ Modern Features**: Enums, type hints, readonly properties, match expressions
+- **PHP 8.3+ Modern Features**: Enums, type hints, readonly properties, match expressions
 - **Laravel Integration**: First-class Laravel support via laravel-php-k8s
 - **Flexible Authentication**: Kubeconfig, tokens, certificates, exec plugins, AWS EKS native, OpenShift OAuth
 - **YAML Import**: Load resources directly from YAML files with templating
@@ -78,8 +77,8 @@ $cluster = KubernetesCluster::fromKubeConfigYamlFile('~/.kube/config');
 
 ## 📦 Requirements
 
-- PHP 8.2 or higher
-- Laravel 11.x or 12.x (for Laravel integration)
+- PHP 8.3 or higher
+- Laravel 12.x or 13.x (for Laravel integration)
 - Kubernetes cluster access
 
 ## 📃 Documentation
