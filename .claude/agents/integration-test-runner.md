@@ -34,7 +34,7 @@ You are an elite Integration Test Engineer specializing in Kubernetes client lib
    minikube stop
    minikube delete
    ```
-4. Start fresh minikube cluster matching CI configuration (currently v1.38.1 with Kubernetes versions v1.35.5 or v1.36.1)
+4. Start fresh minikube cluster matching CI configuration (currently v1.38.1 with Kubernetes versions v1.36.4 or v1.37.0)
 5. Install required addons:
    - volumesnapshots
    - csi-hostpath-driver
@@ -84,7 +84,7 @@ Provide detailed, actionable reports:
 
 Environment:
 - Minikube: v1.38.1
-- Kubernetes: v1.36.1
+- Kubernetes: v1.37.0
 - PHP: 8.3
 - Test Duration: 12m 34s
 

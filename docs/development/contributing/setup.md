@@ -29,7 +29,7 @@ composer install
 
 ```bash
 # Start with specific Kubernetes version
-minikube start --kubernetes-version=v1.36.1
+minikube start --kubernetes-version=v1.37.0
 
 # Enable required addons
 minikube addons enable volumesnapshots
