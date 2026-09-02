@@ -3,8 +3,8 @@ PHP K8s
 
 > **Note:** This is a maintained fork of [renoki-co/php-k8s](https://github.com/renoki-co/php-k8s) with PHP 8.3+ support and additional features. See [fork differences](https://php-k8s.cuppett.dev/project/fork-differences) for details.
 
-![v1.35.5 K8s Version](https://img.shields.io/badge/K8s%20v1.35.5-Ready-%23326ce5?colorA=306CE8&colorB=green)
-![v1.36.1 K8s Version](https://img.shields.io/badge/K8s%20v1.36.1-Ready-%23326ce5?colorA=306CE8&colorB=green)
+![v1.36.4 K8s Version](https://img.shields.io/badge/K8s%20v1.36.4-Ready-%23326ce5?colorA=306CE8&colorB=green)
+![v1.37.0 K8s Version](https://img.shields.io/badge/K8s%20v1.37.0-Ready-%23326ce5?colorA=306CE8&colorB=green)
 
 [![Client Capabilities](https://img.shields.io/badge/Kubernetes%20Client-Silver-blue.svg?colorB=C0C0C0&colorA=306CE8)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/csi-new-client-library-procedure.md#client-capabilities)
 [![Client Support Level](https://img.shields.io/badge/Kubernetes%20Client-stable-green.svg?colorA=306CE8)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/csi-new-client-library-procedure.md#client-support-level)

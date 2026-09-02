@@ -114,7 +114,7 @@ This fork may include additional Kubernetes resource types:
 ### Testing Infrastructure
 
 **This Fork**:
-- Tests against Kubernetes 1.35.5, 1.36.1
+- Tests against Kubernetes 1.36.4, 1.37.0
 - Automated testing with GitHub Actions
 - Integration tests with Minikube
 - VPA, Gateway API, and Sealed Secrets CRD testing
