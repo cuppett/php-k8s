@@ -37,7 +37,7 @@
         "illuminate/macroable": "^12.0|^13.0",
         "illuminate/support": "^12.0|^13.0",
         "ratchet/pawl": "^0.4.1",
-        "symfony/process": "^7.3.4|^8.0"
+        "symfony/process": "^8.1.10"
     },
     "suggest": {
         "ext-yaml": "YAML extension is used to read or generate YAML from PHP K8s internal classes.",
