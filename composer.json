@@ -60,7 +60,7 @@
         "laravel/pint": "dev-main",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^11.3.0",
-        "phpunit/phpunit": "^11.5",
+        "phpunit/phpunit": "^13.4",
         "vimeo/psalm": "^6.20.0"
     },
     "config": {
